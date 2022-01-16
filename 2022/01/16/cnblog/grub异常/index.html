@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="开机出现 grub rescue 指令模式假如看到grub rescue，表示mbr (master boot record)的资料，完全对应不上磁盘的状况，所以无法辨别系统的所有分区，更不用说连grub menu都无法读入。可以grub程序有问题，找不到系统所在分区。 1234567ls # (hd0), (hd0,msdos3), (hd0,msdos2), (hd0,msdos1)# ls可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/grub%E5%BC%82%E5%B8%B8/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="开机出现 grub rescue 指令模式假如看到grub rescue，表示mbr (master boot record)的资料，完全对应不上磁盘的状况，所以无法辨别系统的所有分区，更不用说连grub menu都无法读入。可以grub程序有问题，找不到系统所在分区。 1234567ls # (hd0), (hd0,msdos3), (hd0,msdos2), (hd0,msdos1)# ls可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190521131754775.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190521131201603.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2022-01-16T12:20:07.051Z">
+<meta property="article:modified_time" content="2020-10-24T08:56:34.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190521131754775.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="开机出现-grub-rescue-指令模式"><a href="#开机出现-grub-rescue-指令模式" class="headerlink" title="开机出现 grub rescue 指令模式"></a>开机出现 grub rescue 指令模式</h1><p>假如看到grub rescue，表示mbr (master boot record)的资料，完全对应不上磁盘的状况，所以无法辨别系统的所有分区，更不用说连grub menu都无法读入。可以grub程序有问题，找不到系统所在分区。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">ls <br><span class="hljs-meta">#</span><span class="bash"> (hd0), (hd0,msdos3), (hd0,msdos2), (hd0,msdos1)</span><br><span class="hljs-meta">#</span><span class="bash"> ls可以列出所有的硬碟与分区，(hd0)是第一个硬碟，(hd0,msdos1)是第一颗硬碟的第一个分区。以此类推。输入指令时，可以简写成(hd0,1)表示。若是GPT分割，出现的会是(hd0,gpt0)的格式。</span><br><span class="hljs-meta">#</span><span class="bash"> 只出现(hd0)，那表示你的分区表已经损坏；</span><br>ls (hd0,1)/<br><span class="hljs-meta">#</span><span class="bash"> 确定各个分区那个是 / ，哪个是/boot，就可以开始继续处理。现在假设 / 是(hd0,2)，/boot 是(hd0,2)/boot。</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>/boot/grub下的i386-pc或者x86_64-efi目录，是放置grub模组所在<ul>
+<li>前者出现在以mbr开机的系统，</li>
+<li>后者出现在efi开机的系统 。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">正式设置</span><br>grub rescue&gt; set root=(hd0,2) <br>grub rescue&gt; set prefix=(hd0,2)/boot/grub <br>grub rescue&gt; insmod normal <br>grub rescue&gt; normal<br>第一行指令：设置根目录所在的分区<br>第二行指令：设置grub目录。这样他才知道哪里去找模组。此行设置错误，第三行指令执行时，就无法载入模组。假如你的 /boot 没有额外分割，那这行就要写成 set prefix=(hd0,2)/boot/grub<br>第三行指令：载入normal模组<br>第四行指令：执行normal模组<br></code></pre></td></tr></table></figure>
+
+<p>normal模组作用是什麼？</p>
+<p>会把一些指令，文件系统模组，及其他需要的模组自动呼叫进来。假如你的grub.cfg没有问题，应该就可以看见grub菜单了。</p>
+<h1 id="开机出现grub指令模式"><a href="#开机出现grub指令模式" class="headerlink" title="开机出现grub指令模式"></a>开机出现grub指令模式</h1><ul>
+<li><p>这类问题通常发生在，mbr可以找到对应的磁盘与各分区，却无法找到可用有效的grub.cfg，不能加载内核文件</p>
+</li>
+<li><p>这时候，相关的模组已经载入，所以比grub rescue好处理</p>
+</li>
+<li><p>同样用 ls 找出相关的分区，并检查哪个分区是根目录，哪个分区是 /boot ，方法与之前的grub rescue相同。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">grub&gt;</span><span class="bash"> <span class="hljs-built_in">set</span> root=(hd0,2)</span><br><span class="hljs-meta">grub&gt;</span><span class="bash"> linux /boot/vmlinuz-3.11.0-18-generic root=/dev/sda3</span><br><span class="hljs-meta">grub&gt;</span><span class="bash"> initrd /boot/initrd.img-3.11.0-18-generic</span><br><span class="hljs-meta">grub&gt;</span><span class="bash"> boot</span><br><span class="hljs-meta">#</span><span class="bash"> 第一行：设置根目录所在的分区</span><br><span class="hljs-meta">#</span><span class="bash"> 第二行：设置核心所在，并设置根目录所在分区</span><br><span class="hljs-meta">#</span><span class="bash"> 第三行：设置虚拟系统启动核心所在。</span><br><span class="hljs-meta">#</span><span class="bash"> 注：如果是grub0.9.8.e即grub-legacy在开机区，那么需要把linux改成kernel</span><br><span class="hljs-meta">#</span><span class="bash"> 第四行：开机,直接进入系统没有菜单</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="可见到grub-menu，但无法开机"><a href="#可见到grub-menu，但无法开机" class="headerlink" title="可见到grub menu，但无法开机"></a>可见到grub menu，但无法开机</h1><p>系统可以找到grub.cfg，但是上头的资料有问题，无法找到核心。常发生在变更分割表后，因grub无法辨识uuid或者label造成</p>
+<h1 id="处理grub的异常状况"><a href="#处理grub的异常状况" class="headerlink" title="处理grub的异常状况"></a>处理grub的异常状况</h1><ul>
+<li><p>检查并修改 /etc/fstab ：<br>/etc/fstab 是系统挂载分区的必要文件。请确认里面的uuid是否与实际状况相符？实际的uuid可以藉由sudo blkid取得。若有不符的状况，请修改。现在ubuntu已经默认使用uuid来辨识分区，这种辨识方式，可以避免系统的混淆。当然他仍支持以往用设备名称辨识的方法。</p>
+</li>
+<li><p>更新 /boot/grub/grub.cfg ：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo update-grub<br>sudo update-grub2<br></code></pre></td></tr></table></figure></li>
+<li><p>重新安装grub到磁盘开头的开机区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo grub-install /dev/sda<br></code></pre></td></tr></table></figure></li>
+<li><p>若有问题，可能需要强制安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo grub-install /dev/sda --force<br><span class="hljs-meta">#</span><span class="bash"> 若不是/dev/sda，请自行修改。</span><br><span class="hljs-meta">#</span><span class="bash"> 以下三个参数要注意，必要时要特别加入</span><br>--boot-directory=[path]<br>--efi-directory=[path]<br>--uefi-secure-boot<br><span class="hljs-meta">#</span><span class="bash"> man grub-install 查看帮助</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="MBR与GPT"><a href="#MBR与GPT" class="headerlink" title="MBR与GPT"></a>MBR与GPT</h1><p>BIOS+mbr</p>
+<ul>
+<li>前446字节村存放grub程序<ul>
+<li>为什么要grub引导：因为bios不识别文件系统格式</li>
+<li>grub是操作系统安装后写入的，因此会识别文件系统</li>
+</ul>
+</li>
+<li>后64，存放分区表每个分区的起始，结束柱面号</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190521131754775.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>UEFI+gpt</p>
+<p><img src="https://img-blog.csdnimg.cn/20190521131201603.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>在GPT分区表中引导记录被.efi文件所接管，统一放在一个叫ESP的分区中，<ul>
+<li>这个分区的文件系统必须是FAT文件系统这样才能被UEFI所识别，</li>
+<li>这个分区可以放置引导不同分区以及不同的硬盘多个系统的.efi,不过要在UEFI启动项中设定</li>
+<li>也可以使用grub2进行设定引导。</li>
+</ul>
+</li>
+<li>UEFI这些启动项将会去引导ESP分区中的.efi文件，<ul>
+<li>Linux中的grubx64.efi, shimx64.efi,</li>
+<li>window10中是ESP分区\EFI\BOOT\bootx64.efi,或是bootmgfw.efi,具体引导哪个.efi文件要看UEFI启动项中的设定。</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/ImageDataGenerator/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Github%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6%E5%BE%88%E6%85%A2%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%8C%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

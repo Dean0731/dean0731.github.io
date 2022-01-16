@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="python解析xml文档1,DOM(基于对象) 主要思想：从根节点开始按照标签值 逐层查找123456789101112131415161718192021222324252627282930from xml.dom import minidom# 打开文件DomTree &#x3D; minidom.parse(&amp;#x27;path&amp;#x27;)# 获取xml对象annotation &#x3D; DomTree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/python%E8%A7%A3%E6%9E%90xml%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="python解析xml文档1,DOM(基于对象) 主要思想：从根节点开始按照标签值 逐层查找123456789101112131415161718192021222324252627282930from xml.dom import minidom# 打开文件DomTree &#x3D; minidom.parse(&amp;#x27;path&amp;#x27;)# 获取xml对象annotation &#x3D; DomTree">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.435Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="python解析xml文档"><a href="#python解析xml文档" class="headerlink" title="python解析xml文档"></a>python解析xml文档</h1><h2 id="1-DOM-基于对象-主要思想：从根节点开始按照标签值-逐层查找"><a href="#1-DOM-基于对象-主要思想：从根节点开始按照标签值-逐层查找" class="headerlink" title="1,DOM(基于对象) 主要思想：从根节点开始按照标签值 逐层查找"></a>1,DOM(基于对象) 主要思想：从根节点开始按照标签值 逐层查找</h2><figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> xml.dom <span class="hljs-keyword">import</span> minidom<br><span class="hljs-comment"># 打开文件</span><br>DomTree = minidom.parse(<span class="hljs-string">&#x27;path&#x27;</span>)<br><span class="hljs-comment"># 获取xml对象</span><br>annotation = DomTree.documentElement<br><span class="hljs-comment"># 获取一级节点 列表返回</span><br>folder=annotation.getElementsByTagName(<span class="hljs-string">&quot;folder&quot;</span>)<br>filename=annotation.getElementsByTagName(<span class="hljs-string">&quot;filename&quot;</span>)<br>source=annotation.getElementsByTagName(<span class="hljs-string">&quot;source&quot;</span>)<br>size=annotation.getElementsByTagName(<span class="hljs-string">&quot;size&quot;</span>)<br>segmented=annotation.getElementsByTagName(<span class="hljs-string">&quot;segmented&quot;</span>)<br>obj=annotation.getElementsByTagName(<span class="hljs-string">&quot;object&quot;</span>)<br><span class="hljs-comment"># 在obj列表的第一个对象中查找part</span><br>part = obj[<span class="hljs-number">0</span>].getElementsByTagName(<span class="hljs-string">&quot;part&quot;</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> part:<br>    name=i.getElementsByTagName(<span class="hljs-string">&quot;name&quot;</span>)[<span class="hljs-number">0</span>].childNodes[<span class="hljs-number">0</span>]<br>    bndbox=i.getElementsByTagName(<span class="hljs-string">&quot;bndbox&quot;</span>)[<span class="hljs-number">0</span>]<br>    <span class="hljs-comment"># 例：dom(a标签).childNodes[0] 获取的是&lt;a&gt;&lt;x&gt;之间的飞标签字符，包含换行，或其他字符</span><br>    <span class="hljs-comment"># dom(a标签).childNodes[1] 即可得到&lt;x&gt;&lt;/x&gt;标签</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    &lt;a&gt;</span><br><span class="hljs-string">        &lt;x&gt;&lt;/x&gt;</span><br><span class="hljs-string">    &lt;/a&gt;</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># dom.getAttribute(&quot;id&quot;) 可获取属性值</span><br>    xmin = bndbox.getElementsByTagName(<span class="hljs-string">&quot;xmin&quot;</span>)[<span class="hljs-number">0</span>].childNodes[<span class="hljs-number">0</span>].data<br>    ymin = bndbox.getElementsByTagName(<span class="hljs-string">&quot;ymin&quot;</span>)[<span class="hljs-number">0</span>].childNodes[<span class="hljs-number">0</span>].data<br>    xmax = bndbox.getElementsByTagName(<span class="hljs-string">&quot;xmax&quot;</span>)[<span class="hljs-number">0</span>].childNodes[<span class="hljs-number">0</span>].data<br>    ymax = bndbox.getElementsByTagName(<span class="hljs-string">&quot;ymax&quot;</span>)[<span class="hljs-number">0</span>].childNodes[<span class="hljs-number">0</span>].data<br>    <span class="hljs-built_in">print</span>(name,bndbox,xmin,ymin,xmax,ymax,<span class="hljs-built_in">type</span>(bndbox.getElementsByTagName(<span class="hljs-string">&quot;xmin&quot;</span>)[<span class="hljs-number">0</span>]))<br></code></pre></td></tr></table></figure>
+
+<p>注：</p>
+<p>​    getElementsByTagName()—-&gt;class Element<br>​    Element.childNodes ——&gt;Dom 类型</p>
+<h2 id="2-SAX-基于事件-比dom更多的控制，更有效率，但需要的工作较多"><a href="#2-SAX-基于事件-比dom更多的控制，更有效率，但需要的工作较多" class="headerlink" title="2,SAX (基于事件):比dom更多的控制，更有效率，但需要的工作较多"></a>2,SAX (基于事件):比dom更多的控制，更有效率，但需要的工作较多</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> xml.sax<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnnotationHandler</span>(<span class="hljs-params">xml.sax.ContentHandler</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">___init__</span>(<span class="hljs-params">self</span>):</span><br>        self.firstAttr=<span class="hljs-string">&quot;&quot;</span><br>        self.secAttr=<span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">startElement</span>(<span class="hljs-params">self,tag,attribute</span>):</span><br>        <span class="hljs-keyword">pass</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">characters</span>(<span class="hljs-params">self,content</span>):</span><br>        <span class="hljs-keyword">pass</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">endElement</span>(<span class="hljs-params">self,tag</span>):</span><br>        <span class="hljs-keyword">pass</span><br>parser = xml.sax.make_parser()<br><span class="hljs-comment"># 关闭namespaces</span><br>parser.setFeature(xml.sax.handler.feature_namespaces,<span class="hljs-number">0</span>)<br>parser.setContentHandler(AnnotationHandler())<br>parser.parse(<span class="hljs-string">&quot;path&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>详见 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hongfei/p/python-xml-sax.html">https://www.cnblogs.com/hongfei/p/python-xml-sax.html</a></p>
+<h2 id="3-ElementTree-将xml转化为tree"><a href="#3-ElementTree-将xml转化为tree" class="headerlink" title="3,ElementTree 将xml转化为tree"></a>3,ElementTree 将xml转化为tree</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> xml.etree.ElementTree <span class="hljs-keyword">as</span> et<br>tree = et.parse(<span class="hljs-string">&#x27;path&#x27;</span>)<br>root=tree.getroot() <span class="hljs-comment"># 获取根节点</span><br><span class="hljs-built_in">print</span>(root.tag,root.attrib)  <span class="hljs-comment"># annotation 标签名 , 获取属性</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> root: <span class="hljs-comment"># 找到root的一级字标签 也可以root[n] 获取</span><br>    <span class="hljs-built_in">print</span>(i.tag,i.text)<br>    <span class="hljs-comment"># i.txt 表示i标签中的非标签值</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    &lt;i&gt;xx&lt;/i&gt;  i.text=xx</span><br><span class="hljs-string">    &lt;i&gt;</span><br><span class="hljs-string">    &lt;x&gt;&lt;/x&gt; i.text=换行</span><br><span class="hljs-string">    &lt;/i&gt;</span><br><span class="hljs-string">    &lt;i&gt;&lt;x&gt;&lt;/x&gt; i.text=None</span><br><span class="hljs-string">    &lt;/i&gt;</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">annotation</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">folder</span>&gt;</span>VOC2012<span class="hljs-tag">&lt;/<span class="hljs-name">folder</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">filename</span>&gt;</span>2007_000027.jpg<span class="hljs-tag">&lt;/<span class="hljs-name">filename</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">database</span>&gt;</span>The VOC2007 Database<span class="hljs-tag">&lt;/<span class="hljs-name">database</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">annotation</span>&gt;</span>PASCAL VOC2007<span class="hljs-tag">&lt;/<span class="hljs-name">annotation</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">image</span>&gt;</span>flickr<span class="hljs-tag">&lt;/<span class="hljs-name">image</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">size</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">width</span>&gt;</span>486<span class="hljs-tag">&lt;/<span class="hljs-name">width</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">height</span>&gt;</span>500<span class="hljs-tag">&lt;/<span class="hljs-name">height</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">depth</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">depth</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">size</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">segmented</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">segmented</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">object</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>person<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">pose</span>&gt;</span>Unspecified<span class="hljs-tag">&lt;/<span class="hljs-name">pose</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">truncated</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">truncated</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">difficult</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">difficult</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bndbox</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">xmin</span>&gt;</span>174<span class="hljs-tag">&lt;/<span class="hljs-name">xmin</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">ymin</span>&gt;</span>101<span class="hljs-tag">&lt;/<span class="hljs-name">ymin</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">xmax</span>&gt;</span>349<span class="hljs-tag">&lt;/<span class="hljs-name">xmax</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">ymax</span>&gt;</span>351<span class="hljs-tag">&lt;/<span class="hljs-name">ymax</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">bndbox</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">part</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>head<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">bndbox</span>&gt;</span>12<br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmin</span>&gt;</span>169<span class="hljs-tag">&lt;/<span class="hljs-name">xmin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymin</span>&gt;</span>104<span class="hljs-tag">&lt;/<span class="hljs-name">ymin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmax</span>&gt;</span>209<span class="hljs-tag">&lt;/<span class="hljs-name">xmax</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymax</span>&gt;</span>146<span class="hljs-tag">&lt;/<span class="hljs-name">ymax</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">bndbox</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">part</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">part</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>hand<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">bndbox</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmin</span>&gt;</span>278 asd<span class="hljs-tag">&lt;/<span class="hljs-name">xmin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymin</span>&gt;</span>210<span class="hljs-tag">&lt;/<span class="hljs-name">ymin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmax</span>&gt;</span>297<span class="hljs-tag">&lt;/<span class="hljs-name">xmax</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymax</span>&gt;</span>233<span class="hljs-tag">&lt;/<span class="hljs-name">ymax</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">bndbox</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">part</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">part</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>foot<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">bndbox</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmin</span>&gt;</span>273<span class="hljs-tag">&lt;/<span class="hljs-name">xmin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymin</span>&gt;</span>333<span class="hljs-tag">&lt;/<span class="hljs-name">ymin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmax</span>&gt;</span>297<span class="hljs-tag">&lt;/<span class="hljs-name">xmax</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymax</span>&gt;</span>354<span class="hljs-tag">&lt;/<span class="hljs-name">ymax</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">bndbox</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">part</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">part</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>foot<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">bndbox</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmin</span>&gt;</span>319<span class="hljs-tag">&lt;/<span class="hljs-name">xmin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymin</span>&gt;</span>307<span class="hljs-tag">&lt;/<span class="hljs-name">ymin</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">xmax</span>&gt;</span>340<span class="hljs-tag">&lt;/<span class="hljs-name">xmax</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">ymax</span>&gt;</span>326<span class="hljs-tag">&lt;/<span class="hljs-name">ymax</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">bndbox</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">part</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">object</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">annotation</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/redis/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Python%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

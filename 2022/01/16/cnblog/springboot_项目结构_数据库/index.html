@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="TOMCAT项目结构 123456789101112131415161718192021&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;&lt;web-app xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;     xmlns&#x3D;&amp;quot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/springboot_%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84_%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="TOMCAT项目结构 123456789101112131415161718192021&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;&lt;web-app xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;     xmlns&#x3D;&amp;quot">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/06/26/R8YDfg.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.482Z">
+<meta property="article:modified_time" content="2021-06-26T10:25:41.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/06/26/R8YDfg.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      82 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="TOMCAT项目结构"><a href="#TOMCAT项目结构" class="headerlink" title="TOMCAT项目结构"></a>TOMCAT项目结构</h1><p><img src="https://z3.ax1x.com/2021/06/26/R8YDfg.png" srcset="/img/loading.gif" lazyload alt="Springboot war"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> </span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span> </span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:web</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> </span><br><span class="hljs-tag">    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee </span></span><br><span class="hljs-string"><span class="hljs-tag">    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> </span><br><span class="hljs-tag">    <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;WebApp_ID&quot;</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;3.1&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">display-name</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">display-name</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">welcome-file-list</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">welcome-file</span>&gt;</span>index.jsp<span class="hljs-tag">&lt;/<span class="hljs-name">welcome-file</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">welcome-file</span>&gt;</span>index1.jsp<span class="hljs-tag">&lt;/<span class="hljs-name">welcome-file</span>&gt;</span><br>&lt;/welcome-file-list<br><span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>servlet1<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>net.test.TestServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>servlet1<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>*.do<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">web-app</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="Springboot-WAR项目结构"><a href="#Springboot-WAR项目结构" class="headerlink" title="Springboot WAR项目结构"></a>Springboot WAR项目结构</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs xml">    <span class="hljs-tag">&lt;<span class="hljs-name">packaging</span>&gt;</span>war<span class="hljs-tag">&lt;/<span class="hljs-name">packaging</span>&gt;</span>    <br><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">finalName</span>&gt;</span>demo<span class="hljs-tag">&lt;/<span class="hljs-name">finalName</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;  <span class="hljs-comment">//1.继承SpringBootServletInitializer</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SpringApplication.run(Main.class,args);<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServletInitializer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SpringBootServletInitializer</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> SpringApplicationBuilder <span class="hljs-title">configure</span><span class="hljs-params">(SpringApplicationBuilder application)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> application.sources(Main.class);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><font color=red>注意：使用tomcat10总是访问不到controller，不知道什么原因</font></p>
+<p>war目录结构</p>
+<ol>
+<li>META-INF<ol>
+<li>maven</li>
+<li>MANIFEST.MF</li>
+<li>war-tracker</li>
+</ol>
+</li>
+<li>org<ol>
+<li>springframework<ol>
+<li>boot<ol>
+<li>loader<ol>
+<li>xxx</li>
+<li>yyy</li>
+<li>zzz</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>WEB-INF<ol>
+<li>classes<ol>
+<li>com.example<ol>
+<li>Main.class</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>lib</li>
+<li>lib-provide</li>
+<li>layers.idx</li>
+</ol>
+</li>
+</ol>
+<h1 id="Springboot-JAR项目结构"><a href="#Springboot-JAR项目结构" class="headerlink" title="Springboot JAR项目结构"></a>Springboot JAR项目结构</h1><h5 id="外部配置文件位置"><a href="#外部配置文件位置" class="headerlink" title="外部配置文件位置"></a>外部配置文件位置</h5><p>/home/project</p>
+<ol>
+<li>xxx.jar</li>
+<li>application.yml</li>
+<li>config/application.yml</li>
+</ol>
+<h5 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h5><ol>
+<li>BOOT-INF<ol>
+<li>classes<ol>
+<li>com.example<ol>
+<li>Main.class</li>
+</ol>
+</li>
+<li>static</li>
+<li>templates</li>
+<li>application.yml</li>
+<li>config/application.yml</li>
+</ol>
+</li>
+<li>lib</li>
+<li>classpath,idx</li>
+<li>layer.idx</li>
+</ol>
+</li>
+<li>META-INF:同上</li>
+<li>org：同上</li>
+</ol>
+<h1 id="Flyway"><a href="#Flyway" class="headerlink" title="Flyway"></a>Flyway</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.flywaydb<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>flyway-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.0.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.flywaydb<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>flyway-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.0.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">flyway.sql-migration-prefix</span>=<span class="hljs-string">指定前缀</span><br><span class="hljs-attr">flyway.baseline-description对执行迁移时基准版本的描述.</span><br><span class="hljs-attr">flyway.baseline-on-migrate当迁移时发现目标schema非空，而且带有没有元数据的表时，是否自动执行基准迁移，默认false.</span><br><span class="hljs-attr">flyway.baseline-version开始执行基准迁移时对现有的schema的版本打标签，默认值为1.</span><br><span class="hljs-attr">flyway.check-location检查迁移脚本的位置是否存在，默认false.</span><br><span class="hljs-attr">flyway.clean-on-validation-error当发现校验错误时是否自动调用clean，默认false.</span><br><span class="hljs-attr">flyway.enabled是否开启flywary，默认true.</span><br><span class="hljs-attr">flyway.encoding设置迁移时的编码，默认UTF-8.</span><br><span class="hljs-attr">flyway.ignore-failed-future-migration当读取元数据表时是否忽略错误的迁移，默认false.</span><br><span class="hljs-attr">flyway.init-sqls当初始化好连接时要执行的SQL.</span><br><span class="hljs-attr">flyway.locations迁移脚本的位置，默认db/migration.</span><br><span class="hljs-attr">flyway.out-of-order是否允许无序的迁移，默认false.</span><br><span class="hljs-attr">flyway.password目标数据库的密码.</span><br><span class="hljs-attr">flyway.placeholder-prefix设置每个placeholder的前缀，默认$&#123;.</span><br><span class="hljs-attr">flyway.placeholder-replacementplaceholders是否要被替换，默认true.</span><br><span class="hljs-attr">flyway.placeholder-suffix设置每个placeholder的后缀，默认&#125;.</span><br><span class="hljs-meta">flyway.placeholders.[placeholder</span> <span class="hljs-string">name]设置placeholder的value</span><br><span class="hljs-attr">flyway.schemas设定需要flywary迁移的schema，大小写敏感，默认为连接默认的schema.</span><br><span class="hljs-attr">flyway.sql-migration-prefix迁移文件的前缀，默认为V.</span><br><span class="hljs-attr">flyway.sql-migration-separator迁移脚本的文件名分隔符，默认__</span><br><span class="hljs-attr">flyway.sql-migration-suffix迁移脚本的后缀，默认为.sql</span><br><span class="hljs-attr">flyway.tableflyway使用的元数据表名，默认为schema_version</span><br><span class="hljs-meta">flyway.target迁移时使用的目标版本，默认为latest</span> <span class="hljs-string">version</span><br><span class="hljs-meta">flyway.url迁移时使用的JDBC</span> <span class="hljs-string">URL，如果没有指定的话，将使用配置的主数据源</span><br><span class="hljs-attr">flyway.user迁移数据库的用户名</span><br><span class="hljs-attr">flyway.validate-on-migrate迁移时是否校验，默认为true.</span><br><span class="hljs-comment"># 在classpath下新建/db/migration文件夹，并创建sql脚本文件：</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="liquibase"><a href="#liquibase" class="headerlink" title="liquibase"></a>liquibase</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.liquibase<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>liquibase-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br>  <span class="hljs-function"><span class="hljs-keyword">public</span> SpringLiquibase <span class="hljs-title">liquibase</span><span class="hljs-params">(DataSource dataSource)</span> </span>&#123;<br>    SpringLiquibase liquibase = <span class="hljs-keyword">new</span> SpringLiquibase();<br>    liquibase.setDataSource(dataSource);<br>    <span class="hljs-comment">//指定changelog的位置，这里使用的一个master文件引用其他文件的方式</span><br>    liquibase.setChangeLog(<span class="hljs-string">&quot;classpath:liquibase/master.xml&quot;</span>);<br>    liquibase.setContexts(<span class="hljs-string">&quot;development,test,production&quot;</span>);<br>    liquibase.setShouldRun(<span class="hljs-keyword">true</span>);<br>    <span class="hljs-keyword">return</span> liquibase;<br>  &#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"># /resources/liquibase/master.xml<br><span class="hljs-tag">&lt;<span class="hljs-name">databaseChangeLog</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.liquibase.org/xml/ns/dbchangelog&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.liquibase.org/xml/ns/dbchangelog</span></span><br><span class="hljs-string"><span class="hljs-tag">         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">includeAll</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;liquibase/changelogs/&quot;</span> <span class="hljs-attr">relativeToChangelogFile</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">databaseChangeLog</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs xml"># 数据库表生成<br># /resources/liquibase/changelog-1.0.xml<br># 方法一引入sql<br><span class="hljs-tag">&lt;<span class="hljs-name">databaseChangeLog</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.liquibase.org/xml/ns/dbchangelog&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.liquibase.org/xml/ns/dbchangelog</span></span><br><span class="hljs-string"><span class="hljs-tag">         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">include</span> <span class="hljs-attr">file</span>=<span class="hljs-string">&quot;liquibase/changelogs/project.sql&quot;</span> <span class="hljs-attr">relativeToChangelogFile</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">databaseChangeLog</span>&gt;</span><br># 方法二直接写<br><span class="hljs-tag">&lt;<span class="hljs-name">databaseChangeLog</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.liquibase.org/xml/ns/dbchangelog&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.liquibase.org/xml/ns/dbchangelog</span></span><br><span class="hljs-string"><span class="hljs-tag">         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">changeSet</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;20190713-01&quot;</span> <span class="hljs-attr">author</span>=<span class="hljs-string">&quot;solo&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">createTable</span> <span class="hljs-attr">tableName</span>=<span class="hljs-string">&quot;project_info&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目id&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">constraints</span> <span class="hljs-attr">primaryKey</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">nullable</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">column</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_name&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(255)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目名字&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_difficulty&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目难度&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;category_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目类型类目编号&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_status&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;int(11)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目状态, 0招募中，1 进行中，2已完成，3失败，4延期，5删除&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_desc&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(512)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目简介&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_creater_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目创建者id&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;team_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目所属团队id&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;create_time&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;bigint(64)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;创建时间&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;update_time&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;bigint(64)&quot;</span> <span class="hljs-attr">encoding</span>=<span class="hljs-string">&quot;utf8&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;更新时间&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">createTable</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">changeSet</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">changeSet</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;20190713-02&quot;</span> <span class="hljs-attr">author</span>=<span class="hljs-string">&quot;solo&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">createTable</span> <span class="hljs-attr">tableName</span>=<span class="hljs-string">&quot;project_category&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目类型表&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目类型id&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">constraints</span> <span class="hljs-attr">primaryKey</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">nullable</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">column</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(255)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;类目类型名称&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;int(11)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;状态。1正常，2删除&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;remark&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(255)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;备注&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">createTable</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">changeSet</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">changeSet</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;20190713-03&quot;</span> <span class="hljs-attr">author</span>=<span class="hljs-string">&quot;solo&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">createTable</span> <span class="hljs-attr">tableName</span>=<span class="hljs-string">&quot;project_like_user&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目点赞表&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;主键id&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">constraints</span> <span class="hljs-attr">primaryKey</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">nullable</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">column</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目id&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;user_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;点赞的用户id&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;int(11)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;点赞状态，0 取消点赞，1点赞&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;type&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;int(11)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;类型 1点赞&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;create_time&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;bigint(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;创建时间&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;update_time&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;bigint(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;更新时间&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">createTable</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">changeSet</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">changeSet</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;20190713-04&quot;</span> <span class="hljs-attr">author</span>=<span class="hljs-string">&quot;solo&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">createTable</span> <span class="hljs-attr">tableName</span>=<span class="hljs-string">&quot;project_picture&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目图片表&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;图片id&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">constraints</span> <span class="hljs-attr">primaryKey</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">nullable</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">column</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;project_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;项目id&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;picture_url&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;图片地址&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;picture_url_32&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;图片地址32位&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;picture_url_64&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(64)&quot;</span> <span class="hljs-attr">remarks</span>=<span class="hljs-string">&quot;图片地址64位&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">createTable</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">changeSet</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">databaseChangeLog</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Springboot%E5%90%AF%E5%8A%A8%E5%89%8D%E6%89%A7%E8%A1%8C%E6%96%B9%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/springboot/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

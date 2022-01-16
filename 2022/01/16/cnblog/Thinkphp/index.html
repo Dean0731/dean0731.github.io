@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="thinkphp：mvc模式1，thinkphp的安装配置 条件  PHP&gt;&#x3D;5.4.0 PDO MbString CURL PHP Externsion Mysql Apache或Nginx   安装：  composer 12composer config -g repo.packagist composer https:&#x2F;&#x2F;packagist.phpcomposer.comcompos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/Thinkphp/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="thinkphp：mvc模式1，thinkphp的安装配置 条件  PHP&gt;&#x3D;5.4.0 PDO MbString CURL PHP Externsion Mysql Apache或Nginx   安装：  composer 12composer config -g repo.packagist composer https:&#x2F;&#x2F;packagist.phpcomposer.comcompos">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.586Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      11k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      95 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="thinkphp：mvc模式"><a href="#thinkphp：mvc模式" class="headerlink" title="thinkphp：mvc模式"></a>thinkphp：mvc模式</h1><h2 id="1，thinkphp的安装配置"><a href="#1，thinkphp的安装配置" class="headerlink" title="1，thinkphp的安装配置"></a>1，thinkphp的安装配置</h2><ol>
+<li><p>条件</p>
+<ol>
+<li>PHP&gt;=5.4.0</li>
+<li>PDO MbString CURL PHP Externsion</li>
+<li>Mysql</li>
+<li>Apache或Nginx</li>
+</ol>
+</li>
+<li><p>安装：</p>
+<ul>
+<li><p>composer</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">composer config -g repo.packagist composer https://packagist.phpcomposer.com<br>composer create-project --prefer-dist topthink/think think_composer<br></code></pre></td></tr></table></figure></li>
+<li><p>git</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone https://github.com/top-think/think.git<br></code></pre></td></tr></table></figure></li>
+<li><p>直接到thinkphp官网下载稳定版 5.0.24</p>
+</li>
+<li><p>5.0.24 直接访问public文件夹即可</p>
+<p>6.0版本访问时会报错</p>
+</li>
+</ul>
+</li>
+<li><p>目录结构</p>
+<ol>
+<li><p>application 所有的应用  目录</p>
+<ol>
+<li>index 前台逻辑<ol>
+<li>controller 模块的控制层</li>
+<li>model 新建</li>
+<li>view 新建</li>
+</ol>
+</li>
+<li>admin 后台逻辑</li>
+<li>command.php 控制台的配置文件</li>
+<li>common.php 项目的公用文件，通用函数一般放在这里</li>
+<li>config.php 应用配置文件 admin,index 都是用它</li>
+<li>database.php 数据库</li>
+<li>route.php url</li>
+<li>tags.php 应用行为扩展文件， 埋下了很多钩子</li>
+</ol>
+</li>
+<li><p>extend 第三方库</p>
+</li>
+<li><p>public 网站根目录，都是允许访问的</p>
+<ol>
+<li><p>favicon.ico 网站图标</p>
+</li>
+<li><p>index.php 所有请求的入口文件，都要经过index转发</p>
+</li>
+<li><p>rebots.txt 爬虫允许文件</p>
+</li>
+<li><p>router.php 内置的启动文件，若没有apache ,只安装了php</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">php -s localhost:9090 router.php<br></code></pre></td></tr></table></figure></li>
+<li><p>static 静态文件</p>
+</li>
+</ol>
+</li>
+<li><p>runtime 日志，缓存，编译文件</p>
+</li>
+<li><p>thinkphp 框架文件</p>
+<ol>
+<li>base.php 定义常量</li>
+<li>composer.json composer文件</li>
+<li>console.php 控制台的入口文件</li>
+<li>convention.php 框架默认配置文件</li>
+<li>helper.php 助手函数,例如：Config.php —&gt;config()</li>
+<li>lang 语言包</li>
+<li>library 框架核心<ol>
+<li>traits 扩展</li>
+<li>think 框架核心</li>
+</ol>
+</li>
+<li>PHPunit.xml 测试文件</li>
+<li>start.php 框架启动文件</li>
+</ol>
+</li>
+<li><p>tpl 默认模板</p>
+<ol>
+<li>default_index.tpl 控制器模板文件</li>
+<li>dispatch_jump.tpl </li>
+<li>page_trace.tpl 调试模板文件</li>
+<li>think_exception.tpl 异常模板文件</li>
+</ol>
+</li>
+<li><p>vendor composer 安装过程生成的目录，composer 安装的库会在这里</p>
+</li>
+</ol>
+</li>
+<li><p>目录和文件开发规范</p>
+<ol>
+<li><p><font color=red>目录使用小写加下划线</font></p>
+</li>
+<li><p>所有类库函数名以“.php”结尾</p>
+</li>
+<li><p>namespace app/index/controller; 要指明所在目录</p>
+</li>
+<li><p>不要使用上下划线开头</p>
+</li>
+<li><p>定义常量</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">define(<span class="hljs-string">&#x27;APP_PATH&#x27;</span>,<span class="hljs-string">&#x27;dev&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+<li><p>表和字段不能以下划线开头，命名使用下划线隔开</p>
+</li>
+<li><p><font>顶级命名空间是app，尽量不要修改</font></p>
+</li>
+</ol>
+</li>
+<li><p>模块</p>
+<ol>
+<li><p>修改网站根目录为public</p>
+</li>
+<li><p>修改.htaccess</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">IfModule</span> <span class="hljs-attr">mod_rewrite.c</span>&gt;</span><br>  Options +FollowSymlinks -Multiviews<br>  RewriteEngine On<br><br>  RewriteCond %&#123;REQUEST_FILENAME&#125; !-d<br>  RewriteCond %&#123;REQUEST_FILENAME&#125; !-f<br>  RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]<br><span class="hljs-tag">&lt;/<span class="hljs-name">IfModule</span>&gt;</span><br># 最后一行加？<br></code></pre></td></tr></table></figure></li>
+<li><p>此时访问localhost 即访问的是 app/controller/index/ 文件中的index控制器方法</p>
+<ol>
+<li><p>在app下建立admin\controller/Index.php 访问时使用../admin/index/index 即可</p>
+</li>
+<li><p>注意common模块 不能直接使用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">index</span>\<span class="hljs-title">controller</span>;<br><span class="hljs-keyword">use</span> <span class="hljs-title">app</span>\<span class="hljs-title">common</span>\<span class="hljs-title">controller</span>\<span class="hljs-title">Index</span> <span class="hljs-title">as</span> <span class="hljs-title">commonIndex</span>;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;this is index Index index&#x27;</span>;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">common</span>(<span class="hljs-params"></span>)</span>&#123;<br>    	<span class="hljs-variable">$common</span> = <span class="hljs-keyword">new</span> commonIndex();<br>    	<span class="hljs-keyword">return</span> <span class="hljs-variable">$common</span>-&gt;index();<br>	&#125;<br><br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>配置</p>
+<p>dump(config()); thinkphp的配置信息  /thinkphp/convention.php  全局配置</p>
+<ol>
+<li><p>在public中增加常量定义</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//定义配置文件目录</span><br>define(<span class="hljs-string">&#x27;CONF_PATH&#x27;</span>, <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">&#x27;/../conf/&#x27;</span>);  <span class="hljs-comment">//当前文件夹的上级文件夹下的</span><br></code></pre></td></tr></table></figure></li>
+<li><p>在/conf/中建立config.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">return</span> [<br>	<span class="hljs-string">&#x27;app_author&#x27;</span>	=&gt;	<span class="hljs-string">&#x27;Dean&#x27;</span>,<br>	<span class="hljs-string">&#x27;app_email&#x27;</span> 	=&gt;	<span class="hljs-string">&#x27;1028968939@qq.com&#x27;</span>,<br>    <span class="hljs-string">&#x27;app_debug&#x27;</span>		=&gt;	<span class="hljs-literal">true</span>, <span class="hljs-comment">// 显示报错信息</span><br>]<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>此时dump后会新增</p>
+</li>
+<li><p>若要修改原有的值，通命名替换即可</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$a</span> = [<span class="hljs-string">&#x27;user&#x27;</span>=&gt;<span class="hljs-string">&#x27;a&#x27;</span>]<br><span class="hljs-variable">$b</span> = [<span class="hljs-string">&#x27;user&#x27;</span>=&gt;<span class="hljs-string">&#x27;b&#x27;</span>]<br>dump(array_merge(<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>)) <span class="hljs-comment"># user 为b</span><br></code></pre></td></tr></table></figure></li>
+<li><p>扩展配置</p>
+<ol>
+<li>/conf/extra 建立</li>
+<li>里边建立的xxx.php 都可作为配置文件</li>
+<li>注意数据库database.php 放在extra中可以，放在conf下也可以  比较特殊</li>
+<li>convention -》config-》conf下一级文件-》extra目录下</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>场景配置</p>
+<ol>
+<li>在应用配置中添加 ‘app_state’    =&gt;    ‘home’</li>
+<li>建立文件/conf/home.php</li>
+</ol>
+</li>
+<li><p>模块配置</p>
+<ol>
+<li>为每个模块配置</li>
+<li>建立/conf/模块名文件夹/config.php</li>
+<li>还可以建立/conf/模块名/extra</li>
+</ol>
+</li>
+<li><p>动态配置</p>
+</li>
+</ol>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment"># 在controller中生效</span><br><span class="hljs-comment"># 给controller添加构造方法</span><br><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"></span>)</span>&#123;<br>    config(<span class="hljs-string">&#x27;controller&#x27;</span>,<span class="hljs-string">&#x27;indexController&#x27;</span>); <span class="hljs-comment"># 整个controll生效，放在方法中，只在方法中生效</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="10">
+<li><p>Config和助手函数config</p>
+<ol>
+<li><p>Config ： /thinkphp/library/think/Config.php</p>
+<ol>
+<li>range():调整作用域</li>
+<li>parse():解析</li>
+<li>load():加载配置</li>
+<li>has():检测配置是否存在</li>
+<li>get():获取配置</li>
+<li>set():设置配置</li>
+<li>reset():重置配置参数</li>
+</ol>
+</li>
+<li><p>```php</p>
+<?php
+    namespace app\admin\controller;
+    class Index{
+        public function index(){
+            dump(config());
+            dump(\think\Congig::get()) # 或use \think\Config
+            dump(Config::get('app_author')) # 获取对应值 config('app_author')
+            config('xxx','yyy') # 设置值，设置失败为NULL
+            config('xxx2','yyy2','scope')  # 指定作用域，获取时也要指定，否则为空
+            Config::has(xxx)  # xxx为null或不存在都是false  # config(?xxx)
+        }
+    }
+?>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs php"><br><span class="hljs-number">11</span>. 环境变量的配置和使用<br><br>    <span class="hljs-number">1</span>. ```php<br>       <span class="hljs-meta">&lt;?php</span><br>       	<span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">admin</span>\<span class="hljs-title">controller</span>;<br>       	<span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">ENV</span><br>       	<span class="hljs-title">class</span> <span class="hljs-title">Index</span>&#123;<br>       		<span class="hljs-title">public</span> <span class="hljs-title">function</span> <span class="hljs-title">index</span>()&#123;<br>       			<span class="hljs-title">dump</span>($<span class="hljs-title">_ENV</span>); <span class="hljs-comment"># 系统变量   若数组为空 在php.ini 修改 variables_order = &#x27;EGPCS&#x27;</span><br>                   dump(<span class="hljs-variable">$_ENV</span>(<span class="hljs-string">&#x27;email&#x27;</span>)) <span class="hljs-comment"># 获取，若未定义会报错</span><br>                   ENV::get(<span class="hljs-string">&quot;email&quot;</span>) <span class="hljs-comment"># 此方式未定义 不报错返回NULL</span><br>                   ENV::get(<span class="hljs-string">&quot;email&quot;</span>,<span class="hljs-string">&quot;default&quot;</span>) <span class="hljs-comment">#</span><br>                   ENV::get(<span class="hljs-string">&quot;database_hostname&quot;</span>) <span class="hljs-comment">#  可使用点语法</span><br>       		&#125;<br>       	&#125;<br>       <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>/.env文件  </p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">email</span>=<span class="hljs-string">1028968939@qq.com</span><br><span class="hljs-attr">name</span>=<span class="hljs-string">Dean</span><br><span class="hljs-attr">status</span>=<span class="hljs-string">dev</span><br><span class="hljs-comment"># 在环境变量中都变PHP_大写</span><br><span class="hljs-attr">[database]</span><br><span class="hljs-attr">hostname</span>=<span class="hljs-string">127.0.0.1</span><br><span class="hljs-comment"># 名字便为 PHP_DATABASE_HOSTNAME</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment"># config.php</span><br><span class="hljs-string">&#x27;app_status&#x27;</span>	=&gt;	Env::get(<span class="hljs-string">&#x27;app_status&#x27;</span>,<span class="hljs-string">&#x27;dev&#x27;</span>),<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h2 id="2，URL和路由"><a href="#2，URL和路由" class="headerlink" title="2，URL和路由"></a>2，URL和路由</h2><ol>
+<li><p>入口文件</p>
+<ol>
+<li><p>单入口文件</p>
+<ol>
+<li>安全监测</li>
+</ol>
+</li>
+<li><p>请求过滤  .htacccess  所有的请求经过public/index.php </p>
+</li>
+</ol>
+</li>
+<li><p>入口文件绑定</p>
+<ol>
+<li><p>```php</p>
+<h1 id="public-index-php"><a href="#public-index-php" class="headerlink" title="public/index.php"></a>public/index.php</h1><p>define(‘BIND_MODULE’,’admin’)<br>#此时访问localhost –&gt;/public/index.php—&gt;admin/(index)/(index) 默认</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><br><span class="hljs-number">2.</span> ```php<br>   <span class="hljs-meta"># config.php</span><br>   <span class="hljs-string">&#x27;auto_bind_module&#x27;</span> =&gt; <span class="hljs-literal">true</span> <span class="hljs-meta"># 开启入口文件自动绑定</span><br></code></pre></td></tr></table></figure>
+
+<p>此时建立/public/api.php  访问时—》/app/ap/controller/Index/index()</p>
+</li>
+<li><p>路由</p>
+<ol>
+<li><p>```php</p>
+<h1 id="config-php"><a href="#config-php" class="headerlink" title="config.php"></a>config.php</h1><p>‘url_route_on’    =&gt; true,<br>‘url_route_must’    =&gt;    false,# 所有url都是用路由</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><br>```php<br><span class="hljs-meta">&lt;?php</span><br>    <span class="hljs-comment">#/conf/route.php</span><br>    <span class="hljs-keyword">return</span> [<br>    <span class="hljs-string">&#x27;news/:id&#x27;</span> =&gt;<span class="hljs-string">&#x27;index/index/info&#x27;</span><br>]<br>    <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">info</span>(<span class="hljs-params"><span class="hljs-variable">$id</span></span>)</span><br><span class="hljs-function"></span>&#123;<br>    url(<span class="hljs-string">&quot;index/index/info&quot;</span>,[<span class="hljs-string">&#x27;id&#x27;</span>=&gt;<span class="hljs-variable">$id</span>])  <span class="hljs-comment"># 本方法的路由</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-variable">$id</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>pathinfo 方法结束后剩余的路径信息</p>
+<p>例如：index/index/index/a/b/c/d/e.html</p>
+<p>param(): a–&gt;b,c-&gt;d  会传入这两个路径参数</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="3，请求和响应"><a href="#3，请求和响应" class="headerlink" title="3，请求和响应"></a>3，请求和响应</h2><ol>
+<li><p>请求对象request</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$request</span> = request();<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Request</span><br><span class="hljs-title">Request</span>::<span class="hljs-title">instance</span>();<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Request</span><br><span class="hljs-title">public</span> <span class="hljs-title">function</span> <span class="hljs-title">index</span>(<span class="hljs-title">Request</span> $<span class="hljs-title">request</span>)&#123;# 建议方式<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$request</span>-&gt;domain();<span class="hljs-comment"># 域名信息</span><br><span class="hljs-variable">$request</span>-&gt;pathionfo(); <span class="hljs-comment"># 路径信息 xxx/yyy/zz.html  &quot;.html&quot;为了安全 后缀可修改</span><br><span class="hljs-variable">$request</span>-&gt;path(); <span class="hljs-comment"># xxx/yyy/zzz</span><br><span class="hljs-variable">$request</span>-&gt;method(); <span class="hljs-comment"># 请求类型</span><br><span class="hljs-variable">$request</span>-&gt;isGet(); <span class="hljs-comment"># boolean</span><br><span class="hljs-variable">$request</span>-&gt;isPost(); <span class="hljs-comment"># boolean</span><br><span class="hljs-variable">$request</span>-&gt;isAjax();<span class="hljs-comment"># boolean </span><br><span class="hljs-variable">$request</span>-&gt;get() <span class="hljs-comment"># 数组返回，5.0之后 get不包含pathinfo中的值</span><br><span class="hljs-variable">$request</span>-&gt;param(); <span class="hljs-comment"># 合并</span><br><span class="hljs-comment">#post同理</span><br><span class="hljs-variable">$request</span>-&gt;session(); <span class="hljs-comment"># 数组</span><br>session(<span class="hljs-string">&#x27;name&#x27;</span>,<span class="hljs-string">&#x27;dean&#x27;</span>);<br><span class="hljs-comment">#使用session 在convention.php中找到session，复制到config.php,删除httponly，secure</span><br><span class="hljs-variable">$request</span>-&gt;cookie();<br>cookie(<span class="hljs-string">&#x27;email&#x27;</span>,<span class="hljs-string">&#x27;xxxx&#x27;</span>);<br><span class="hljs-variable">$request</span>-&gt;param(<span class="hljs-string">&#x27;xxx&#x27;</span>); <span class="hljs-comment"># 获取路径参数</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment"># 获取模块 控制器 操作</span><br><span class="hljs-variable">$request</span>-&gt;module(); <span class="hljs-comment"># 获取模块 index admin等</span><br><span class="hljs-variable">$request</span>-&gt;controller();<br><span class="hljs-variable">$request</span>-&gt;action();<br><span class="hljs-variable">$request</span>-&gt;url() <span class="hljs-comment"># /index/index/xxxxxx.html?id=10 包含参数</span><br><span class="hljs-variable">$request</span>-&gt;baseUrl() <span class="hljs-comment"># /index/index/xxxxxx.html 不包含参数</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment"># input</span><br><span class="hljs-variable">$request</span>-&gt;input(<span class="hljs-string">&quot;id&quot;</span>) <span class="hljs-comment"># 从param()中取值  默认是get的</span><br><span class="hljs-variable">$request</span>-&gt;get(<span class="hljs-string">&quot;id&quot;</span>)<br><span class="hljs-comment"># --------------------</span><br><span class="hljs-variable">$request</span>-&gt;input(<span class="hljs-string">&quot;post.id&quot;</span>) <span class="hljs-comment"># 取出post中的id</span><br><span class="hljs-variable">$request</span>-&gt;post(<span class="hljs-string">&quot;id&quot;</span>)<br><span class="hljs-comment"># ---------------------</span><br><span class="hljs-variable">$request</span>-&gt;input(<span class="hljs-string">&quot;不存在&quot;</span>) <span class="hljs-comment"># NULL</span><br><span class="hljs-variable">$request</span>-&gt;input(<span class="hljs-string">&quot;不存在&quot;</span>,<span class="hljs-string">&#x27;default&#x27;</span>);<br><span class="hljs-variable">$request</span>-&gt;input(xxx,<span class="hljs-number">100</span>,<span class="hljs-string">&#x27;intval&#x27;</span>); <span class="hljs-comment"># &quot;trim&quot;  过滤空格</span><br><span class="hljs-comment"># 若xxx存在，即为原来格式 不存在 会将xxx换为 int ，转换失败则为默认值为0</span><br><span class="hljs-comment"># -----------------------------</span><br><span class="hljs-variable">$request</span>-&gt;input(<span class="hljs-string">&quot;session.xxxx&quot;</span>); <span class="hljs-comment"># 获取session的值</span><br><span class="hljs-comment"># ----------------------------</span><br><span class="hljs-comment"># 还可以获取put，path，file，delete,patch等</span><br></code></pre></td></tr></table></figure></li>
+<li><p>响应对象Response</p>
+<ol>
+<li><p>```php<br>$res = xxxxx<br>Config::set(‘default_return_type’,’xml’);<br>return $res; # 经过改变格式的res可直接返回，若res为对象不能直返回</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><br>## <span class="hljs-number">4</span>，视图和模板<br><br><span class="hljs-number">1.</span> 视图<span class="hljs-keyword">view</span><br><br>   <span class="hljs-number">1.</span> ```php<br>      # 默认 app/<span class="hljs-keyword">index</span>/<span class="hljs-keyword">view</span>/<span class="hljs-keyword">index</span>(控制器名)/<span class="hljs-keyword">index</span>.html<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">view</span>()<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">view</span>(&quot;upload&quot;) # app/<span class="hljs-keyword">index</span>/<span class="hljs-keyword">view</span>/<span class="hljs-keyword">index</span>/upload.html<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">view</span>(&quot;public/upload&quot;) # app/<span class="hljs-keyword">index</span>/<span class="hljs-keyword">view</span>/<span class="hljs-built_in">public</span>/upload.html<br>      # &quot;./&quot;表示<span class="hljs-built_in">public</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">view</span>(&quot;./upload.html&quot;) # /<span class="hljs-built_in">public</span>/upload.html<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">view</span>(&quot;./html/upload.html&quot;) #/<span class="hljs-built_in">public</span>/html/upload.html<br></code></pre></td></tr></table></figure></li>
+<li><p>```php<br>return view(“index”,[</p>
+<div class="code-wrapper"><pre><code class="hljs">&#39;email&#39;    =&gt; &#39;1028968939@qq.com&#39;,  # 在html中 &#123;$email&#125;获取
+&#39;user&#39;    =&gt;    &#39;Dean&#39;,
+</code></pre></div>
+<p>],[</p>
+<div class="code-wrapper"><pre><code class="hljs">&#39;STATIC&#39;    =&gt;    &#39;当前是static的替换内容&#39;, # html中 STATIC 直接会替换
+</code></pre></div>
+<p>])</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><br><span class="hljs-number">3</span>. ```php<br>   <span class="hljs-keyword">use</span> <span class="hljs-title">think</span>\<span class="hljs-title">Controller</span>;<br>   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span></span>&#123;<br>       <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span>&#123;<br>           <span class="hljs-comment"># fetch 中第二个参数，第三个参数与view相同，html获取方也相同</span><br>           <span class="hljs-keyword">$this</span>-&gt;assign(<span class="hljs-string">&quot;xx&quot;</span>,<span class="hljs-string">&quot;yy&quot;</span>); <span class="hljs-comment"># 也可传值</span><br>           <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;fetch(<span class="hljs-string">&#x27;upload&#x27;</span>);<span class="hljs-comment"># /app/index/view/index/upload.html</span><br>           <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;display(<span class="hljs-string">&quot;xx&#123;email&#125;xxx&quot;</span>,[<br>               <span class="hljs-string">&#x27;email&#x27;</span>	=&gt;	<span class="hljs-string">&#x27;zzz&#x27;</span><br>           ]); <span class="hljs-comment"># 不使用模板，直接显示字符串，不建议</span><br>       &#125;<br>   &#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>模板变量输出，替换，赋值</p>
+<ol>
+<li><p>```php<br>use think\Controller;<br>class Index extends Controller{</p>
+<div class="code-wrapper"><pre><code class="hljs">public function index()&#123;
+    return $this-&gt;fetch(&#39;index&#39;,[
+        &#39;email&#39;    =&gt;    &#39;xxx&#39;,
+    ]);
+&#125;
+</code></pre></div>
+<p>}</p>
+<h1 id="email-—-gt"><a href="#email-—-gt" class="headerlink" title="{$email}  —&gt; "></a>{$email}  —&gt; <?php echo $email;?></h1><h1 id="“-”-可在配置文件中修改template，避免与前端框架冲突"><a href="#“-”-可在配置文件中修改template，避免与前端框架冲突" class="headerlink" title="“{}” 可在配置文件中修改template，避免与前端框架冲突"></a>“{}” 可在配置文件中修改template，避免与前端框架冲突</h1><h1 id="email-有空格php-不识别"><a href="#email-有空格php-不识别" class="headerlink" title="{ $email } 有空格php 不识别"></a>{ $email } 有空格php 不识别</h1><p>$this-&gt;view-&gt;key = ‘value’; # 也可传值， 获取方式与上边相同<br>View::share(‘key’,’value’); # 也可以</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><br><span class="hljs-number">2</span>. ```php<br>   <span class="hljs-meta"># 配置文件中</span><br>   &#x27;view_replace_str&#x27;	=&gt;	[<br>       &#x27;xxx&#x27;	=&gt;	&#x27;yyy&#x27;,<br>   ]<br>   <span class="hljs-meta"># 在html中所有xxx都会替换为yyy</span><br>   <span class="hljs-meta"># 默认的替换</span><br>      <span class="hljs-meta"># __URL__  /当前模块名、控制器名</span><br>      <span class="hljs-meta"># __STSTIC__ /static   /public下边的static 用来代替静态文件地址</span><br>      <span class="hljs-meta"># __JS__ /static/js</span><br>      <span class="hljs-meta"># __CSS__ /static/css</span><br>      <span class="hljs-meta"># __ROOT__ </span><br></code></pre></td></tr></table></figure></li>
+<li><p>模板中使用系统变量，原生标签</p>
+<ol>
+<li><p>```php<br>use think\Controller;<br>class Index extends Controller{</p>
+<div class="code-wrapper"><pre><code class="hljs">public function index()&#123;
+    $_SERVER; # 系统变量
+    return $this-&gt;fetch(&#39;index&#39;);
+&#125;
+</code></pre></div>
+<p>}</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"></span><br><span class="xml">```html</span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.server.HTTP_POST&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- 系统变量--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.env.PHP_STATUS&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- 环境变量--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.session.email&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- session--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.cookie.email&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- cookie--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.get.id&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- get--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.post.id&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- post--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.request.id&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- request--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.const.APP_PATH&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- 常量--&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$Think.APP_PATH&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- 常量--&gt;</span></span><br></code></pre></td></tr></table></figure></li>
+<li><p>```html</p>
+<!-- 在html中使用php  不建议使用-->
+<?php
+    echo xxx;
+?>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xl"><br><span class="hljs-number">4</span>. 模板变量<br><br>   <span class="hljs-number">1</span>. ```php<br>      $<span class="hljs-function"><span class="hljs-title">this</span>-&gt;</span>assgin(<span class="hljs-string">&quot;email&quot;</span>,<span class="hljs-string">&#x27;xxx&#x27;</span>);<br>      $<span class="hljs-function"><span class="hljs-title">this</span>-&gt;</span>assgin(<span class="hljs-string">&quot;time&quot;</span>,<span class="hljs-built_in">time</span>());<br>      $<span class="hljs-function"><span class="hljs-title">this</span>-&gt;</span>assgin(<span class="hljs-string">&quot;user&quot;</span>,<span class="hljs-string">&#x27;dean&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;$email|md5&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><span class="hljs-comment">&lt;!-- 加密变量--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;$email|substr=0,8&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><span class="hljs-comment">&lt;!-- 字符串截取--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;$time|date=&quot;Y-m-d&quot;,###&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><span class="hljs-comment">&lt;!-- 时间格式化, ### 是占位符--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;$email|md5|strtoupper&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;$a+$b&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><span class="hljs-comment">&lt;!-- 支持数字的加减乘除--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&#123;$email|default=&quot;xxxx&quot;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><span class="hljs-comment">&lt;!--控制器未定义显示默认值--&gt;</span><br>&#123;literal&#125;&#123;$email&#125;&#123;/literal&#125; <span class="hljs-comment">&lt;!--不进行编译--&gt;</span><br>&#123;/* php模板的注释 */&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>循环标签</p>
+<ol>
+<li><p>```php<br>$list = [</p>
+<div class="code-wrapper"><pre><code class="hljs">&#39;user1&#39;    =&gt;[&#39;name&#39;    =&gt;    &#39;a&#39;],
+&#39;user2&#39;    =&gt;[&#39;name&#39;    =&gt;    &#39;b&#39;],
+&#39;user3&#39;    =&gt;[&#39;name&#39;    =&gt;    &#39;c&#39;],
+</code></pre></div>
+<p>]</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"></span><br><span class="xml">```html</span><br><span class="xml"></span><span class="hljs-template-variable">&#123;volist name=&quot;list&quot; id=&quot;vo&quot; offset=&quot;2&quot; length=&quot;1&quot; mod=&quot;3&quot; empty=&quot;xxx&quot; key=&quot;i&quot;&#125;</span><span class="xml"> <span class="hljs-comment">&lt;!--从第三个开始,遍历1次,若list为空，显示empty的值，empty不接受html标签，但接受控制器变量--&gt;</span></span><br><span class="xml">	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$mod&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- 0 ,1，2 间隔输出--&gt;</span></span><br><span class="xml">	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$i&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!-- 内置变量从1开始, 有上边key控制，可修改--&gt;</span></span><br><span class="xml">	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$vo.name&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>  <span class="hljs-comment">&lt;!-- 输出abc三个--&gt;</span></span><br><span class="xml"></span><span class="hljs-template-tag">&#123;/<span class="hljs-name">volist</span>&#125;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>```html<br>{foreach $list as vo}</p>
+<div class="code-wrapper"><pre><code class="hljs">&lt;p&gt;&#123;$vo.name&#125;&lt;/p&gt;
+</code></pre></div>
+<p>{/foreach}<br>{foreach name=”list” item=”vo” key=”key”}</p>
+<div class="code-wrapper"><pre><code class="hljs">&lt;p&gt;&#123;$key&#125;&lt;/p&gt; &lt;!--获取键,默认是key，通过key修改--&gt;
+&lt;p&gt;&#123;$vo.name&#125;&lt;/p&gt;
+</code></pre></div>
+<p>{/foreach}</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"></span><br><span class="xml">3. ```html</span><br><span class="xml">   </span><span class="hljs-template-variable">&#123;for start=&quot;1&quot; end=&quot;10&quot; step=&quot;2&quot; name=&quot;i&quot;&#125;</span><span class="xml"></span><br><span class="xml">   	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;$i&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <span class="hljs-comment">&lt;!--通过name控制--&gt;</span></span><br><span class="xml">   </span><span class="hljs-template-tag">&#123;/<span class="hljs-name">for</span>&#125;</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>比较标签</p>
+<ol>
+<li><p>```html<br>{eq name=”a” value=”10”} <!-- a 是变量 不用$ ,value中使用变量时加$--></p>
+<div class="code-wrapper"><pre><code class="hljs">&lt;p&gt;&lt;/p&gt;
+</code></pre></div>
+<p>{else}</p>
+<div class="code-wrapper"><pre><code class="hljs">&lt;p&gt;&lt;/p&gt;
+</code></pre></div>
+<p>{/eq}</p>
+<!--下边用法相同-->
+<p>{neq}<br>{equal}={eq}<br>{notequal}={neq}<br>{gt} <!--大于--><br>{lt} <!--大于--><br>{egt} <!--大于等于--><br>{elt} <!--小于等于--></p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xquery"><br><span class="hljs-number">7</span>. 条件标签<br><br>   <span class="hljs-number">1</span>. ```html<br>      &#123;<span class="hljs-keyword">switch</span><span class="hljs-built_in"> name</span> = <span class="hljs-string">&quot;Think.get.level&quot;</span>&#125;<br>      	&#123;<span class="hljs-keyword">case</span> <span class="hljs-keyword">value</span>=<span class="hljs-string">&quot;1&quot;</span>&#125;<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>普通会员<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br>      	&#123;<span class="hljs-keyword">case</span> <span class="hljs-keyword">value</span>=<span class="hljs-string">&quot;2&quot;</span>&#125;<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>vip会员<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br>      	&#123;<span class="hljs-keyword">case</span> <span class="hljs-keyword">value</span>=<span class="hljs-string">&quot;3|4|5&quot;</span>&#125;<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>svip会员<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br>      	&#123;<span class="hljs-keyword">default</span> /&#125;<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>游客<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br>      &#123;/<span class="hljs-keyword">switch</span>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>```html<br>{range name=”Think.get.level” value=”1,2,3,4” type=”in|或者是notin|between|notbetween”}</p>
+<div class="code-wrapper"><pre><code class="hljs">&lt;!--level 在value中--&gt;
+</code></pre></div>
+<p>{else /}</p>
+<div class="code-wrapper"><pre><code class="hljs">&lt;!--level 不在value中--&gt;
+</code></pre></div>
+<p>{/range}</p>
+<!--type为between时value前2个有效，包含开头结尾-->
+<!--效果与上边相同-->
+<p>{in name=”Think.get.level” value=”1,2,3”}<br>{else/}<br>{/in}<br>{notin},{bwtween},{notbwtween}<br>{define name=”APP_PATH”} <!--变量是否定义--><br>{if condition=”($Think.get.level==1) AND () OR()”}<br>{else/}<br>{/if}</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"></span><br><span class="xml">8. 模板的包含和继承</span><br><span class="xml"></span><br><span class="xml">   1. ```html</span><br><span class="xml">      <span class="hljs-comment">&lt;!--nav.html--&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">          <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">      </span><br><span class="xml">      <span class="hljs-comment">&lt;!--其他地方使用--&gt;</span></span><br><span class="xml">      </span><span class="hljs-template-variable">&#123;include file=&quot;xxxxx/nav&quot; /&#125;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>```html</p>
+<!--base.html-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{block name="title"}模板{/block}</title>
+</head>
+<body>
+    {block name="body"}内容{/block}
+</body>
+</html>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"></span><br><span class="xml">```html</span><br><span class="xml"></span><span class="hljs-template-variable">&#123;extend file=&quot;xxxx/base&quot; /&#125;</span><span class="xml"></span><br><span class="xml"></span><span class="hljs-template-variable">&#123;block name=&quot;title&quot;&#125;</span><span class="xml">新的页面标题</span><span class="hljs-template-variable">&#123;__block__&#125;</span><span class="hljs-template-tag">&#123;/<span class="hljs-name">block</span>&#125;</span><span class="xml"></span><br><span class="xml"><span class="hljs-comment">&lt;!--可以获取被继承的模板中的原内容--&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>conf/config.php  在template 中添加 </p>
+<ol>
+<li>‘layout_on’ =&gt;    true </li>
+<li>‘layout_name’  =&gt; ‘layout’</li>
+</ol>
+</li>
+<li><p>开启后默认找的文件变为 /app/index/view/layout.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html">xxx<br>&#123;__CONTENT__&#125;  <br>xxx<br><span class="hljs-comment">&lt;!-- 只能有一个坑，因此其他需要修改的地方 通过参数传入即可--&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>此时原来/app/index/view/index/index.html 中内容随机</p>
+</li>
+<li><p>访问对应页面时替换地方的内容就会被替换，</p>
+</li>
+<li><p>前台一般使用继承，后态layout加继承</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="5，扩展内容"><a href="#5，扩展内容" class="headerlink" title="5，扩展内容"></a>5，扩展内容</h2>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Typora%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/tensorflow%EF%BC%8Ckeras%EF%BC%8Ccuda%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

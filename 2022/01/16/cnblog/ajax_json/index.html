@@ -1,0 +1,819 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="AJAX框架Day1 1、Ajax引言 a)&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 概念 Asynchronous&amp;nbsp;Javascript&amp;nbsp;And&amp;nbsp;XML (异步请求 javaScript &amp;nbsp;And&amp;nbsp; XML)  b)&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 传统的请求  发起传统请求的方式 地址">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/ajax_json/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="AJAX框架Day1 1、Ajax引言 a)&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 概念 Asynchronous&amp;nbsp;Javascript&amp;nbsp;And&amp;nbsp;XML (异步请求 javaScript &amp;nbsp;And&amp;nbsp; XML)  b)&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 传统的请求  发起传统请求的方式 地址">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221100420-1109005680.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221133395-265056185.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221249546-1563204703.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221259822-933761469.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221325422-2121738944.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221333883-1805546846.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221350808-836129969.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221407245-2142296806.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221417500-1171944827.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221525182-1856949437.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221546287-1058698031.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221558784-1565801640.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221619470-81539582.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221638554-878480099.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221638559-341907147.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221713144-374798940.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221735386-978374189.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221742816-32688954.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221757885-1219841663.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221818714-2069931482.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221825276-761881739.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221833432-1293898298.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221840475-1828977492.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221844548-1913895190.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221900411-1204050178.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221909329-633515744.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221922056-1270637708.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221934327-389646672.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221947204-2031171715.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221959486-1630124779.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921222009818-1818366163.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921222019594-1186582308.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921222029315-1928295497.png">
+<meta property="article:published_time" content="2022-01-16T12:20:06.945Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221100420-1109005680.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <p align="center"><strong>AJAX</strong><strong>框架</strong><strong>Day1</strong></p>
+<p align="left">1、Ajax引言</p>
+<p align="left">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 概念 <strong>A</strong><em>synchronous&nbsp;</em><strong>J</strong><em>avascript&nbsp;<strong>A</strong>nd&nbsp;</em><strong>X</strong><em>ML</em> (异步请求 javaScript &nbsp;And&nbsp; XML)</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221100420-1109005680.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p align="left">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 传统的请求</p>
+<ol>
+<li>发起传统请求的方式<ol>
+<li>地址栏</li>
+<li>超级连接</li>
+<li>表单</li>
+<li>Javascript: location.href 函数</li>
+<li><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221133395-265056185.png" srcset="/img/loading.gif" lazyload alt="" />&nbsp;</li>
+</ol></li>
+<li>传统请求的问题<br />
+因为传统请求响应的是新的页面（刷新了页面）。所以用户就必须要等待响应结果，才可以进行后续的操作。<br />
+用户体验差。</li>
+
+
+</ol><ol>
+<li>基于异步请求的特点<br />
+响应的内容不是新的页面，是一个页面的局部，字符串信息，所以用户在使用异步请求的时候，不需要等待响应的，直接就可以进行后续处理。</li>
+
+
+</ol><ol>
+<li>传统请求与异步请求的区别<ol>
+<li>响应内容<br />
+传统响应的内容：新的页面，刷新页面<br />
+异步响应的内容：页面的局部，字符串信息</li>
+<li>对于用户的操作<br />
+传统的请求：等待响应<br />
+异步的请求：不需要等待响应，用户可以直接进行后续的操作</li>
+
+
+
+</ol></li>
+<li>建议在合适的场景下，都使用异步请求，提高用户的体验</li>
+
+
+</ol>
+<p align="left">2、异步请求的开发</p>
+<p align="left">a)&nbsp; &nbsp;异步请求对象的创建&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+　　javascript: XmlHttpRequest对象 xhr<br />
+　　Chrome|FF|safari中&nbsp;
+XmlHttpRequest<br />
+　　var xhr = new XmlHttpRequest();<br />
+　　IE(ie5 ie6)中 ActiveXObject<br />
+　　var xhr = new ActiveXObject(&ldquo;Microsoft.XMLHTTP&rdquo;);</p>
+<p align="left">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+xhr对象的使用<br />
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221249546-1563204703.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">3、用户名检测的案例<br />
+
+ 
+<p><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221259822-933761469.png" srcset="/img/loading.gif" lazyload alt="" /></p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">
+不再跳转</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221325422-2121738944.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221333883-1805546846.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">控制表单是否提交,提交时检测</p>
+<p align="left">4、Ajax的开发步骤</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221350808-836129969.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221407245-2142296806.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221417500-1171944827.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+创建异步请求 <br />
+IE系&nbsp;
+xhr = new ActiveXObject(&ldquo;Microsoft.XMLHTTP&rdquo;);<br />
+非IE系 xhr
+= new XmlHttpRequest();</p>
+<p align="left">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+ 
+<p>发送请求&nbsp;&nbsp;&nbsp;<br>queryString<br /><br>xhr.open(&ldquo;GET&rdquo;,URL?name=suns&amp;pwd=123&amp;sex=male);<br /><br>xhr.send(null);<br /><br><span style="font-size: 16px;"><strong>xhr.open(&ldquo;POST&rdquo;,url,true(是否使用异步));</strong></span><br /><span style="font-size: 16px;"><strong><br>xhr.setRequestHeader(&ldquo;content-type&rdquo;,&rdquo;application/x-www-form-urlencoded&rdquo;);</strong></span></p></p>
+<p align="left"><br />
+<span style="font-size: 18px;">为什么设置：模拟表单</span><br />
+基本Web的开发 只能使用表单提交数据，使用表单提交数据时默认指定<br />
+enctype=&rdquo;application/x-www-form-urlencoded&rdquo;,但是现在使用ajax编程，不再使用<br />
+&lt;form标签了也就没有方式提供enctype属性对应的值了。那么这时候需要通过在<br />
+请求头中手工设置application/x-www-form-urlencoded来模拟表单。<br />
+xhr.send(&ldquo;name=suns&amp;pwd=123&amp;sex=male&rdquo;);,传递数据要加引号,<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221525182-1856949437.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+监听响应<br />
+xhr.onreadystatechange = function(){<br />
+&nbsp;&nbsp;&nbsp;
+if(xhr.readyState==4&amp;&amp;xhr.status==200){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xhr.responseText<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DOM编程<br />
+&nbsp;&nbsp;&nbsp; }<br />
+}</p>
+<p align="left">d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+服务器端：<br />
+不再进行页面的跳转，而是通过返回字符串信息，完成交互<br />
+request作用域 不使用 <br />
+底层就是使用Response.getWriter()获取输出流 进行交互<br />
+<br />
+</p>
+<p align="left">5、JSON协议串<br />
+JSON协议串，本质上就是一个字符串。<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221546287-1058698031.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+作用：异构的编程体系中，进行数据的传输，交互。</p>
+<p align="left">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+核心：</p>
+<ol>
+<li>定义了字符串的格式<ol>
+<li>对象形式<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221558784-1565801640.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</li>
+<li>集合形式<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221619470-81539582.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<br />
+
+ 
+</li>
+<li>内嵌对象<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221638554-878480099.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<br />
+
+ 
+</li>
+<li>Map类型
+与 对象的形式一致<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221638559-341907147.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<br />
+
+ 
+</li>
+<li>JSON协议解析 多种工具可以自动支持转换<br />
+java端：jsonlib&nbsp; gson(Google)&nbsp;&nbsp;
+fastjson(ali)&nbsp; jakeson(SpringMVC)<br />
+Gson//对象是大括弧,集合小括弧</li>
+
+
+
+</ol></li>
+
+
+
+</ol>
+<p align="left">注意map是当做对象来写,大括弧</p>
+<ol>
+<li>Gson的基本应用<br />
+Gson gson = new Gson();<br />
+gson.toJson();<br />
+
+ 
+</li>
+<li>Gson的特殊应用场景</li>
+<li><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221713144-374798940.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</li>
+
+
+
+</ol>
+<p align="left">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Json字符串的属性名与对象属性名不一致的问题<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221735386-978374189.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+解决对象回环问题<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221742816-32688954.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<ol>
+<li>注解 @Expose<br />
+没有使用@Expose的注解的属性 将会被排除，不会被转换<br />
+
+ 
+<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221757885-1219841663.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<br />
+
+ 
+</li>
+
+
+
+</ol>
+<p align="left">太不灵活,复杂都用gsonbuilder</p>
+<p align="left">&nbsp;</p>
+<ol>
+<li>使用接口回调,<br />
+实现一个排除策略的接口（告示Gson 排除的内容）<br />
+
+ 
+<br />
+
+ 
+</li>
+<li><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221818714-2069931482.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221825276-761881739.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</li>
+
+
+
+</ol>
+<p align="left">可以指定多个排除策略,更灵活</p>
+<p align="left">c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+特殊的日期类型问题</p>
+<ol>
+<li>实现接口</li>
+<li><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221833432-1293898298.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</li>
+<li>注册到GsonBuilder<br />
+
+ 
+<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221840475-1828977492.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221844548-1913895190.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<br />
+
+ 
+</li>
+<li>JSON转化成JS对象 （浏览器内置，Jquery,Ext..）<br />
+浏览器内置对象 ，后续建议使用Jquery<br />
+JSON.parse(jsonString) -----&nbsp; js对象<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -----&nbsp; js的数组<br />
+
+ 
+<img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221900411-1204050178.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<br />
+<br />
+</li>
+
+
+
+</ol>
+<p align="left">6、案例 ：应用Ajax技术实现 显示所用用户的信息<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221909329-633515744.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="center"><strong>AJAX</strong><strong>框架</strong><strong>Day2</strong></p>
+<p align="left">1、SpringMVC对于Ajax的支持</p>
+<p align="left">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+底层整合 原始整合<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221922056-1270637708.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+通过@ResponseBody<br />
+SpringMVC自动的把对象转换成JSON串，并通过字符输出流输出。<br />
+注意：@ResponseBody封装的对象转换JSON的组件为
+jackson<br />
+环境搭建：引入jackson相关的jar包<br />
+开发步骤；<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221934327-389646672.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<ol>
+<li>使属性名与JSON字符串的key不一致<ol>
+<li><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221947204-2031171715.png" srcset="/img/loading.gif" lazyload alt="" />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</li>
+
+
+</ol></li>
+<li>日期类型的格式 <br />
+@JsonFormat(pattern="yyyy-MM-dd")</li>
+<li>空值类型不转换<br />
+@JsonInclude(Include.<em>NON_NULL</em>)</li>
+<li>如何忽略某个属性<br />
+@JsonIgnore </li>
+<li>中文字符集会自动处理</li>
+
+
+
+</ol>
+<p align="left">原来处理方法<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921221959486-1630124779.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p align="left"> 基于实战自动日期处理与空值处理<br />
+
+ 
+<p><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921222009818-1818366163.png" srcset="/img/loading.gif" lazyload alt="" /></p></p>
+<p align="left">2、Struts2与Ajax技术集成<br />
+
+ 
+</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921222019594-1186582308.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left">3、基于Ajax的编程方式思考：<br />
+&nbsp;&nbsp;&nbsp; 现在的开发体系中，除了使用一个ajax的ui框架(easyui ext dojo)进行编程之外，剩下所用的应用，在开发时，都应该部分环节中使用ajax.</p>
+<p align="left">&nbsp;&nbsp; 1
+局部操作 与 服务器端交互<br />
+&nbsp;&nbsp; 2 最好结构简单</p>
+<p align="left"><img src="https://img2018.cnblogs.com/blog/1333782/201909/1333782-20190921222029315-1928295497.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="left"><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ 
+<br />
+<br />
+<br />
+</p>
+<p align="left">&nbsp;</p>
+<p>&nbsp;</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Anaconda/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/7%E5%B1%82%E5%8D%8F%E8%AE%AE/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

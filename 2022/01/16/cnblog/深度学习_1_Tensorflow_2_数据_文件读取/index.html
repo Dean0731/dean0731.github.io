@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="tensorflow 数据读取 队列和线程 文件读取, 图片处理  问题:大文件读取,读取速度, 在tensorflow中真正的多线程 子线程读取数据 向队列放数据(如每次100个),主线程学习,不用全部数据读取后,开始学习 队列与对垒管理器,线程与协调器tf.FIFOQueue(capacity&#x3D;None,dtypes&#x3D;None,name&#x3D;”fifo_queue”)  # 先进先出队列 dequ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_Tensorflow_2_%E6%95%B0%E6%8D%AE_%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="tensorflow 数据读取 队列和线程 文件读取, 图片处理  问题:大文件读取,读取速度, 在tensorflow中真正的多线程 子线程读取数据 向队列放数据(如每次100个),主线程学习,不用全部数据读取后,开始学习 队列与对垒管理器,线程与协调器tf.FIFOQueue(capacity&#x3D;None,dtypes&#x3D;None,name&#x3D;”fifo_queue”)  # 先进先出队列 dequ">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.879Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      83 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="tensorflow-数据读取"><a href="#tensorflow-数据读取" class="headerlink" title="tensorflow 数据读取"></a>tensorflow 数据读取</h1><ul>
+<li><h5 id="队列和线程"><a href="#队列和线程" class="headerlink" title="队列和线程"></a>队列和线程</h5></li>
+<li><h5 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取,"></a>文件读取,</h5></li>
+<li><h5 id="图片处理"><a href="#图片处理" class="headerlink" title="图片处理"></a>图片处理</h5></li>
+</ul>
+<p>问题:大文件读取,读取速度,</p>
+<p>在tensorflow中真正的多线程</p>
+<p>子线程读取数据 向队列放数据(如每次100个),主线程学习,不用全部数据读取后,开始学习</p>
+<h2 id="队列与对垒管理器-线程与协调器"><a href="#队列与对垒管理器-线程与协调器" class="headerlink" title="队列与对垒管理器,线程与协调器"></a>队列与对垒管理器,线程与协调器</h2><h4 id="tf-FIFOQueue-capacity-None-dtypes-None-name-”fifo-queue”-先进先出队列"><a href="#tf-FIFOQueue-capacity-None-dtypes-None-name-”fifo-queue”-先进先出队列" class="headerlink" title="tf.FIFOQueue(capacity=None,dtypes=None,name=”fifo_queue”)  # 先进先出队列"></a>tf.FIFOQueue(capacity=None,dtypes=None,name=”fifo_queue”)  # 先进先出队列</h4><ul>
+<li><p>dequeue() 出队方法</p>
+</li>
+<li><p>enqueue(vals,name=None) 入队方法</p>
+</li>
+<li><p>enqueue_many(vals,name=None) 多个入队</p>
+</li>
+<li><p>size(name=None) 还有对少数据</p>
+</li>
+</ul>
+<h4 id="tf-RandomShuffleQueue-随机出队队列"><a href="#tf-RandomShuffleQueue-随机出队队列" class="headerlink" title="tf.RandomShuffleQueue()  # 随机出队队列"></a>tf.RandomShuffleQueue()  # 随机出队队列</h4><h4 id="tf-train-QueueRunner-queue-None-enqueue-ops-None"><a href="#tf-train-QueueRunner-queue-None-enqueue-ops-None" class="headerlink" title="tf.train.QueueRunner(queue=None,enqueue_ops=None)"></a>tf.train.QueueRunner(queue=None,enqueue_ops=None)</h4><ul>
+<li><p>queue:队列</p>
+</li>
+<li><p>enqueue_ops:添加线程的队列操作列表,[op1,op2]*2 2表示指定两个线程</p>
+</li>
+<li><p>create_threads(sess,coord=None,start=False) 创建线程运行给定的入队操作</p>
+</li>
+<li><p>start:若为True线程自动启动,Fasle需手动start()</p>
+</li>
+<li><p>coord:线程协调器,后面线程管理器用到</p>
+</li>
+<li><p>return:返回线程实例</p>
+</li>
+</ul>
+<h2 id="线程协调器"><a href="#线程协调器" class="headerlink" title="线程协调器"></a>线程协调器</h2><h3 id="tf-train-Coordinator"><a href="#tf-train-Coordinator" class="headerlink" title="tf.train.Coordinator()"></a>tf.train.Coordinator()</h3><ul>
+<li><p>request_stop()</p>
+</li>
+<li><p>should_stop() 检查是否要求停止</p>
+</li>
+<li><p>join(threads=None,stop_grace_period_secs=120) 等待线程终止</p>
+</li>
+<li><p>return 返回线程协调器实例</p>
+</li>
+</ul>
+<h2 id="同步-异步案例"><a href="#同步-异步案例" class="headerlink" title="同步,异步案例"></a>同步,异步案例</h2><figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span>  tensorflow <span class="hljs-keyword">as</span> tf<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sync</span>():</span><br>    <span class="hljs-comment"># 模拟一下同步  先处理数据,然后取数据训练</span><br>    <span class="hljs-comment"># tensorflow中,运行操作有依赖性</span><br>    <span class="hljs-comment"># 1,首先定义队列</span><br>    Q = tf.FIFOQueue(<span class="hljs-number">3</span>,tf.float32)<br>    <span class="hljs-comment"># 放入数据 tensorflow 会把传入的数据当做张量 a=y 此时y不会当做列表  a=[x,] 此时a是list</span><br>    enq_many = Q.enqueue_many([[<span class="hljs-number">0.1</span>,<span class="hljs-number">0.2</span>,<span class="hljs-number">0.3</span>],])<br>    <span class="hljs-comment"># 2,定义读取数据,取数据过程, 入队,出队</span><br>    out_q = Q.dequeue() <span class="hljs-comment"># 虽然是个op 但取出来是数据</span><br>    data = out_q+<span class="hljs-number">1</span><br>    en_q = Q.enqueue(data)<br>    <span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>        <span class="hljs-comment"># 初始化队列</span><br>        sess.run(enq_many)<br>        <span class="hljs-comment"># 处理数据</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):<br>            sess.run(en_q) <span class="hljs-comment"># 有依赖性,会运行out_q,data,qn_q</span><br>        <span class="hljs-comment"># 训练数据</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(Q.size().<span class="hljs-built_in">eval</span>()):<br>            <span class="hljs-built_in">print</span>(sess.run(Q.dequeue())) <span class="hljs-comment"># 33.2 33.3 34.1</span><br></code></pre></td></tr></table></figure>
+<h1 id="模拟异步"><a href="#模拟异步" class="headerlink" title="模拟异步"></a>模拟异步</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span>  tensorflow <span class="hljs-keyword">as</span> tf<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">asyn</span>():</span><br>    <span class="hljs-comment"># 1,定义队列</span><br>    Q = tf.FIFOQueue(<span class="hljs-number">1000</span>,tf.float32)<br>    <span class="hljs-comment"># 2,定义子线程 操作</span><br>    var = tf.Variable(<span class="hljs-number">0.0</span>)<br>    <span class="hljs-comment"># 实现自增 tf.assign_add() # 主要作用是江var的值改变了</span><br>    data = tf.assign_add(var,tf.constant(<span class="hljs-number">1.0</span>))<br>    en_q = Q.enqueue(data)<br>    <span class="hljs-comment"># 3,定义队列管理器op,指定子线程该做什么</span><br>    qr = tf.train.QueueRunner(Q,enqueue_ops=[en_q]*<span class="hljs-number">2</span>)<br>    <span class="hljs-comment"># 初始化变量op</span><br>    init = tf.global_variables_initializer()<br>    <span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>        sess.run(init)<br>        <span class="hljs-comment"># 开启线程管理器</span><br>        coord = tf.train.Coordinator()<br>        <span class="hljs-comment"># 开启子线程</span><br>        threads = qr.create_threads(sess,start=<span class="hljs-literal">True</span>,coord=coord) <span class="hljs-comment"># coord指定管理器</span><br>        <span class="hljs-comment"># 主线程,不断取数据训练</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">300</span>): <span class="hljs-comment"># 300 次后主线程结束,sess释放,单子线程还在,会报错,需要回收子线程</span><br>            <span class="hljs-built_in">print</span>(sess.run(Q.dequeue()))<br>        coord.request_stop() <span class="hljs-comment"># 请求回收</span><br>        coord.join(threads) <span class="hljs-comment"># 等待回收</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="文件读取-1"><a href="#文件读取-1" class="headerlink" title="文件读取"></a>文件读取</h2><ul>
+<li>构造文件列表,</li>
+<li>构造文件队列,</li>
+<li>阅读器 读取内容一行,</li>
+<li>解码, </li>
+<li>批处理</li>
+</ul>
+<h2 id="文件队列"><a href="#文件队列" class="headerlink" title="文件队列"></a>文件队列</h2><h3 id="tf-train-string-input-producer-string-tensor-None-shuffle-True-奖输出字符串输入到管道队列"><a href="#tf-train-string-input-producer-string-tensor-None-shuffle-True-奖输出字符串输入到管道队列" class="headerlink" title="tf.train.string_input_producer(string_tensor=None,shuffle=True) # 奖输出字符串输入到管道队列"></a>tf.train.string_input_producer(string_tensor=None,shuffle=True) # 奖输出字符串输入到管道队列</h3><ul>
+<li><p>string_tensor 含有文件名的1阶张量</p>
+</li>
+<li><p>num_epochs:过几遍数据,默认无限</p>
+</li>
+<li><p>return:具有字符串的队列</p>
+</li>
+</ul>
+<h2 id="文件阅读器"><a href="#文件阅读器" class="headerlink" title="文件阅读器"></a>文件阅读器</h2><ul>
+<li>tf.TextLineReader # csv文件</li>
+<li>tf.FixedLengthRecordReader(record_bytes=1024) # 二进制</li>
+<li>tf.TFRecordReader # TfRecords 自带的文件格式</li>
+</ul>
+<h2 id="共同方法-read-file-queue"><a href="#共同方法-read-file-queue" class="headerlink" title="共同方法 read(file_queue)"></a>共同方法 read(file_queue)</h2><p>返回tensors元祖(key文件名字,value 默认的内容,一行,或字节)</p>
+<h2 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h2><h3 id="tf-decode-csv-records-None-record-defaults-None-field-delim-”-”-name-None"><a href="#tf-decode-csv-records-None-record-defaults-None-field-delim-”-”-name-None" class="headerlink" title="tf.decode_csv(records=None,record_defaults=None,field_delim=”,”,name=None)"></a>tf.decode_csv(records=None,record_defaults=None,field_delim=”,”,name=None)</h3><ul>
+<li><p>recodes:上边的value</p>
+</li>
+<li><p>field_delim:默认分隔符</p>
+</li>
+<li><p>record_defaults:指定每列类型,指定默认值</p>
+</li>
+<li><p>参数决定了张量的类型,并设置一个值,在字符串中缺少使用默认值</p>
+</li>
+</ul>
+<h3 id="tf-decode-raw-bytes-out-type-None-little-endian-None-name-None"><a href="#tf-decode-raw-bytes-out-type-None-little-endian-None-name-None" class="headerlink" title="tf.decode_raw(bytes,out_type=None,little_endian=None,name=None)"></a>tf.decode_raw(bytes,out_type=None,little_endian=None,name=None)</h3><p>将字节转换为一个数字向量,字节为一字符类型的张量,与函数</p>
+<h3 id="tf-FixLengthRecordReader"><a href="#tf-FixLengthRecordReader" class="headerlink" title="tf.FixLengthRecordReader"></a>tf.FixLengthRecordReader</h3><p>搭配使用,二进制读取为uint8格式</p>
+<h2 id="管道批处理"><a href="#管道批处理" class="headerlink" title="管道批处理"></a>管道批处理</h2><h3 id="tf-train-batch"><a href="#tf-train-batch" class="headerlink" title="tf.train.batch()"></a>tf.train.batch()</h3><ul>
+<li><p>tensors:包含张量的列表</p>
+</li>
+<li><p>batch_size:从队列汇总读取的批处理的大小</p>
+</li>
+<li><p>num_threads:进入队列的线程数</p>
+</li>
+<li><p>capacity:整数,队列的最大数量</p>
+</li>
+</ul>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span>  tensorflow <span class="hljs-keyword">as</span> tf<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">readcsv</span>(<span class="hljs-params">filelist</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    :param filelist:文件路径列表</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">import</span> os<br>    path = <span class="hljs-string">r&quot;E:\Workspace\PythonWorkSpace\Machine-Learning\asstes\temp&quot;</span><br>    file_name = os.listdir(path)<br>    file_list = [os.path.join(path, file) <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> file_name]<br>    <span class="hljs-comment"># 1,构造文件队列</span><br>    file_queue = tf.train.string_input_producer(file_list)<br>    <span class="hljs-comment"># 2,构造csv阅读器 读取队列数据</span><br>    reader = tf.TextLineReader()<br>    key,value=reader.read(file_queue)<br>    <span class="hljs-comment"># 3,对每行内容进行解码</span><br>    records = [[<span class="hljs-string">&quot;None&quot;</span>],[<span class="hljs-string">&quot;None&quot;</span>]] <span class="hljs-comment"># 指定第一列为字符串,默认值为None, 或指定为[1.0] 数字</span><br>    <span class="hljs-comment"># 单行读取</span><br>    first,second = tf.decode_csv(value,record_defaults=records) <span class="hljs-comment"># 返回就是n列,就是n个值接收</span><br>    <span class="hljs-comment"># 批量读取,每次取出的大小只与batch_size:有关 若大于总数,会重复取</span><br>    first_batch,second_batch = tf.train.batch([first,second],batch_size=<span class="hljs-number">6</span>,num_threads=<span class="hljs-number">1</span>,capacity=<span class="hljs-number">6</span>)<br>    <span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>        <span class="hljs-comment"># 定义线程协调器</span><br>        coord = tf.train.Coordinator()<br>        threads = tf.train.start_queue_runners(sess,coord=coord)<br>        <span class="hljs-comment">#print(sess.run([first,second]))</span><br>        <span class="hljs-built_in">print</span>(sess.run([first_batch,second_batch]))<br>    coord.request_stop()<br>    coord.join(threads)<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="图像读取"><a href="#图像读取" class="headerlink" title="图像读取"></a>图像读取</h1><p>特征值:像素</p>
+<p>黑白:单通道[0-255]  像素数</p>
+<p>彩色:三通道:RGB      像素数*3</p>
+<p>图片数字化</p>
+<p>三要素:长度,宽度,通道数</p>
+<p>3D张量 [200,200,1] [200,200,3]</p>
+<p>图片特征要一样:像素要一样–&gt;大小相同     缩放图片</p>
+<h1 id="图片文件读取"><a href="#图片文件读取" class="headerlink" title="图片文件读取"></a>图片文件读取</h1><h3 id="API"><a href="#API" class="headerlink" title="API:"></a>API:</h3><h4 id="图像读取器-tf-WholeFileReader"><a href="#图像读取器-tf-WholeFileReader" class="headerlink" title="图像读取器:tf.WholeFileReader"></a>图像读取器:tf.WholeFileReader</h4><ul>
+<li><p>​    将文件的全部内容作为值输出的读取器</p>
+</li>
+<li><p>​    返回读取实例</p>
+</li>
+<li><p>​    read(file_queuse) 输出时一个文件名和该文件的值</p>
+</li>
+</ul>
+<h4 id="图像解码器-tf-image-decode-jpeg-contents"><a href="#图像解码器-tf-image-decode-jpeg-contents" class="headerlink" title="图像解码器:tf.image.decode_jpeg(contents)"></a>图像解码器:tf.image.decode_jpeg(contents)</h4><ul>
+<li><p>​    将jpeg编码为的图像解码为uint8张量</p>
+</li>
+<li><p>​    返回uint8张量 3D形状 [height,width,channels]</p>
+</li>
+<li><p>​    tf.image.decode_png(contents)</p>
+</li>
+<li><p>​    解码为uint8或uint16</p>
+</li>
+<li><p>​    返回3D形状    </p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">picread</span>():</span><br>    <span class="hljs-keyword">import</span> os<br>    <span class="hljs-keyword">import</span> os,tensorflow <span class="hljs-keyword">as</span> tf<br>    path = <span class="hljs-string">r&quot;D:\图片\壁纸\手机壁纸\people&quot;</span><br>    file_name = os.listdir(path)<br>    file_list = [os.path.join(path, file) <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> file_name]<br>    <span class="hljs-comment"># 1, 构造文件队列</span><br>    file_queue=tf.train.string_input_producer(file_list)<br>    <span class="hljs-comment"># 2, 构造文件读取器读取图片内容(默认一张)</span><br>    reader = tf.WholeFileReader()<br>    key,value=reader.read(file_queue)  <span class="hljs-comment"># value tensor(shape=(),dtype=string)</span><br>    <span class="hljs-comment"># 3, 对读取的图片数据进行解码</span><br>    image = tf.image.decode_jpeg(value)  <span class="hljs-comment"># tensor(shape=(?,?,?),dtype=uint8)</span><br>    <span class="hljs-comment"># 4, 处理图片大小统一</span><br>    image_resize = tf.image.resize_images(image,[<span class="hljs-number">1080</span>,<span class="hljs-number">2160</span>])  <span class="hljs-comment"># shape(1080,2160,?)</span><br>    <span class="hljs-comment"># 设置通道数,在批处理时要求形状必须固定</span><br>    image_resize.set_shape([<span class="hljs-number">1080</span>,<span class="hljs-number">2160</span>,<span class="hljs-number">3</span>])   <span class="hljs-comment"># 此时 shape(1080,2160,3)</span><br>    <span class="hljs-comment"># 5, 进行批处理</span><br>    image_batch = tf.train.batch([image_resize],batch_size=<span class="hljs-number">20</span>,num_threads=<span class="hljs-number">4</span>,capacity=<span class="hljs-number">20</span>) <span class="hljs-comment"># shape(20,1080,2160,3)</span><br><br>    <span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>        <span class="hljs-comment"># 定义线程协调器</span><br>        coord = tf.train.Coordinator()<br>        threads = tf.train.start_queue_runners(sess, coord=coord)<br>        <span class="hljs-comment"># print(sess.run([image_resize])) #</span><br>        <span class="hljs-built_in">print</span>(sess.run([image_batch])) <span class="hljs-comment">#</span><br>        coord.request_stop()<br>        coord.join(threads)<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+<h1 id="二进制文件处理"><a href="#二进制文件处理" class="headerlink" title="二进制文件处理"></a>二进制文件处理</h1><p>案例分析:<a target="_blank" rel="noopener" href="https://www.cs.toronto.edu/~kriz/cifar.html">https://www.cs.toronto.edu/~kriz/cifar.html</a></p>
+<p>CIFAR-10数据集:6000张32*32彩色图片 分为训练集文件,测试集文件</p>
+<p>文件中每一行为(标签 像素值) 即为0-9  1024红色通道,1024绿色,1024蓝色    每行3072个字节    目标值+特征值</p>
+<h1 id="TFRecords-分析-存取"><a href="#TFRecords-分析-存取" class="headerlink" title="TFRecords 分析,存取"></a>TFRecords 分析,存取</h1><ul>
+<li>​    Tensorflow内置文件格式,二进制文件, 更好的利用内存,速度快,更好的赋值和移动</li>
+<li>​    为了将二进制数据和标签 存储在同一个文件中</li>
+<li>​    文件格式*.tfrecords</li>
+<li>​    写入文件内容:Example协议块 —–&gt;类字典格式</li>
+<li>​        每个example样本:{image:xxx,label:yyy}</li>
+</ul>
+<h2 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h2><h3 id="tf-python-io-TFRecordsWriter-path"><a href="#tf-python-io-TFRecordsWriter-path" class="headerlink" title="tf.python_io.TFRecordsWriter(path)"></a>tf.python_io.TFRecordsWriter(path)</h3><ul>
+<li>​    path:TFrecords文件路径  </li>
+<li>​    return:文件写入器</li>
+<li>​    write(record):向文件中写入一个字符串记录.,就是一个example</li>
+<li>​    close():关闭文件写入器</li>
+</ul>
+<p>一个样本—&gt;example</p>
+<h3 id="tf-train-Example-features-None"><a href="#tf-train-Example-features-None" class="headerlink" title="tf.train.Example(features=None)"></a>tf.train.Example(features=None)</h3><ul>
+<li>​    写入tfrecords文件</li>
+<li>​    feature:tf.train.Features类型的特征实例</li>
+<li>​    return:example协议块</li>
+</ul>
+<h4 id="tf-train-Features-feature-None"><a href="#tf-train-Features-feature-None" class="headerlink" title="tf.train.Features(feature=None)"></a>tf.train.Features(feature=None)</h4><ul>
+<li>​        构建每个样本的信息键值对</li>
+<li>​        feature:字典数据,key为名字,value为tf.train.Feature 实例</li>
+<li>​        return:Features类型</li>
+</ul>
+<h4 id="tf-train-Feature-options"><a href="#tf-train-Feature-options" class="headerlink" title="tf.train.Feature(**options)"></a>tf.train.Feature(**options)</h4><p>​        **options:例如</p>
+<p>​                bytes_list=tf.train.BytesList(value=[Bytes])</p>
+<p>​                int64_list=tf.train.Int64List(value=[Value])</p>
+<p>​                float_list=tf.train.FloatList(value=[Value])</p>
+<h2 id="TfRecords读取"><a href="#TfRecords读取" class="headerlink" title="TfRecords读取"></a>TfRecords读取</h2><ul>
+<li><div class="code-wrapper"><pre><code class="hljs"> 同文件阅读器流程,中间需要解析过程
+</code></pre></div>
+</li>
+<li><p>​    解析Tfrecords的example协议块</p>
+</li>
+<li><p>​    tf.parse_single_example(seralized,features=None,name=None)</p>
+<ul>
+<li>​        解析一个单一的example原型</li>
+<li>​        seralized:标量字符串Tensor,一个序列化的Example</li>
+<li>​        Features:dcit字典数据,键为读取的名字,值为 Fixed LenFeature</li>
+<li>​        return:一个键值对组成的字典,键为读取的名字</li>
+</ul>
+</li>
+<li><p>​    tf.FixedLengthFeature(shape.dtype)</p>
+<ul>
+<li>​        shape:输入数据的形状,一般不指定,为空列表</li>
+<li>​        dtype:输入数据的类型,与存储金文件的类型一致,只能为float32,int64,string</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CifarRead</span>(<span class="hljs-params"><span class="hljs-built_in">object</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    完成读取二进制文件,写进tfrecords,读取tfrecords</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self,filelist,tfrecords_path</span>):</span><br>        <span class="hljs-comment"># tfrecords文件路径</span><br>        self.tfrecords_path = tfrecords_path<br>        <span class="hljs-comment"># 文件列表(文件的目录)</span><br>        self.filelist = filelist<br>        <span class="hljs-comment">#</span><br>        <span class="hljs-comment"># 定义读取图片的属性</span><br>        self.height = <span class="hljs-number">32</span><br>        self.weight = <span class="hljs-number">32</span><br>        self.channel = <span class="hljs-number">3</span><br>        self.label_bytes = <span class="hljs-number">1</span><br>        self.image_bytes= self.height*self.weight*self.channel<br>        self.<span class="hljs-built_in">bytes</span> = self.image_bytes+self.label_bytes<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_and_decodes</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-comment"># 1, 构造文件队列</span><br>        file_queue = tf.train.string_input_producer(self.filelist)<br>        <span class="hljs-comment"># 2, 构造文件读取器,读取内容,每个人样本字节数</span><br>        reader = tf.FixedLengthRecordReader(self.<span class="hljs-built_in">bytes</span>)<br>        key,value = reader.read(file_queue) <span class="hljs-comment"># 此时shape() dtype=string</span><br>        <span class="hljs-comment"># 3, 解码内容</span><br>        label_image = tf.decode_raw(value,tf.uint8)  <span class="hljs-comment"># shape(?,) dtype=uint8 一维 图片与,目标值在一起</span><br>        <span class="hljs-comment"># 4,分割图片与标签数据 特征值和目标值 (本例数据中,目标值在前边,1,3072)</span><br>        label = tf.<span class="hljs-built_in">slice</span>(label_image,[<span class="hljs-number">0</span>],[self.label_bytes]) <span class="hljs-comment"># 切割出label ,slice(value,从哪读,读多少)</span><br>        image = tf.<span class="hljs-built_in">slice</span>(label_image,[self.label_bytes],[self.image_bytes])<br>        label = tf.cast(label,tf.int32)<br>        <span class="hljs-comment"># image = tf.cast(image,tf.float32) # 需要计算的话转为float32</span><br>        <span class="hljs-comment"># 5, 对图片数据进行形状改变,[3072]---&gt;[32,32,3]</span><br>        image_reshape = tf.reshape(image,[self.height,self.weight,self.channel])<br>        <span class="hljs-comment"># 6, 批处理数据</span><br>        image_batch,label_batch = tf.train.batch([image_reshape,label],batch_size=<span class="hljs-number">10</span>,num_threads=<span class="hljs-number">1</span>,capacity=<span class="hljs-number">10</span>)  <span class="hljs-comment"># shape(10,32,32,3) shape(10,1)</span><br>        <span class="hljs-keyword">return</span> image_batch,label_batch<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">write_to_tfrecords</span>(<span class="hljs-params">self,image_batch,label_batch</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        将图片的特征值和目标值 存进tfrecords</span><br><span class="hljs-string">        :param image_batch: n张图片的目标值</span><br><span class="hljs-string">        :param label_batch: n张图片的目标值</span><br><span class="hljs-string">        :return: None</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 1, 构造一个tfrecords文件,使用Tfrecords存储器</span><br>        writer = tf.python_io.TFRecordWriter(self.tfrecords_path)<br>        <span class="hljs-comment"># 2, 循环写入,每张图片都早example</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(image_batch.shape[<span class="hljs-number">0</span>]):<br>            <span class="hljs-comment"># 取出第i个图片的特征值和目标值</span><br>            image = image_batch[i] <span class="hljs-comment"># (32,32,3)</span><br>            label = label_batch[i] <span class="hljs-comment"># (10,1)</span><br>            <span class="hljs-comment"># 要转化为张量,张量值转化为字符串</span><br>            image = image.<span class="hljs-built_in">eval</span>().tostring()<br>            label = <span class="hljs-built_in">int</span>(label.<span class="hljs-built_in">eval</span>()[<span class="hljs-number">0</span>])<br>            <span class="hljs-comment"># 构造一个样本的example</span><br>            example = tf.train.Example(features=tf.train.Features(feature=&#123;<br>                <span class="hljs-string">&quot;image&quot;</span>:tf.train.Feature(bytes_list=tf.train.BytesList(value=[image])),<br>                <span class="hljs-string">&quot;label&quot;</span>:tf.train.Feature(int64_list=tf.train.Int64List(value=[label])),<br>            &#125;))<br>            <span class="hljs-comment"># 写入单独的样本</span><br>            writer.write(example.SerializeToString())<br>        <span class="hljs-comment"># 关闭</span><br>        writer.close()<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_form_tfrecords</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-comment"># 1, 构造文件队列</span><br>        file_queue = tf.train.string_input_producer([<span class="hljs-string">r&quot;I:\人工智能数据\6000_32_32_图片集\cifar-10-batches-bin\all.tfrecords&quot;</span>])<br>        <span class="hljs-comment"># 2, 构造文件阅读器,读取内容 example value 为一个样本序列化的example</span><br>        reader = tf.TFRecordReader()<br>        key,value = reader.read(file_queue)<br>        <span class="hljs-comment"># 3, 解析example</span><br>        features = tf.parse_single_example(value,features=&#123;<br>            <span class="hljs-string">&quot;image&quot;</span>:tf.FixedLenFeature([],tf.string),<br>            <span class="hljs-string">&quot;label&quot;</span>:tf.FixedLenFeature([],tf.int64),<br>        &#125;)<br>            <span class="hljs-comment"># features[&quot;image&quot;] Tensor(shape=(),dtype=string)</span><br>            <span class="hljs-comment"># features[&quot;label&quot;] Tensor(shape=(),dtype=64)</span><br>        <span class="hljs-comment"># 4,解码内容 ,若内容时string 需要解码,是int64,string32 不需要解码</span><br>        image = tf.decode_raw(features[<span class="hljs-string">&quot;image&quot;</span>],tf.uint8)  <span class="hljs-comment"># Tensor(shape(?,) uint8)</span><br>        <span class="hljs-comment"># 固定形状</span><br>        image_reshape = tf.reshape(image,[self.height,self.weight,self.channel])<br>        label = features[<span class="hljs-string">&quot;label&quot;</span>]  <span class="hljs-comment"># Tensor(shape=(),int64)</span><br>        <span class="hljs-comment"># 5, 进行批处理</span><br>        image_batch,label_batch = tf.train.batch([image_reshape,label],batch_size=<span class="hljs-number">20</span>,num_threads=<span class="hljs-number">1</span>,capacity=<span class="hljs-number">10</span>)<br>        <span class="hljs-keyword">return</span> image_batch,label_batch<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">readBinary</span>():</span><br>    <span class="hljs-keyword">import</span> os<br>    <span class="hljs-comment"># 数据地址 https://www.cs.toronto.edu/~kriz/cifar.html</span><br>    path = <span class="hljs-string">r&quot;I:\人工智能数据\6000_32_32_图片集\cifar-10-batches-bin&quot;</span><br>    tfrecords = os.path.join(path,<span class="hljs-string">&quot;all.tfrecords&quot;</span>)<br>    file_name = os.listdir(path)<br>    <span class="hljs-comment"># 获取文件列表,并过滤 非bin文件</span><br>    filelist = [os.path.join(path,file) <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> file_name <span class="hljs-keyword">if</span> file[-<span class="hljs-number">3</span>:]==<span class="hljs-string">&quot;bin&quot;</span>]<br>    <span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>        c = CifarRead(filelist, tfrecords)<br>        <span class="hljs-comment"># 读取数据并存入tfrecords</span><br>        image_batch, label_batch = c.read_and_decodes()<br>        c.write_to_tfrecords(image_batch=image_batch, label_batch=label_batch)<br>        <span class="hljs-comment"># 从tfrercords中读取</span><br>        <span class="hljs-comment"># image_batch, label_batch = c.read_form_tfrecords()</span><br>        coord = tf.train.Coordinator()<br>        threads = tf.train.start_queue_runners(sess, coord=coord)<br>        <span class="hljs-built_in">print</span>(sess.run([image_batch,label_batch]))<br>        coord.request_stop()<br>        coord.join(threads)<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C_1/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_Tensorflow_1/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

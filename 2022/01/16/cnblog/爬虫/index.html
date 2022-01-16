@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1，初识爬虫 import requestsfrom bs4 import BeautifulSoupimport osurl&#x3D;&quot;https:&#x2F;&#x2F;www.58pic.com&#x2F;&quot;response &#x3D; requests.get(url)response.encoding&#x3D;&#39;utf8&#39;# print(response.text)soup &#x3D; BeautifulSoup(response.text,&quot;ht">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E7%88%AC%E8%99%AB/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="1，初识爬虫 import requestsfrom bs4 import BeautifulSoupimport osurl&#x3D;&quot;https:&#x2F;&#x2F;www.58pic.com&#x2F;&quot;response &#x3D; requests.get(url)response.encoding&#x3D;&#39;utf8&#39;# print(response.text)soup &#x3D; BeautifulSoup(response.text,&quot;ht">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.923Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <p>1，初识爬虫</p>
+<p>import requests<br />from bs4 import BeautifulSoup<br />import os<br />url="https://www.58pic.com/"<br />response = requests.get(url)<br />response.encoding='utf8'<br /># print(response.text)<br />soup = BeautifulSoup(response.text,"html.parser")</p>
+<p># div = soup.find(name="div",attrs="id:xxxxx") # 返回值都是对象 obj.text返回标签中的值文本<br /># div.find_all("li") # 查找里边的li标签<br /># 唯一的时候用find,多个使用find_all<br /># print(url.rsplit("/",maxsplit=1))  # rsplit 从后向前分割,maxsplit 指定分割次数<br />ret = soup.find_all(name="img")<br />for img in ret:<br />    src = img.get("src")<br />    if src:<br />        ret = requests.get("https:"+src)<br />        name = src.rsplit("/",maxsplit=1)[1]<br />        with open(os.path.join(os.path.join(os.getcwd(),"img"),name),"wb") as f:<br />            f.write(ret.content)<br /># 通过继承实现java的接口功能<br />"""<br />class A:<br />    def fun():<br />        raise NotImplementdError("子类没有实现父类方法")<br />class B():<br />    pass<br />obj=B()<br />obj.fun()<br />通过此方式实现调用方法报错,注意只有在(调用)的时候才会报错</p>
+<p>"""</p>
+<p># ==============================================<br />"""<br />1,直接通过request.get()获取页面没有携带请求信息,容易别反爬发现<br />2,因此需要携带数据,仿照浏览器<br />requests.get(<br />    url="xxx",<br />    headers={<br />        "user-agent":"浏览器信息"    一般情况下这个即可,若还不可以,使用浏览器访问,逐个加上请求头即可<br />    }<br />)</p>
+<p>&nbsp;</p>
+<p>登录爬虫<br />1,请求头<br />2,数据<br />header中 data={"phone":"xxxx".......} 返回ret</p>
+<p>获取cookies<br />ret.cookies.get_dict()  cookies做为字典返回</p>
+<p>下次发送数据时带上<br />headers中 cookies={xxx}或 ret.cookies.get_dict()  有的网站这样即可,但有的不行<br />cookies 是放在请求头中的<br />1,访问主页,生成cookies, 登录时提交cookie,使生效, 此时再次返回的数据还有cookie 但它是无用的cookies<br />2,自动登录github<br />    a,get主页,找到input 获取csrf_token<br />    b,发送数据 csrf 用户名,密码,cookies<br />    c,访问url,携带cookies<br />3,请求主页后,会在请求头加字段或html中加字段,登录时返回<br />    re.findall("xxx='(.*?)'",文本,re.S)[0] 获取第一个<br />"""<br /># =================================<br /># requests.get() 中没有data,不用传数据 post里边有<br /># 若在里边中加入 params={"k1":"v1"} 此时请求头把它转为?参数及嵌入url get post都有</p>
+<p># data，传请求体<br /># requests.post(<br />#     ...,<br />#     data={'user': 'alex', 'pwd': '123'}<br /># )</p>
+<p># GET / index http1.1\r\nhost: c1.com\r\n\r\nuser = alex &amp; pwd = 123<br /># json，传请求体<br /># requests.post(<br />#     ...,<br />#     json={'user': 'alex', 'pwd': '123'}<br /># )<br /># GET / index http1.1\r\nhost: c1.com\r\nContent - Type: application / json\r\n\r\n{"user": "alex", "pwd": 123}</p>
+<p># 代理 proxies<br /># 无验证<br />proxie_dict = {<br />    "https:/xxxx":"yyy", # 为单独url设置代理<br />    "http": "61.172.249.96:80",<br />    "https": "http://61.185.219.126:3128",<br />}<br />ret = requests.get("https://www.proxy360.cn/Proxy", proxies=proxie_dict)</p>
+<p># 验证代理<br />from requests.auth import HTTPProxyAuth</p>
+<p>proxyDict = {<br />    'http': '77.75.105.165',<br />    'https': '77.75.106.165'<br />}<br />auth = HTTPProxyAuth('用户名', '密码')</p>
+<p>r = requests.get("http://www.google.com",proxies = proxyDict, auth = auth)<br />print(r.text)<br /># 发送文件<br />file_dict = {<br />    'f1': open('定制文件名','xxxx.log', 'rb')<br />}<br />requests.request(<br />    method='POST',<br />    url='http://127.0.0.1:8000/test/',<br />    files=file_dict<br />)<br /># =======================================================<br /># 认证 auth<br /># 内部：用户名和密码，用户和密码加密，放在请求头中传给后台。例如:路由器登录弹窗<br /># - "用户:密码"<br /># - base64("用户:密码")<br /># - "Basic base64("用户 | 密码")"<br /># - 请求头：Authorization： "basic base64("用户 | 密码")"  我们使用时,构造这个请求头即可</p>
+<p>from requests.auth import HTTPBasicAuth, HTTPDigestAuth # 通过该模块生成</p>
+<p>ret = requests.get('https://api.github.com/user', auth=HTTPBasicAuth('wupeiqi', 'sdfasdfasdf'))<br />print(ret.text)<br /># =======================================================<br /># 超时时间 连接1s就返回<br /># ret = requests.get('http://google.com/', timeout=1)<br /># print(ret)<br /># 连接5s,连接上1秒返回<br /># ret = requests.get('http://google.com/', timeout=(5, 1))<br /># print(ret)<br /># =======================================================<br /># 允许重定向 allow_redirects ,访问百度,百度让你转到搜狐,你去还是不去,若不去,没有响应体,只有响应头<br />ret = requests.get('http://127.0.0.1:8000/test/', allow_redirects=False)<br />print(ret.text)<br /># =======================================================<br /># 大文件下载 若通过普通方式,文件过大内存放不下<br /># 设置stream为true表示一点一点下载,为false表示全部到内存<br />from contextlib import closing<br />with closing(requests.get('http://httpbin.org/get', stream=True)) as r1:<br /># 在此处理响应。<br /> for i in r1.iter_content():<br />    print(i)<br /># =======================================================<br /># 证书(公钥)<br />#   用户访问服务器的时候要携带公钥,公钥位于一个地方(服务方要使用,所以交钱),使用时自动下载了,系统帮你携带<br />#   自定义证书, 用户访问时需要下载证书,访问时携带<br />requests.get('http://127.0.0.1:8000/test/', cert="xxxx/xxx/xxx.pem") # 一个证书<br />requests.get('http://127.0.0.1:8000/test/', cert=("xxxx/xxx/xxx.pem", "xxx.xxx.xx.key")) # 前边证书,后边秘钥<br />requests.get('http://127.0.0.1:8000/test/', cert="xxxx/xxx/xxx.pem")<br /># =======================================================<br />session = requests.sessions()<br />session.get("xxxx") # 第一次访问<br />session.get("xxxx") # 第二次访问 可能第二次访问需要添加cookies,通过此方式不用每次手动添加<br /># =======================================================<br /># beautifulsoup https://www.cnbolg.com/wupeiqi/articles/6283017.html<br /># ======================================================<br />"""<br />轮询:实时刷新,定时器,获取实施效果<br />长轮询:把请求保存30s,最大就是30s,请求回去后再次请求,再被保存30s, 以此达到实施效果<br />$(function(){}) 通过此方式对于个更新的标签同样生效<br />直接写function()对于新的ajax添加的组件可能时间失效<br />绑定时间的时候使用委托式 on的方式</p>
+<p>长轮询实现方式:队列<br />也可以使用webocket实现,但是兼容性不好<br />from flask import Flask,render_template,request,jsonify,session<br />import uuid<br />import queue</p>
+<p>app = Flask(__name__)<br />app.secret_key = 'asdfasdfasd'</p>
+<p><br />USERS = {<br />    '1':{'name':'贝贝','count':1},<br />    '2':{'name':'小东北','count':0},<br />    '3':{'name':'何伟明','count':0},<br />}</p>
+<p>QUEQUE_DICT = {<br />    # 'asdfasdfasdfasdf':Queue()<br />}</p>
+<p>@app.route('/user/list')<br />def user_list():<br />    user_uuid = str(uuid.uuid4())<br />    QUEQUE_DICT[user_uuid] = queue.Queue()</p>
+<p>    session['current_user_uuid'] = user_uuid<br />    return render_template('user_list.html',users=USERS)</p>
+<p>@app.route('/vote',methods=['POST'])<br />def vote():<br />    uid = request.form.get('uid')<br />    USERS[uid]['count'] += 1<br />    for q in QUEQUE_DICT.values():<br />        q.put(USERS)<br />    return "投票成功"</p>
+<p><br />@app.route('/get/vote',methods=['GET'])<br />def get_vote():<br />    user_uuid = session['current_user_uuid']<br />    q = QUEQUE_DICT[user_uuid]</p>
+<p>    ret = {'status':True,'data':None}<br />    try:<br />        users = q.get(timeout=5)<br />        ret['data'] = users<br />    except queue.Empty:<br />        ret['status'] = False</p>
+<p>    return jsonify(ret)</p>
+<p>&nbsp;</p>
+<p>if __name__ == '__main__':<br />    app.run(host='192.168.13.253',threaded=True)<br />    # app.run(threaded=True)<br />"""</p>
+<p># http请求包括请求头, 请求体   头之间使用\r\n 隔开, 请求头与请求体之间使用\r\n\r\n隔开<br /># 响应同理</p>
+<p><br /># requests中 ContentType默认是:urlencode-form....<br /># request.POST 获取数据时会检测是不是url..这个类型<br /># data发送数据时<br /># data={1:"a",2,"b"}  ---&gt; \r\n\r\n1=a&amp;2=b contentType 就是默认的类型 使用post可获得数据<br /># data=json.dumps({1:"a",2,"b"}) ---&gt;\r\n\r\n{1:"a",2,"b"}<br /># data=b"abcd"    -&gt; \r\n\r\n'abcd'</p>
+<p># json 发送<br /># json={1:"a",2,"b"} ----&gt;\r\n\r\n{1:"a",2,"b"},<br />#   请求头中会添加ContentType:application/json,data不会,<br />#   不是ContentType默认类型,使用post无法获取<br /># 使用request.body --&gt; {1:"a",2,"b"}<br />#   是字节,先转换为字符串,再反序列化--&gt;字典</p>
+<p># 出现FormDATA或表单数据  就是 &amp;连接的第一种方式<br /># requestpayload json格式 直接是<br />#   json={1="a",2="b"}<br />#   或使用data =json.dumps({}) 这种方式,若有中文data =json.dumps(bytes({},encoding="utf8"),ensure_ascii=False)</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B_0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E2%80%9C%20%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%A8%A1%E5%9E%8B%E2%80%9C%EF%BC%88end-to-end%20learning%EF%BC%89/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1237 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一章，汇编语言产生1，机器语言与汇编语言一一对应     2，汇编指令：Mov AX,BX  将寄存器BX，移入AX 3，寄存器：CUP中的存储器，注意不是CUP的缓存， 4，汇编–》编译器—》机器码01 5，汇编语言组成  汇编指令，机器码的助记符 伪指令，编译器执行 其他符号，编译器识别  6，一串机器码，可以使指令，也可以是数据，就看是cd，ds那个指向他 7，地址信息，读或写，数据信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="第一章，汇编语言产生1，机器语言与汇编语言一一对应     2，汇编指令：Mov AX,BX  将寄存器BX，移入AX 3，寄存器：CUP中的存储器，注意不是CUP的缓存， 4，汇编–》编译器—》机器码01 5，汇编语言组成  汇编指令，机器码的助记符 伪指令，编译器执行 其他符号，编译器识别  6，一串机器码，可以使指令，也可以是数据，就看是cd，ds那个指向他 7，地址信息，读或写，数据信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/bCRA5rikJmp3lNz.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/Y1d2RiNo7vawDUj.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/iqv9rjlhLsHAxRo.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/sozLCrpQPYaydHj.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/EuDdMehgapoBbHR.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/9pmJAcEuqVeUPzs.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/9XGisLT6k5wIrSR.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/15/DfC5oGe8OKpkHYM.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/abvQgVZFA4qmhru.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/25/ihnrBeypFt1HA8w.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/26/ErBHwPZYMzgovT8.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/26/CIWhuMkljoKEOxe.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/26/xZP9zSgc8u3itDR.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/26/mRW6huQBSJ32zOt.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/26/VEDmhCQKBLv9x67.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/26/dMZRsrDHwSmQihj.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/08/CTXy2hvfwgcbYP7.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/14/iNHkBbZIwnDoz9Y.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/14/wHo1yItCRslgEup.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/14/NMzltF7Gkr5pguy.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/14/QZepGlMS7IxP26a.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.861Z">
+<meta property="article:modified_time" content="2020-10-24T08:56:38.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.loli.net/2020/07/25/bCRA5rikJmp3lNz.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      16k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      132 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="第一章，汇编语言产生"><a href="#第一章，汇编语言产生" class="headerlink" title="第一章，汇编语言产生"></a>第一章，汇编语言产生</h1><p>1，机器语言与汇编语言一一对应    </p>
+<p>2，汇编指令：Mov AX,BX  将寄存器BX，移入AX</p>
+<p>3，寄存器：CUP中的存储器，注意不是CUP的缓存，</p>
+<p>4，汇编–》编译器—》机器码01</p>
+<p>5，汇编语言组成</p>
+<ul>
+<li>汇编指令，机器码的助记符</li>
+<li>伪指令，编译器执行</li>
+<li>其他符号，编译器识别</li>
+</ul>
+<p>6，一串机器码，可以使指令，也可以是数据，就看是cd，ds那个指向他</p>
+<p>7，地址信息，读或写，数据信息</p>
+<p>​    cup与所有内存之间：地址总线，数据总线，控制总线，每条线对应不同信息，指令与数据分开</p>
+<p>8，总线</p>
+<ul>
+<li>地址总线：产品cpu通过它指定存储单元，地址总线有多少不同信息，就是CPU的寻址范围，64位CPU就是64个地址总线</li>
+<li>数据总线：宽度决定传输速度，例如一次传8bit，16bit</li>
+<li>控制总线：宽度表示控制能力</li>
+</ul>
+<p><img src="https://i.loli.net/2020/07/25/bCRA5rikJmp3lNz.png" srcset="/img/loading.gif" lazyload alt="image-20200725222259680"></p>
+<p><img src="https://i.loli.net/2020/07/25/Y1d2RiNo7vawDUj.png" srcset="/img/loading.gif" lazyload alt="image-20200725222458172"></p>
+<p>9，例</p>
+<p>地址：0-7FFFH，为RAM</p>
+<p>地址：8000H-9FFFH，为显存地址:当数据写入此处，就会显示</p>
+<p>地址：A000H-FFFFH为各个ROM</p>
+<p>10，8086CPU如下，8086,8088，龙芯，酷睿等都是类似分配</p>
+<p><img src="https://i.loli.net/2020/07/25/iqv9rjlhLsHAxRo.png" srcset="/img/loading.gif" lazyload alt="image-20200725222928292"></p>
+<h1 id="第二章，寄存器（CPU工作原理）"><a href="#第二章，寄存器（CPU工作原理）" class="headerlink" title="第二章，寄存器（CPU工作原理）"></a>第二章，寄存器（CPU工作原理）</h1><h5 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h5><p>1，CPU：运算器，控制器，寄存器，内部总线相连接</p>
+<p>2，8086cpu寄存器：共14个，有8个通用寄存器</p>
+<ul>
+<li><p>AX，BX，CX，DX，SI，DI，SP，BP，IP，CS，SS，DS，ES，PSW</p>
+</li>
+<li><p>所有寄存器16bit，16位的CPU，8086上一代8bit</p>
+</li>
+<li><p>AX,BX,CX,DX通用寄存器，可以分为两个独立的8位寄存器使用 AX–&gt;AH,AL</p>
+</li>
+<li><p><img src="https://i.loli.net/2020/07/25/sozLCrpQPYaydHj.png" srcset="/img/loading.gif" lazyload alt="image-20200725224609858"></p>
+</li>
+<li><p><img src="https://i.loli.net/2020/07/25/EuDdMehgapoBbHR.png" srcset="/img/loading.gif" lazyload alt="image-20200725224111847"></p>
+<p><img src="https://i.loli.net/2020/07/25/9pmJAcEuqVeUPzs.png" srcset="/img/loading.gif" lazyload alt="image-20200725224232240"></p>
+</li>
+<li><p><img src="https://i.loli.net/2020/07/25/9XGisLT6k5wIrSR.png" srcset="/img/loading.gif" lazyload alt="image-20200725224722314"></p>
+</li>
+</ul>
+<h5 id="字"><a href="#字" class="headerlink" title="字"></a>字</h5><p>寄存器中数据大多是n*8bit</p>
+<h5 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h5><p><img src="https://i.loli.net/2020/08/15/DfC5oGe8OKpkHYM.png" srcset="/img/loading.gif" lazyload alt="image-20200725225400234"></p>
+<h5 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h5><h5 id="16位结构CPU"><a href="#16位结构CPU" class="headerlink" title="16位结构CPU"></a>16位结构CPU</h5><p>1，一次16bit数据</p>
+<p>2，寄存器最大宽度16bit</p>
+<p>3，寄存器运算器之间通路16bit</p>
+<h5 id="8086CPU给出物理地址"><a href="#8086CPU给出物理地址" class="headerlink" title="8086CPU给出物理地址"></a>8086CPU给出物理地址</h5><p>1，20位地址总线，寻址1m</p>
+<p>2，内部16位结构，寻址64kb</p>
+<p>方法：</p>
+<p><img src="https://i.loli.net/2020/07/25/abvQgVZFA4qmhru.png" srcset="/img/loading.gif" lazyload alt="image-20200725232114587"></p>
+<p>3，物理地址=段地址*16+偏移地址  因为是2进制</p>
+<h5 id="段"><a href="#段" class="headerlink" title="段"></a>段</h5><p>1，内存并没有分段，分段是因为cup，内部不足，但因此使用分段管理内存</p>
+<p>2，偏移地址16bit，因此每段64KB</p>
+<p>3，CUP可以不痛段地址与偏移构成相同的物理地址</p>
+<h5 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h5><p>8086:CS,DS,SS,ES</p>
+<p>cs:指令段寄存器，ip指令偏移寄存器     —-》段，偏移</p>
+<p><img src="https://i.loli.net/2020/07/25/ihnrBeypFt1HA8w.png" srcset="/img/loading.gif" lazyload alt="image-20200725235034031"></p>
+<h5 id="修改CS-IP"><a href="#修改CS-IP" class="headerlink" title="修改CS,IP"></a>修改CS,IP</h5><p>1，只能操作寄存器控制cpu，因此需要控制cs，ip</p>
+<p>2，mov 传送指令，可修改ax，但不能cs，ip</p>
+<p>3，jmp 2ae3：3  跳转的意思  此时cs 为2ae3，ip为3</p>
+<h5 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h5><p>将n&lt;64kb的数据  —》代码段</p>
+<p><img src="https://i.loli.net/2020/07/26/ErBHwPZYMzgovT8.png" srcset="/img/loading.gif" lazyload alt=" "></p>
+<p>将cs，ip指向该代码段，会认为是指令，才会执行，执行后ip = ip + 指令长度</p>
+<p><img src="https://i.loli.net/2020/07/26/CIWhuMkljoKEOxe.png" srcset="/img/loading.gif" lazyload alt="image-20200726003309179"></p>
+<h1 id="第三章，寄存器"><a href="#第三章，寄存器" class="headerlink" title="第三章，寄存器"></a>第三章，寄存器</h1><h5 id="内存中的存储"><a href="#内存中的存储" class="headerlink" title="内存中的存储"></a>内存中的存储</h5><p>1，例：数字2000  （4E20H）</p>
+<p><img src="https://i.loli.net/2020/07/26/xZP9zSgc8u3itDR.png" srcset="/img/loading.gif" lazyload alt="image-20200726131206580"></p>
+<p>任何两个连续单元，N,N+1，可以看做两个内存单元，也可以看做地址为N的字单元中的高位字节单元，低位字节单元</p>
+<h5 id="DS与Address"><a href="#DS与Address" class="headerlink" title="DS与Address"></a>DS与Address</h5><p>DS：存放的数据的段地址，</p>
+<p>1，执行指令时，自动取DS中数据为内存单元的段地址</p>
+<p>2，mov al，[0]    将ds:0 <font color=red>内存单元</font>中的数据移入al</p>
+<p>3，但不能直接把值移入ds  ，mov ds 1000H：错误的 8086cpu不支持放入段寄存器，硬件问题。只能数据 –》通用寄存器–》段寄存器</p>
+<p><img src="https://i.loli.net/2020/07/26/mRW6huQBSJ32zOt.png" srcset="/img/loading.gif" lazyload alt="image-20200726133154156"></p>
+<h5 id="字的传送"><a href="#字的传送" class="headerlink" title="字的传送"></a>字的传送</h5><h5 id="mov，add，sub"><a href="#mov，add，sub" class="headerlink" title="mov，add，sub"></a>mov，add，sub</h5><p>1，mov</p>
+<ul>
+<li>mov 寄存器，数据</li>
+<li>mov 寄存器，寄存器</li>
+<li>mov 寄存器，内存</li>
+<li>mov 内存，寄存器</li>
+<li>mov 段寄存器，寄存器</li>
+<li>mov 寄存器，段寄存器 ，也可以</li>
+</ul>
+<p><img src="https://i.loli.net/2020/07/26/VEDmhCQKBLv9x67.png" srcset="/img/loading.gif" lazyload alt="image-20200726140431689"></p>
+<h5 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a>数据段</h5><h5 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h5><p>push ax：将ax放入栈内存中</p>
+<p>​    sp =sp-2</p>
+<p>​    ss：sp 指向新地址</p>
+<p>pop ax：从栈内存取数据到ax</p>
+<p>1，cup如何知道某段内存是栈内存？</p>
+<p>ss，栈顶段寄存器，sp栈顶偏移     ss：sp指向栈顶，栈为空时指向栈顶下一位，</p>
+<p>出栈时只是修改索引，数据还未覆盖，由此可见，硬盘类似</p>
+<p>2，cpu如何知道哪个是栈顶，栈底？从大地址向小地址写数据</p>
+<p>3，<font color=red>语言中的函数，调用时就是申请一块栈内存，执行完，栈内存元素全部出栈，因此局部变量失效</font>，栈内存由编译器管理，堆内存有程序员管理</p>
+<h5 id="栈顶越界"><a href="#栈顶越界" class="headerlink" title="栈顶越界"></a>栈顶越界</h5><p>1，cpu关心栈只关心栈顶指针在何处，当前要执行的指令是哪个</p>
+<p>2，c,c++常会溢出</p>
+<h5 id="POP-PUSH"><a href="#POP-PUSH" class="headerlink" title="POP,PUSH"></a>POP,PUSH</h5><p>1，栈空间，一段固定读取格式的内存</p>
+<h5 id="栈段"><a href="#栈段" class="headerlink" title="栈段"></a>栈段</h5><p>1，可以将小于64kb的内存当做栈</p>
+<p>2，认为10010H,1001FH 当做16字节栈，但cup只关心栈顶，不会关心栈段的大小</p>
+<h1 id="第四章，第一个程序"><a href="#第四章，第一个程序" class="headerlink" title="第四章，第一个程序"></a>第四章，第一个程序</h1><p>汇编—》可执行</p>
+<p>1，流程</p>
+<ul>
+<li><p>编写，</p>
+</li>
+<li><p>编译程序（masm.exe），产生目标文件 </p>
+</li>
+<li><p>连接程序（link.exe），生成可执行文件</p>
+</li>
+</ul>
+<p>2，可执行程序组成</p>
+<ul>
+<li>程序，数据（程序中定义的数据）</li>
+<li>描述信息，程序多大，占空间多大等</li>
+</ul>
+<p>3，执行过程</p>
+<ul>
+<li>按照可执行文件描述信息，将程序，数据加载到内存，设置cs，ip等</li>
+</ul>
+<p>4，汇编指令,伪指令</p>
+<ul>
+<li><p>segment …. ends：定义一个段，程序段，数据段等，一个程序有多个段</p>
+</li>
+<li><p>end：便已结束标记</p>
+</li>
+<li><p>assume：假设，将段指定为数据段，程序段等，伪指令指向程序开始等等</p>
+<ul>
+<li>```assembly<br>assume cs:codesg<br>codesg segment<br>start: mov ax 0123H<br>codesg ends<br>end<figure class="highlight x86asm"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><pre><code class="hljs x86asm"><br>![image-<span class="hljs-number">20200726160028404</span>](https://i<span class="hljs-number">.</span>loli<span class="hljs-number">.</span>net/<span class="hljs-number">2020</span>/<span class="hljs-number">07</span>/<span class="hljs-number">26</span>/vVnYwOU87I2xajB<span class="hljs-number">.</span>png)<br><br>##### 源程序<br><br><span class="hljs-number">1</span>，一个标号只带一个地址<br><br><span class="hljs-number">2</span>，codesg：给段的命名，最后会变为地址<br><br><span class="hljs-number">3</span>，程序返回，<br><br>- 返回使它运行的那个程序<br>  - <span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>，<span class="hljs-number">4c00H</span><br>  - <span class="hljs-keyword">int</span> <span class="hljs-number">21H</span><br>  - 这两个规定的语句实现中断<br><br>##### 编辑源程序<br><br><span class="hljs-string">```</span>asm<br><span class="hljs-meta">assume</span> <span class="hljs-built_in">cs</span>:abc<br>abc <span class="hljs-meta">segment</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,<span class="hljs-number">2</span><br>	<span class="hljs-keyword">add</span> <span class="hljs-built_in">ax</span>,<span class="hljs-built_in">ax</span><br>	<span class="hljs-keyword">add</span> <span class="hljs-built_in">ax</span>,<span class="hljs-built_in">ax</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,<span class="hljs-number">4c00H</span><br>	<span class="hljs-keyword">int</span> <span class="hljs-number">21H</span><br>abc ends<br>end<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>masm 编译，link 链接 生成exe文件</p>
+<p>“；”可以简化masm，link</p>
+<p>ml：两部合起来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 有入口的文件<br>assume cs:abc<br>abc segment<br>start:mov ax,2<br>	add ax,ax<br>	add ax,ax<br>	mov ax,4c00H<br>	int 21H<br>abc ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<p>1，exe文件加载过程</p>
+<p><img src="https://i.loli.net/2020/07/26/dMZRsrDHwSmQihj.png" srcset="/img/loading.gif" lazyload alt="image-20200726181347006"></p>
+<p>程序加载后，内存地址为ds：0</p>
+<p>其中前256是dos与程序通信的，256向后是程序</p>
+<h1 id="第五章，bx与loop"><a href="#第五章，bx与loop" class="headerlink" title="第五章，bx与loop"></a>第五章，bx与loop</h1><p>注意：在debug中[0]表示段地址的偏移地址，在masm中表示数值0</p>
+<h5 id="bx"><a href="#bx" class="headerlink" title="bx"></a>bx</h5><p>mov bx ，0</p>
+<p>mov ax，[bx]  ,此时[bx]表示以bx内容位偏移地址</p>
+<p>1，将bx中的数据作为偏移地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs assembly">inc bx # 自加<br></code></pre></td></tr></table></figure>
+
+<h5 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h5><p>1，loop 标号</p>
+<ul>
+<li>cx = cx-1</li>
+<li>判断cx中的值，不为零转到标号执行处，若果为零则向下执行</li>
+<li>cx中存放的一般是循环次数</li>
+</ul>
+<p>2，2^1000</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code<br>code segment<br>mov ax,2<br>mov cx,11<br>s:add as,ax<br>loop s # s就是标号   判断cx，是否跳到标号<br></code></pre></td></tr></table></figure>
+
+<p>3，越位赋值会可能出错 mov ax,[bx]</p>
+<p>mov al,[bx]</p>
+<p>mov ah,0</p>
+<p>4，汇编语言中数字以字母开头，例如大于9fffh的，Afffh，需要在前边加0</p>
+<p>5，使用deubg追踪循环</p>
+<p>g 命令地址：相当于 debug中的段点</p>
+<p>p :在循环时使用，会直接跳到循环结束，即自动完成循环过程</p>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>在masm中</p>
+<p>mov al，[0] 将0移入al</p>
+<p>mov al，ds:[0] ，偏移为0的地址中内容放入al</p>
+<p>mov al，[bx]，将bx为偏移地址的地址中的内容放入al</p>
+<p>mov al，ds:[bx]，同上</p>
+<h5 id="loop，bx联合应用"><a href="#loop，bx联合应用" class="headerlink" title="loop，bx联合应用"></a>loop，bx联合应用</h5><p>内存数值相加时的问题</p>
+<p>例：ffff:0—ffff:b 12个字节相加，</p>
+<p>问题：放入16位ax，会不会越界，8位如何放入16位寄存器</p>
+<p>解决方法：使用中介，将8位数据放入16位中介寄存器ax，再相加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code<br>code segment<br>	mov,ax,0ffffh<br>	mov,ds,ax # 设置段地址<br>	<br>	mov dx,0 # 初始化累加寄存器<br>	mov al,ds:[0]  # 赋值给中间寄存器<br>	mov ah,0 # 设置高位为0，此时ax为0<br>	add dx,ax # 累加<br>	...<br>	mov ax,4c00h<br>	int 21h<br></code></pre></td></tr></table></figure>
+
+<p>$sum =\sum\limits_{X=0}^{0bh}(ffffh*10h+X)$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 优化:使用循环，偏移地址应该递增<br>asume cs:code<br>code segment<br>	mov ax,0ffffh<br>	mov ds,ax<br>	mov bx,0<br>	<br>	mov dx,0<br>	<br>	mov cx,12<br>	<br>s:	mov al,[bx]<br>	mov ah,0<br>	add dx,ax<br>	int bx<br>	loop s<br>	mov ax,4c00h<br>	int 21h<br>code ends<br>end<br><br></code></pre></td></tr></table></figure>
+
+<h5 id="段前缀"><a href="#段前缀" class="headerlink" title="段前缀"></a>段前缀</h5><p>ds就是段地址，也称为段前缀，<font color=red>ds是默认的段前缀</font>，其他还有cs，es等</p>
+<h5 id="一段安全的空间"><a href="#一段安全的空间" class="headerlink" title="一段安全的空间"></a>一段安全的空间</h5><p>在PC中，0:200到0:2ff是安全的空间</p>
+<p>段前缀的使用</p>
+<p>在不同的段中操作时，一个ds需要多次更改，可能需要多个段寄存器，例如用es替代。效果更好</p>
+<h1 id="第六章，包含多个段的程序"><a href="#第六章，包含多个段的程序" class="headerlink" title="第六章，包含多个段的程序"></a>第六章，包含多个段的程序</h1><h5 id="代码段中使用数据"><a href="#代码段中使用数据" class="headerlink" title="代码段中使用数据"></a>代码段中使用数据</h5><p>dw 0123h,0456h 定义字符型数据</p>
+<p>db 45h,78h 定义字节型数据</p>
+<p>当上面定义在cs中时，数据段地址就是代码段的段地址</p>
+<p>dw在第一行定义，数据地址偏移为0,2,4,6….</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code<br>code segment <br>	dw 0123h,0456h,0789h<br>	start:mov bx,0<br>	mov ax,0<br>	mov cx,0<br>	s:add ax,cs:[bx]<br>	add bx 2<br>	loop s<br>	mov ax 4c00h<br>	int 21h<br>code ends<br>end start<br># cup读指令的时候会从start开始，若不添加start，应为dw的存在，存放的是数据，无法转化为机器指令，程序无法执行<br># end的作用：通知编译器程序结束，告诉编译器程序入口在哪里，当不指定入口时，会按照上到下执行，因此若现定义数据，会把数据当做指令执行<br></code></pre></td></tr></table></figure>
+
+<h5 id="代码段中使用栈"><a href="#代码段中使用栈" class="headerlink" title="代码段中使用栈"></a>代码段中使用栈</h5><p>问题：将上面程序中的数据逆序存放</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code<br>code:segment<br>	dw 0123h,0456h,0789h<br>	dw 0,0,0 # 定义数据当做栈空间<br>	<br>	start :mov ax,cs<br>	mov ss,ax   # 指定栈段<br>	mov sp,32	# 指定栈偏移，栈指针，操作时指针自动变<br>	mov bx,0<br>	mov cx,3	# 循环次数<br>	<br>	s:push cs:[bx] # 入栈数据<br>	add bx,2<br>	loop s<br>	<br>	mov bx,0<br>	mov cx,3<br>	<br>	s0:pop cs:[bx]<br>	add bx,2<br>	loop s0<br>	<br>	mov 4c00h<br>	int 21h<br>code ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<h5 id="将数据，代码，栈放入不同的段"><a href="#将数据，代码，栈放入不同的段" class="headerlink" title="将数据，代码，栈放入不同的段"></a>将数据，代码，栈放入不同的段</h5><p>上面的逆序排放</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code,ds:data,ss:stack<br>data segment<br>	dw 0123h,0456h,0789h<br>data ends<br>stack segment<br>	dw 0,0,0<br>stack ends<br>code segment<br>start:mov ax,stack  # cs,ss,da 系统加载程序时会有系统指定加载的位置，cs 确定后，ds应该就是cs-2，ss=cs-1<br>	  mov ss,ax<br>	  mov sp,6  # 指定栈指针<br>	  mov ax,data <br>	  mov ds,ax # 数据段地址<br>	  <br>	  mov bx,0<br>	  mov cx,3<br>	  <br>	  s:pop [bx]<br>	  add bx,2<br>	  loop s<br>	  <br>	  mov bx,0<br>	  mov cs,8<br>	  s0:pull [bx]<br>	  add bx,2<br>	  loop s0<br>	  <br>	  mov ax,4c00h<br>	  int 21h<br>code ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<h1 id="第七站，更灵活的定位内存地址的方法"><a href="#第七站，更灵活的定位内存地址的方法" class="headerlink" title="第七站，更灵活的定位内存地址的方法"></a>第七站，更灵活的定位内存地址的方法</h1><h5 id="and和or指令"><a href="#and和or指令" class="headerlink" title="and和or指令"></a>and和or指令</h5><ul>
+<li>and<ul>
+<li>两个都是1为1，其他是0 ，add al 10100010B</li>
+<li>可以把寄存器某一位设置为0：and al,10111111B</li>
+</ul>
+</li>
+<li>or<ul>
+<li>有一个1就为1</li>
+<li>使得寄存器某一位为1：or al,00000100B</li>
+</ul>
+</li>
+</ul>
+<h5 id="关于ASCII"><a href="#关于ASCII" class="headerlink" title="关于ASCII"></a>关于ASCII</h5><p>键盘按下a键：键盘产生61h，放入内存空间，编辑器软件从指定内存读取，送到显存中</p>
+<h5 id="以字符形式给出的数据"><a href="#以字符形式给出的数据" class="headerlink" title="以字符形式给出的数据"></a>以字符形式给出的数据</h5><p>‘….’指明数据是以字符形式给出，编译器会转化为ASCII</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume ds:data<br>data segment<br>db &#x27;unix&#x27;  # db 75H,6EH,49H,58H<br>db &#x27;fork&#x27; # ...<br>data ends<br>code segment<br>start:mov al,&#x27;a&#x27; # mov al,61h<br>	mov b1,&#x27;b&#x27;<br>	mov ax,4c00h<br>	int 21h<br>code ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<h5 id="大小写转化问题"><a href="#大小写转化问题" class="headerlink" title="大小写转化问题"></a>大小写转化问题</h5><p>A：65，a：97</p>
+<p>大写：第五位为0</p>
+<p>小写：第五位为1</p>
+<p>and 小写,11011111b</p>
+<p>or   大写,00100000b</p>
+<h5 id="bx-idata"><a href="#bx-idata" class="headerlink" title="[bx+idata]"></a>[bx+idata]</h5><p>mov ax,[bx+200]:将地址内数据放入ax，这个地址是bx中的值+200</p>
+<p>mov ax,200[bx]    mov ax,[bx].200 </p>
+<h5 id="用-bx-idata-方式进行数组的处理"><a href="#用-bx-idata-方式进行数组的处理" class="headerlink" title="用[bx+idata]方式进行数组的处理"></a>用[bx+idata]方式进行数组的处理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code,ds:data<br>data segment<br>	db &#x27;BaSiC&#x27;<br>	db &#x27;MinIX&#x27;<br>data ends<br><br>code segment<br>start:mov as,data<br>	mov ds,ax<br>	mov bx,0<br>	<br>	mov cx,5<br>	s:mov al,[bx]<br>	and al,11011111b<br>	mov [bx],al<br>	<br>	mov al,[5+bx]   # 5[bx]<br>	or al,00100000b<br>	mov [5+bx],al<br>	<br>	inc bx<br>	loop s<br><br>code ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<h5 id="SI和DI"><a href="#SI和DI" class="headerlink" title="SI和DI"></a>SI和DI</h5><p>与bx类似的功能，但不能分为2个8位的使用，</p>
+<p>bx不够用的问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># 将数据复制到后边地址<br># ds:si 指向原数据<br># ds:di 指向目的地址<br>assume cs:code,ds:data<br>data segment<br>	db &#x27;welcome to masm!&#x27;<br>	db &#x27;...............&#x27;<br>data ends<br><br>code segment<br>start:mov ax,data<br>	mov ds,ax<br>	mov si,0<br>	mov di,16<br>	mov cs,8<br>	s:mov ax,[si]<br>	mov [di],ax<br>	add si,2<br>	add di,2<br>	loop s<br>	<br>	mov ax,4c00h<br>	int 21h<br>code ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<h5 id="bx-si-和-bx-di"><a href="#bx-si-和-bx-di" class="headerlink" title="[bx+si]和[bx+di]"></a>[bx+si]和[bx+di]</h5><p>两个功能类似</p>
+<p>[bx+si] 表示一个内存单元，偏移地址为bx值+si值</p>
+<h5 id="bx-si-idata-和-bx-di-idata"><a href="#bx-si-idata-和-bx-di-idata" class="headerlink" title="[bx+si+idata]和[bx+di+idata]"></a>[bx+si+idata]和[bx+di+idata]</h5><p>表示内存单元，偏移地址，</p>
+<h5 id="不同寻址方式的灵活应用"><a href="#不同寻址方式的灵活应用" class="headerlink" title="不同寻址方式的灵活应用"></a>不同寻址方式的灵活应用</h5><ul>
+<li>ds:[idata]     </li>
+<li>[bx]</li>
+<li>[bx+idata]</li>
+<li>[bx+si]</li>
+<li>[bx+si+idata]</li>
+</ul>
+<p>例：将数据段单词，开头变为大写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code,ds:data<br>data segment<br>db &#x27;1.file    &#x27;<br>db &#x27;2.editable&#x27;<br>db &#x27;3.help    &#x27;<br>data ends<br>code segment<br>start:	mov ax,data<br>		mov ds,ax<br>		mov bx,0<br>		<br>		mov cx,3<br>	s:mov al,[bx+2] # 把第二个字母放入al<br> 	add al,11011111b  # 修改字母，变为大写<br>	mov [bx+3],al 	# 放回<br>	add bx,10<br>	loop s<br>	mov ax,4c00h<br>	int 21h<br>code ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<p>对于多层循环，需要其它寄存器记下外层cx的值，内层循环结束后恢复，不然会遇到死循环</p>
+<p><font color=red>当寄存器不够时，需要使用内存了</font>,如使用栈，每层cx入栈 push cx，结束时出栈pop cx</p>
+<h1 id="数据处理的基本问题"><a href="#数据处理的基本问题" class="headerlink" title="数据处理的基本问题"></a>数据处理的基本问题</h1><h5 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h5><ul>
+<li><p>处理的数据在哪里</p>
+</li>
+<li><p>处理的数据有多少，多长</p>
+</li>
+</ul>
+<p>寄存器：ax,bx,cx,dx    ah,al,bh,bj,ch,cl,dh,dl</p>
+<p>sp（栈指针）,bp,  si（原数据地址）,di（目的数据地址）</p>
+<p>段寄存器：ds（数据段），ss（栈段），cs（代码段），es（扩展段）</p>
+<h5 id="bx-si-di-bp"><a href="#bx-si-di-bp" class="headerlink" title="bx,si,di,bp"></a>bx,si,di,bp</h5><ul>
+<li>8086可以用[…]表达内存地址的寄存器：bx bp si di，[ax]是错误的</li>
+<li>这几种不能任意组合<ul>
+<li>bx，si</li>
+<li>bx，di</li>
+<li>bp，si</li>
+<li>bp，di</li>
+<li>其他的组合是错误的，例如：mov ax,[bp+si]</li>
+</ul>
+</li>
+<li>在[…]使用bp，时段地址是ss，即bp就像是sp</li>
+</ul>
+<h5 id="机器指令处理的数据所在位置"><a href="#机器指令处理的数据所在位置" class="headerlink" title="机器指令处理的数据所在位置"></a>机器指令处理的数据所在位置</h5><p>指令执行前，数据所在位置：CUP,内存，端口</p>
+<h5 id="汇编中数据位置的表达"><a href="#汇编中数据位置的表达" class="headerlink" title="汇编中数据位置的表达"></a>汇编中数据位置的表达</h5><ul>
+<li><p>立即数：直接包含在机器指令中的数据，存在于指令缓冲区:mov ax,1 :b80100</p>
+<ul>
+<li>B8表示移动立即数到ax</li>
+<li>指令寄存器：<ul>
+<li>就是cpu读取一条指令</li>
+<li>经过数据总线条指令存出入指令缓冲器</li>
+<li>读取该指令要操作的数据，放入地址加法器</li>
+<li>数据放入目的地址</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>寄存器 mov ax,bx:89D8</p>
+</li>
+<li><p>段地址和偏移地址</p>
+<ul>
+<li>mov ax,ds:[bp] 强制改变段地址</li>
+</ul>
+</li>
+</ul>
+<h5 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h5><p><img src="https://i.loli.net/2020/08/08/CTXy2hvfwgcbYP7.png" srcset="/img/loading.gif" lazyload alt="image-20200808154051203"></p>
+<h5 id="指令要处理的数据有多长"><a href="#指令要处理的数据有多长" class="headerlink" title="指令要处理的数据有多长"></a>指令要处理的数据有多长</h5><p>8086可操作byte，word，在机器指令中需要指明进行操作的是字符还是字节</p>
+<ul>
+<li>通过寄存器指名要处理的数据<ul>
+<li>mov ax,bx</li>
+</ul>
+</li>
+<li>X ptr指明内存长度<ul>
+<li>mov word ptr ds:[0],1</li>
+<li>inc word ptr [bx]</li>
+<li>inc word ptr ds:[0]</li>
+<li>add word ptr [bx],2</li>
+<li>mov byte ptr ds:[0],1</li>
+<li>等等，</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>栈指令，操作时，默认都是按照字符操作</li>
+</ul>
+</li>
+</ul>
+<h5 id="寻址方式的总和应用"><a href="#寻址方式的总和应用" class="headerlink" title="寻址方式的总和应用"></a>寻址方式的总和应用</h5><ul>
+<li>字符串在内存中就是数组</li>
+<li>一般用[bx+idata+si]访问结构体<ul>
+<li>bx表示结构体</li>
+<li>idata表示某一个数据项</li>
+<li>si表示数据项中每个元素</li>
+<li>student.name[i]</li>
+</ul>
+</li>
+</ul>
+<h5 id="divide指令"><a href="#divide指令" class="headerlink" title="divide指令"></a>divide指令</h5><ul>
+<li>除数：8位，16位，寄存器，内存都可以</li>
+<li>被除数：默认ax，dx与ax<ul>
+<li>除数8位，被除数16位（dx）</li>
+<li>除数16位，被除数应该是32位（dx+ax）</li>
+</ul>
+</li>
+<li>指令格式<ul>
+<li>div 寄存器</li>
+<li>div 内存单元<ul>
+<li>div byte ptr ds:[0]<ul>
+<li> al = ax/0地址的商</li>
+<li>ah = ax/0地址余数</li>
+</ul>
+</li>
+<li>div word ptr es:[0]<ul>
+<li>ax = [(dx)*10000H+(ax)]/((ds)*16+0)的商</li>
+<li>dx = [(dx)*10000H+(ax)]/((ds)*16+0)的余数</li>
+</ul>
+</li>
+<li>div byte ptr [bx+si+8]<ul>
+<li>al = (ax)/((ds)*16+bx+si+8)的商</li>
+<li>ah = (ax)/((ds)*16+bx+si+8)的余数</li>
+</ul>
+</li>
+<li>div word ptr [bx+si+8]<ul>
+<li>ax = [dx*10000h+ax]/(ds*16+bx+si+8)的商</li>
+<li>dx = [dx*10000h+ax]/(ds*16+bx+si+8)的余数</li>
+</ul>
+</li>
+<li>最后结果覆盖原来被除数的位置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="伪指令dd"><a href="#伪指令dd" class="headerlink" title="伪指令dd"></a>伪指令dd</h5><ul>
+<li><p>定义dword，即double word</p>
+</li>
+<li><p>```assembly<br>data segment<br>db 1 # 01H<br>dw 1 # 0001H<br>dd 1 # 00000001H<br>data ends</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><br>##### dup<br><br>- 同<span class="hljs-built_in">dw</span>,<span class="hljs-built_in">dd</span>,<span class="hljs-built_in">db</span>一样有编译器识别处理的符号，用来数据重复<br><br>- <span class="hljs-string">```</span>assembly<br>  <span class="hljs-built_in">db</span> <span class="hljs-number">3</span> dup(<span class="hljs-number">0</span>) # 定义了<span class="hljs-number">3</span>个字节<span class="hljs-number">0</span><br>  <span class="hljs-built_in">db</span> <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span><br>  <span class="hljs-built_in">db</span> <span class="hljs-number">3</span> dup(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br>  <span class="hljs-built_in">db</span> <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span><br>  <span class="hljs-built_in">db</span> <span class="hljs-number">2</span> dup(<span class="hljs-string">&#x27;abc,&#x27;</span>ABC)<br>  <span class="hljs-built_in">db</span> <span class="hljs-string">&#x27;abcABCabcABC&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs assembly">stack segment<br>dw 0,0,0,0,0,0...<br>stack ends<br>stack segment<br>db 200 dup(0)<br>stack ends<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="第九章，转移指令的原理"><a href="#第九章，转移指令的原理" class="headerlink" title="第九章，转移指令的原理"></a>第九章，转移指令的原理</h1><p>8086CPU转移指令分类</p>
+<ul>
+<li>无条件转移指令 例jmp</li>
+<li>条件转移指令</li>
+<li>循环指令 例loop</li>
+<li>过程</li>
+<li>中断</li>
+</ul>
+<h5 id="操作符offset"><a href="#操作符offset" class="headerlink" title="操作符offset"></a>操作符offset</h5><p>由编译器处理的符号，取得标号的偏移地址吗，就标号所在地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs assembly">assume cs:code<br>code segment<br>	start:mov ax.offset start  # 相当于mov ax,0<br>	s:mov ax,offset s # 相当于mov ax,3<br>code ends<br>end start<br></code></pre></td></tr></table></figure>
+
+<h5 id="jmp指令"><a href="#jmp指令" class="headerlink" title="jmp指令"></a>jmp指令</h5><ul>
+<li>cs，ip<ul>
+<li>可以只修改ip</li>
+<li>也可以修改cs</li>
+</ul>
+</li>
+<li>转移要求<ul>
+<li>目的地址</li>
+<li>转移的距离 （-128—-》127）段内跳转 <ul>
+<li>jmp start  标号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="依据位移进行jmp指令"><a href="#依据位移进行jmp指令" class="headerlink" title="依据位移进行jmp指令"></a>依据位移进行jmp指令</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">movax,0123 		# B8 23 01<br>mov as,ds:[0123]# A1 23 01<br>push ds:[0123]	# FF 36 23 01<br></code></pre></td></tr></table></figure>
+
+<p>jmp指令对应的机器码中没有目的地址，是相对于jmp所在指令的偏移</p>
+<ul>
+<li>jmp near ptr 标号 实现段内近转移：<ul>
+<li>IP=IP+16位位移</li>
+<li>near ptr 指明此处为16位位移，进行的是段内近转移</li>
+<li>16位位移 = 标号处地址减去jmp指令后第一个字节地址</li>
+</ul>
+</li>
+</ul>
+<h5 id="转移的目的地址在指令中的jmp指令"><a href="#转移的目的地址在指令中的jmp指令" class="headerlink" title="转移的目的地址在指令中的jmp指令"></a>转移的目的地址在指令中的jmp指令</h5><ul>
+<li>偏移地址是实际的地址</li>
+<li><font color=red>段间转移，远转移</font></li>
+<li>jmp fat ptr 标号：修改了cs:ip     —-&gt;EAXXXXYYYY</li>
+</ul>
+<h5 id="转移地址在寄存器中的jmp指令"><a href="#转移地址在寄存器中的jmp指令" class="headerlink" title="转移地址在寄存器中的jmp指令"></a>转移地址在寄存器中的jmp指令</h5><p>jmp 16位寄存器</p>
+<p>jmp ax</p>
+<h5 id="转移地址在内存中的jmp指令"><a href="#转移地址在内存中的jmp指令" class="headerlink" title="转移地址在内存中的jmp指令"></a>转移地址在内存中的jmp指令</h5><ul>
+<li>jmp word ptr 内存</li>
+<li>jmp dword ptr 内存，段之间转移，32位 高16位cs，低16位ip</li>
+</ul>
+<h5 id="jcxz指令"><a href="#jcxz指令" class="headerlink" title="jcxz指令"></a>jcxz指令</h5><ul>
+<li>有条件转移</li>
+<li>（-128–127）</li>
+<li>机器码包含位移，而不是目的地址</li>
+<li>jcxz 标号，<ul>
+<li>cx=0 跳转，否则不跳转，向下执行</li>
+<li>ip = ip+8位移<ul>
+<li>负数用补码表示</li>
+<li>有编译时编译器算出</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="loop指令"><a href="#loop指令" class="headerlink" title="loop指令"></a>loop指令</h5><ul>
+<li>位移而不是目的地址</li>
+<li>-128–127</li>
+<li>与cx配合</li>
+<li>都是编译器指令</li>
+</ul>
+<h5 id="根据位移进行转移的意义"><a href="#根据位移进行转移的意义" class="headerlink" title="根据位移进行转移的意义"></a>根据位移进行转移的意义</h5><p>使用位移可使程序在内存中任意位置调用</p>
+<h5 id="编译器对转移位移超界的检测"><a href="#编译器对转移位移超界的检测" class="headerlink" title="编译器对转移位移超界的检测"></a>编译器对转移位移超界的检测</h5><p>编译时编译器会报错</p>
+<h5 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h5><p>显存地址：B8000H-BFFFFH dos系统的显存地址</p>
+<h1 id="第十章，Call和Ret指令"><a href="#第十章，Call和Ret指令" class="headerlink" title="第十章，Call和Ret指令"></a>第十章，Call和Ret指令</h1><p>都是修改cs，ip </p>
+<h5 id="ret与retf"><a href="#ret与retf" class="headerlink" title="ret与retf"></a>ret与retf</h5><ul>
+<li>ret使用栈中的数据，修改ip实现近转移</li>
+<li>cpu执行ret时<ul>
+<li>ip=ss*16+sp</li>
+<li>sp=sp+2</li>
+</ul>
+</li>
+<li>cpu执行retf时<ul>
+<li>ip=ss*16+sp</li>
+<li>sp=sp+2</li>
+<li>cs=ss*16+sp</li>
+<li>sp=sp+2</li>
+</ul>
+</li>
+<li>ret执行后 ip=0，cs：ip指向代码段第一条指令</li>
+<li>retf执行后，cs：ip指向代码段第一条指令</li>
+</ul>
+<h5 id="call"><a href="#call" class="headerlink" title="call"></a>call</h5><ul>
+<li>与ret配合使用<ul>
+<li>将ip，或cs，ip入栈</li>
+<li>转移（jmp）</li>
+</ul>
+</li>
+<li>不能短转移</li>
+</ul>
+<h5 id="位移转移的call"><a href="#位移转移的call" class="headerlink" title="位移转移的call"></a>位移转移的call</h5><ul>
+<li><p>将当前标号入栈后，转到标号处执行</p>
+<ul>
+<li>sp =sp -2<ul>
+<li>ss*16+sp=ip</li>
+</ul>
+</li>
+<li>ip = ip+16位位移</li>
+</ul>
+</li>
+<li><p>相当于进行push ip，jmp near ptr 标号</p>
+</li>
+</ul>
+<h5 id="直接地址转移的call"><a href="#直接地址转移的call" class="headerlink" title="直接地址转移的call"></a>直接地址转移的call</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs assembly">call far ptr 标号<br>sp = sp -2<br>ss*16+sp=cs<br>sp = sp -2<br>ss*16+sp=ip<br><br>cs=标号所在段地址<br>ip=标号所在偏移地址<br></code></pre></td></tr></table></figure>
+
+<p>相当于push cs，push ip，jmp fat ptr 标号</p>
+<h5 id="寄存器转移的call"><a href="#寄存器转移的call" class="headerlink" title="寄存器转移的call"></a>寄存器转移的call</h5><p>sp =sp -2</p>
+<p>ss *16+sp =ip</p>
+<p>ip=16位寄存器</p>
+<p>相当于push ip,jmp 16位寄存器</p>
+<h5 id="转移地址在内存的call"><a href="#转移地址在内存的call" class="headerlink" title="转移地址在内存的call"></a>转移地址在内存的call</h5><ul>
+<li>call word ptr 内存<ul>
+<li>push ip</li>
+<li>jmp word ptr 内存单元</li>
+</ul>
+</li>
+<li>call dword ptr 内存<ul>
+<li>push cs</li>
+<li>push ip</li>
+<li>jmp dword ptr 内存单元</li>
+</ul>
+</li>
+</ul>
+<h5 id="call与ret的配合使用"><a href="#call与ret的配合使用" class="headerlink" title="call与ret的配合使用"></a>call与ret的配合使用</h5><p>可以使用call与ret配合写子程序，就像是高级语言中的方法，使用call跳转，ret返回</p>
+<h5 id="mul"><a href="#mul" class="headerlink" title="mul"></a>mul</h5><ul>
+<li>乘法指令<ul>
+<li>相乘的2位数位数需要相同</li>
+<li>8位：AL中和8位寄存器或内存单元</li>
+<li>16位：AX中和16位寄存器或内存单元</li>
+</ul>
+</li>
+<li>结果<ul>
+<li>2个8位：放在ax</li>
+<li>2个16位：高位DX,低位AX</li>
+</ul>
+</li>
+<li>mul reg,mul 内存单元<ul>
+<li>mul byte ptr ds:[0]   ==(ax)=(al)*(ds*16+0)</li>
+<li>mul word ptr [bx+si+8]<ul>
+<li>(ax)=(ax)*((ds)*16+(bx)+(si)+8) 低8位</li>
+<li>(dx)=(ax)*((ds)*16+(bx)+(si)+8)  高8位</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>例100*10<ul>
+<li>mov al,100</li>
+<li>mov b1,10</li>
+<li>mul bl</li>
+<li>ax = 1000(03E8H)</li>
+</ul>
+</li>
+<li>100*10000<ul>
+<li>mov ax,100</li>
+<li>mov bx,10000</li>
+<li>mul bx</li>
+<li>ax=4240H</li>
+<li>dx=000FH</li>
+</ul>
+</li>
+</ul>
+<h5 id="模块化程序设计"><a href="#模块化程序设计" class="headerlink" title="模块化程序设计"></a>模块化程序设计</h5><p>如何存储子程序参数，与返回值</p>
+<ul>
+<li><p>子程序计算N的3次方</p>
+<ul>
+<li><p>N存储位置</p>
+<ul>
+<li>寄存器</li>
+</ul>
+</li>
+<li><p>结果存储位置</p>
+<ul>
+<li>dx，ax</li>
+</ul>
+</li>
+<li><p>```assembly<br>bx = N ;型参<br>dx:ax=N^3</p>
+<p>cube:mov ax,bx<br>mul bx<br>mul bx<br>ret</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><br>##### 参数和结果传递问题<br><br>用寄存器存储参数与结果最常用的方法<br><br>##### 批量数据传递<br><br>传递的数据多的时候怎么办？使用内存,或者栈，高级语言就是栈<br><br><span class="hljs-string">```</span>assembly<br><span class="hljs-meta">assume</span> <span class="hljs-built_in">cs</span>:code<br>data <span class="hljs-meta">segment</span><br>	<span class="hljs-built_in">db</span> <span class="hljs-string">&#x27;conversation&#x27;</span>	<br>data ends<br>code <span class="hljs-meta">segment</span><br><span class="hljs-symbol">start:</span><span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,data<br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ds</span>,<span class="hljs-built_in">ax</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">si</span>,<span class="hljs-number">0</span>	<span class="hljs-comment">;ds:si指向字符串所在空间首地址</span><br>	<br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">cx</span>,<span class="hljs-number">12</span>	<span class="hljs-comment">;cx存放字符串长度</span><br>	<span class="hljs-keyword">call</span> capital<br>	<br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,<span class="hljs-number">4c00h</span><br>	<span class="hljs-keyword">int</span> <span class="hljs-number">21h</span><br><span class="hljs-symbol">capital:</span><span class="hljs-keyword">and</span> <span class="hljs-built_in">byte</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">si</span>]:<span class="hljs-number">11011111b</span><br>	<span class="hljs-keyword">inc</span> <span class="hljs-built_in">si</span><br>	<span class="hljs-keyword">loop</span> capital<br>	<span class="hljs-keyword">ret</span><br>code ends<br>end start<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h5 id="寄存器冲突"><a href="#寄存器冲突" class="headerlink" title="寄存器冲突"></a>寄存器冲突</h5><p>上面的程序，当不知道字符串长度时，如何做</p>
+<p>db ‘conversation’,’0’</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs assembly">capital:mov cl,[si]<br>	mov ch,0<br>	jcxz ok	;若果cx=0,结束，若不是，接着处理<br>	and byte ptr [si],11011111b<br>	inc si<br>	jmp short capital<br>ok:ret<br>	<br></code></pre></td></tr></table></figure>
+
+<h1 id="第十一章，标志寄存器"><a href="#第十一章，标志寄存器" class="headerlink" title="第十一章，标志寄存器"></a>第十一章，标志寄存器</h1><h5 id="引言-1"><a href="#引言-1" class="headerlink" title="引言"></a>引言</h5><p><font color=red>计算机中的数据可以看做是有符号数，也可以是无符号数</font></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">00000001B</span> # 可看做无符号数<span class="hljs-number">1</span>，或有符号数+<span class="hljs-number">1</span><br><span class="hljs-attribute">10000001B</span> # 可看做无符号数<span class="hljs-number">129</span>，或有符号数-<span class="hljs-number">127</span><br></code></pre></td></tr></table></figure>
+
+<p>flag标志寄存器与其它不同，其他是用来存放数据的，flag是按位起作用</p>
+<p><img src="https://i.loli.net/2020/08/14/iNHkBbZIwnDoz9Y.png" srcset="/img/loading.gif" lazyload alt="image-20200814142743401"></p>
+<p><img src="https://i.loli.net/2020/08/14/wHo1yItCRslgEup.png" srcset="/img/loading.gif" lazyload alt="image-20200814163851014"></p>
+<p> 1,3,5,12,13,14,15在8086中没有使用</p>
+<h5 id="ZF，零标志位"><a href="#ZF，零标志位" class="headerlink" title="ZF，零标志位"></a>ZF，零标志位</h5><ul>
+<li>上一条指令结果为0，此时标志位ZF=1<ul>
+<li>mov ax,1</li>
+<li>sub ax,1</li>
+<li>此时ax=0</li>
+</ul>
+</li>
+<li>否则ZF=0 <ul>
+<li>mov ax,2</li>
+<li>sub ax,1</li>
+<li>ax=1 </li>
+</ul>
+</li>
+<li>add,sub,mul，inc 等等都是运算指令，mov push等都是传送指令</li>
+</ul>
+<h5 id="PF，奇偶标志位"><a href="#PF，奇偶标志位" class="headerlink" title="PF，奇偶标志位"></a>PF，奇偶标志位</h5><ul>
+<li>指令执行后，结果中所有二进制中1的个数<ul>
+<li>偶数，PF=1</li>
+<li>奇数，PF=0 </li>
+</ul>
+</li>
+</ul>
+<h5 id="SF，符号标志位"><a href="#SF，符号标志位" class="headerlink" title="SF，符号标志位"></a>SF，符号标志位</h5><ul>
+<li><p>指令执行后结果的正负情况</p>
+</li>
+<li><p>SF=1，结果为负</p>
+</li>
+<li><p>SF=0，结果为正</p>
+</li>
+<li><p>```assembly<br>mov al,10000001B<br>add al,1<br>;结果 al=100000010B<br>;有符号位 -12 6<br>;无符号位 130<br>;所以说该指令包含结果有2个</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><br>  - SF标志，就是<span class="hljs-meta">CPU</span>对有符号数运算结果的一种记录，它记录数据正负，<span class="hljs-meta">Cpu</span>会影响SF标志位，但<span class="hljs-meta">Cpu</span>并不识别数据有无符号<br><br>- 但我们把数据当做无符号数，SF则无实际作用<br><br>  - <span class="hljs-string">```</span>assembly<br>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>,<span class="hljs-number">10000001B</span><br>    <span class="hljs-keyword">add</span> <span class="hljs-built_in">al</span>,<span class="hljs-number">1</span><br>    <span class="hljs-comment">;结果为10000010B，SF=1</span><br>    <span class="hljs-comment">;如果指令是进行有符号运算，那么结果为负数，否则不用处理</span><br>    <span class="hljs-comment">;注意没有-0的说法，只有+0</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="CF，进位标志位"><a href="#CF，进位标志位" class="headerlink" title="CF，进位标志位"></a>CF，进位标志位</h5><p> 存储上一条指令执行后是否有数据进位,或借位（减 法）</p>
+<ul>
+<li>有进位 CF=CY=1</li>
+<li>无进位 CF=NC=0</li>
+</ul>
+<p>减法</p>
+<ul>
+<li>97H-98H 在计算机中就是</li>
+<li>197H-98H = FF，CY=1</li>
+</ul>
+<h5 id="OF，溢出标志位"><a href="#OF，溢出标志位" class="headerlink" title="OF，溢出标志位"></a>OF，溢出标志位</h5><p>超出了机器的范围 </p>
+<ul>
+<li>溢出是针对有符号位，正+正边负</li>
+<li>进位是相对于无符号位，例如8位边9位</li>
+<li>溢出时OF=OV=1</li>
+</ul>
+<p><font color=red>对于cpu的计算结果，若做有符号位观察，OF,SF，若看作无符号位观察CF</font></p>
+<p><font color=red>总之，cpu计算时，不管有无符号，adc指令：结合符号位获取正确值</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov ax,98d ; 0110 0010<br>add ax,99d ; 0110 0011<br><br>;1100 0101  C5 SF=1,OF=1,CF=0<br>;当做无符号位相加，C5<br>;当有符号位，首位为1，SF=1表示是负数，是-59的补码，<br></code></pre></td></tr></table></figure>
+
+<h5 id="adc指令"><a href="#adc指令" class="headerlink" title="adc指令"></a>adc指令</h5><p>带进位加法指令，利用CF位记录值</p>
+<p>adc ax,bx       ax = ax+bx+CF</p>
+<p>add,配合adc可以解决这些问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">;1EF000h+201000h 高16位ax，低16位bx<br>mov ax,001EH<br>mov bx,0f000H<br>add bx,1000H ; 0000H cf=1<br>adc ax,0020H ; <br></code></pre></td></tr></table></figure>
+
+<p>adc执行后也会可能产生进位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs assembly">;1E F000 1000h+ 20 1000 1EF0h 高位16ax，次高位16bx，cx低16位<br>;思路 低16位相加，然后次16位adc，高16位adc<br>mov ax,001EH<br>mov bx,0f000H<br>mov cx,1000H<br><br>add cx,1ef0h<br>adc bx,1000h<br>adc ax,0020h<br></code></pre></td></tr></table></figure>
+
+<p>更大的数据可以放在栈或内存中</p>
+<h5 id="sbb指令"><a href="#sbb指令" class="headerlink" title="sbb指令"></a>sbb指令</h5><p>带位减法指令</p>
+<p>sbb ax,bx = &gt; ax= ax-bx-cf</p>
+<p>与加法类似</p>
+<h5 id="cmp指令"><a href="#cmp指令" class="headerlink" title="cmp指令"></a>cmp指令</h5><p>相当于减法指令，但不保存结果，仅仅对标志位进行设置</p>
+<p>cmp ax,ax ===&gt;  此时ax不变，仅影响flag —》ZF=1,PF=1,SF=0,CF=0,OF=0</p>
+<p><img src="https://i.loli.net/2020/08/14/NMzltF7Gkr5pguy.png" srcset="/img/loading.gif" lazyload alt="image-20200814182305437"></p>
+<p>有符号位比较</p>
+<p>ZF</p>
+<p>需要考虑OF,SF</p>
+<ul>
+<li>OF=0,SF=1 AH&lt;BH</li>
+<li> OF=1,SF=1 AH&gt;BH</li>
+<li>SF=0,OF=1 AH&lt;BH</li>
+<li>OF=0,SF=0 AH&gt;BH</li>
+</ul>
+<h5 id="检测比较结果的条件转移指令"><a href="#检测比较结果的条件转移指令" class="headerlink" title="检测比较结果的条件转移指令"></a>检测比较结果的条件转移指令</h5><p>与cmp配合</p>
+<p><img src="https://i.loli.net/2020/08/14/QZepGlMS7IxP26a.png" srcset="/img/loading.gif" lazyload alt="image-20200814233016395"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs assembly">cmp ah,bh<br>je s<br>add ah,bh<br>jmp short ok<br>s:add ah,ah<br>ok:ret<br></code></pre></td></tr></table></figure>
+
+<h5 id="DF标志和串传送指令"><a href="#DF标志和串传送指令" class="headerlink" title="DF标志和串传送指令"></a>DF标志和串传送指令</h5><ul>
+<li><p>flag第10位，方向标志位</p>
+</li>
+<li><p>在串指令中，控制每次操作后si，di增减</p>
+</li>
+<li><p>DF=0,每次操作后递增</p>
+</li>
+<li><p>DF=1递减</p>
+</li>
+<li><p>movsb:以字节为单位传递，将ds:si指向的内存中的数据送入es:di</p>
+<ul>
+<li>es*16+di=ds*16+si</li>
+<li>若DF=0,SI=SI+1,DI=DI+1</li>
+<li>若DF=1;SI=SI-1,DI=DI-1</li>
+</ul>
+</li>
+<li><p>movsw 以字为单位传送，即16位，si，di每次加减2</p>
+</li>
+<li><p>movsb,movsw与rep配合</p>
+<ul>
+<li>rep movsb ，根据cx的值重复n次</li>
+</ul>
+</li>
+<li><p><font color=red>cld:设置DF=0,std设置DF=1</font></p>
+</li>
+<li><p>```assembly<br>assume cd:code<br>data segment<br>db ‘welcome to masm!’<br>db 16 dup(0)<br>data ends<br>code segment<br>start:mov cx,16</p>
+<div class="code-wrapper"><pre><code class="hljs">cld;
+mov ax data
+mov ds,ax
+mov si,0
+mov di,16
+mov es,ax
+rep movsb
+mov ax,4c00h
+int 21h
+</code></pre></div>
+<p>code ends<br>end start</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><br>##### <span class="hljs-keyword">pushf</span>和<span class="hljs-keyword">popf</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">pushf:</span>将标志寄存器的值压入栈中<br><span class="hljs-symbol"></span><br><span class="hljs-symbol">popf:</span>弹出到标志寄存器，出栈<br><br># 第十二章，内中断<br><br>##### 内中断的产生<br><br>外部中断：外部设备<br><br>内部中断：内部错误<br><br>软件中断，<span class="hljs-keyword">int</span> <span class="hljs-number">21h</span>等<br><br><span class="hljs-meta">CPU</span>中断优先权：<br><br>- 除法错误，溢出中断，软件中断<br>- 不可屏蔽中断<br>- 可屏蔽中断<br>- 单步中断<br><br>##### 中断处理程序<br><br>内存中有中断处理程序<br><br>##### 中断向量表<br><br>- 形式：序号 中断程序地址<br>- 地址用8bit，所以一共<span class="hljs-number">256</span>个中断程序<br><br>- <span class="hljs-keyword">int</span> 序号 就会调用中断处理程序<br>- 对于8086CUP，中断程序地址存放位置<span class="hljs-number">0000</span>：<span class="hljs-number">0000</span>---》<span class="hljs-number">0000</span>：03FF，段地址16bit，偏移地址16bit，<span class="hljs-number">32</span>\*<span class="hljs-number">256</span><br>- <span class="hljs-number">8086</span>中<span class="hljs-number">0</span>:<span class="hljs-number">200</span>-<span class="hljs-number">0</span>:<span class="hljs-number">300</span>安全的地址，因为并不是<span class="hljs-number">256</span>个程序都要用<br><br>##### 中断过程<br><br>找到中断程序地址，<span class="hljs-meta">CPU</span>设置<span class="hljs-built_in">cs</span>，<span class="hljs-built_in">ip</span>该过程为中断过程<br><br>中断过程：<br><br>- 取得中断类型码<br>- 标志寄存器入栈<br>- 设置标志寄存器的第八位TF,第九位IF为<span class="hljs-number">0</span><br>- <span class="hljs-built_in">CS</span>,<span class="hljs-built_in">IP</span>入栈<br>- 读入<span class="hljs-built_in">cs</span>，<span class="hljs-built_in">ip</span><br><br>##### 中断处理程序<br><br>- 保存用到的寄存器<br>- 处理中断<br>- 恢复寄存器<br>- 用<span class="hljs-keyword">iret</span>指令返回<br><br><span class="hljs-keyword">iret</span>：<span class="hljs-keyword">pop</span> <span class="hljs-built_in">ip</span>；<span class="hljs-keyword">pop</span> <span class="hljs-built_in">cs</span>；<span class="hljs-keyword">popf</span><br><br><span class="hljs-keyword">iret</span>和硬件自动完成中断过程配合使用<br><br>##### 除法错误中断处理<br><br>##### 编程处理<span class="hljs-number">0</span>号中断<br><br>发生除法溢出时，即结果比寄存器范围大，<span class="hljs-meta">Cpu</span>将转换为处理中断程序<br><br>中断向量表中该错误终端地址为<span class="hljs-number">0</span>号地址<br><br>可以自定义中断程序，修改中断向量表，此时会执行自己的中断程序<br><br><span class="hljs-string">```</span>assembly<br><span class="hljs-meta">assume</span> <span class="hljs-built_in">cs</span>:code<br>code <span class="hljs-meta">segment</span><br><span class="hljs-symbol">start:</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,<span class="hljs-built_in">cs</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ds</span>,<span class="hljs-built_in">ax</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">si</span>,offset do0<span class="hljs-comment">;设置自定义终端程序位置</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,<span class="hljs-number">0</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">es</span>,<span class="hljs-built_in">ax</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">di</span>,<span class="hljs-number">200h</span>	<span class="hljs-comment">;设置es:di位置</span><br>	<br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">cx</span> offset do0end- offset do0<br>	<span class="hljs-keyword">cld</span> <span class="hljs-keyword">rep</span> <span class="hljs-keyword">movsb</span> <span class="hljs-comment">;中断程序写入内存</span><br>	<span class="hljs-comment">;设置中断向量表</span><br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,<span class="hljs-number">4c00h</span><br>	<span class="hljs-keyword">int</span> <span class="hljs-number">21h</span><br><span class="hljs-symbol">do0:</span><br>	xxxxx<br>	<span class="hljs-keyword">mov</span> <span class="hljs-built_in">ax</span>,<span class="hljs-number">4c00h</span><br>	<span class="hljs-keyword">int</span> <span class="hljs-number">21h</span><br><span class="hljs-symbol">do0end:</span><span class="hljs-keyword">nop</span> <span class="hljs-comment">;占一个字节，无作用</span><br>code ends<br>end start<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="单步中断"><a href="#单步中断" class="headerlink" title="单步中断"></a>单步中断</h5><p>CPU在执行一条指令后检测到TF=1，就会引发中断过程</p>
+<p>单步中断的类型码为1，debug就是改变了1号中断的程序，改为debug的程序</p>
+<h5 id="响应中断的特殊情况"><a href="#响应中断的特殊情况" class="headerlink" title="响应中断的特殊情况"></a>响应中断的特殊情况</h5><p>有时候遇到中断信号CPU也不会响应，</p>
+<p>例如：</p>
+<ul>
+<li>SS:SP的设置过程，ss，sp需要同时改变，因此不能被中断<ul>
+<li>mov设置ss：sp时也要连续</li>
+</ul>
+</li>
+</ul>
+<h1 id="第十三章，int指令"><a href="#第十三章，int指令" class="headerlink" title="第十三章，int指令"></a>第十三章，int指令</h1><h5 id="int指令"><a href="#int指令" class="headerlink" title="int指令"></a>int指令</h5><p>与call类似，int调用中断程序</p>
+<h5 id="对int-iret与栈的深入理解"><a href="#对int-iret与栈的深入理解" class="headerlink" title="对int,iret与栈的深入理解"></a>对int,iret与栈的深入理解</h5><h5 id="BIOS与dos中断例程的安装"><a href="#BIOS与dos中断例程的安装" class="headerlink" title="BIOS与dos中断例程的安装"></a>BIOS与dos中断例程的安装</h5><ul>
+<li>开机后CS:0FFFFH,IP=0, 该位置有一条跳转指令，执行后专区bios的硬件检测与初始化程序</li>
+<li>初始化程序，将BIOS所支持的中断向量，即Bois提供的中断例程入口记录在中断向量表</li>
+<li>完成后 int 19h进行操作系统的引导，将计算机交给操作系统<ul>
+<li>dos病毒就是改变 int 19h的中断</li>
+</ul>
+</li>
+</ul>
+<h5 id="BIOS中断历程应用"><a href="#BIOS中断历程应用" class="headerlink" title="BIOS中断历程应用"></a>BIOS中断历程应用</h5><ul>
+<li><p>int 10h中断的设置光标位置功能</p>
+<ul>
+<li>10h中包含多个子程序，通过ah，设置子程序的序号</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov ah,2 ;2号子程序<br>mov bh,0 ;0页<br>mov dh,5 ;5行<br>mov dl,12 ;12列<br>int 10h<br></code></pre></td></tr></table></figure></li>
+<li><p>int 21h</p>
+<ul>
+<li>程序返回功能<ul>
+<li>mov ah 4ch # 序号，程序返回的功能</li>
+<li>mov al,0  # 返回值</li>
+<li>int 21h</li>
+</ul>
+</li>
+<li>光标显示字符功能</li>
+</ul>
+</li>
+</ul>
+<h1 id="第十四章，端口"><a href="#第十四章，端口" class="headerlink" title="第十四章，端口"></a>第十四章，端口</h1><h5 id="端口的读写"><a href="#端口的读写" class="headerlink" title="端口的读写"></a>端口的读写</h5><ul>
+<li><p>访问内存</p>
+<ul>
+<li>mov ax,ds:[8]</li>
+<li>cpu 通过地址线将地址8信息发出</li>
+<li>cpu控制线发出内存读命令，选中存储器新编，通知他读数据</li>
+<li>存储器将8单元数据通过数据线送入cpu</li>
+</ul>
+</li>
+<li><p>当问端口</p>
+<ul>
+<li>使用in,out</li>
+<li>in al,60h</li>
+<li>地址总线60h发出</li>
+<li>控制线发出端口度命令，端口芯片，通知读数据</li>
+<li>端口芯片通过数据线传入cpu</li>
+<li>8位端口al,16位ax<ul>
+<li>in al，20h 读取20h端口一个字节</li>
+<li>mov dx,3f8h</li>
+<li>in al,dx 读取改端口一个字节</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="CMOS-RAM-芯片"><a href="#CMOS-RAM-芯片" class="headerlink" title="CMOS RAM 芯片"></a>CMOS RAM 芯片</h5><ul>
+<li>包含一个实时钟和128存储单元的RAM</li>
+<li>该芯片靠电池供电，不是电源</li>
+<li>128单元中，内部时钟占用0-0dh，其他保存系统配置信息</li>
+<li>芯片内部有2端口70h,71h，cup通过他们进行读写<ul>
+<li>70h地址端口，要访问的RAM单元地址，</li>
+<li>71h是数据端口，要读取或写入的数据</li>
+<li>例：读取RAM 2号单元<ul>
+<li>2送入 70h</li>
+<li>从71 读取2单元内容</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="shl与shr指令"><a href="#shl与shr指令" class="headerlink" title="shl与shr指令"></a>shl与shr指令</h5><ul>
+<li><p>逻辑移位指令，左移与右移</p>
+</li>
+<li><p>将寄存器或内存单元中数据左移，右移</p>
+</li>
+<li><p>shl</p>
+<ul>
+<li><p>数据左移</p>
+</li>
+<li><p>最后移出的写入CF</p>
+</li>
+<li><p>最低位0补充</p>
+</li>
+<li><p>若移位大于1，移动位数放在cl，不能直接用数字</p>
+</li>
+<li><p>```assembly<br>mov  al,01001000b<br>shl al,1<br>;al = 10010000b</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>- shr 相反的操作<br><br>##### CMOS RAM中存储时间信息<br><br>- 秒<span class="hljs-number">00</span>H,分<span class="hljs-number">02</span>h，时<span class="hljs-number">04</span>h，日<span class="hljs-number">07</span>h，月<span class="hljs-number">08</span>h，年，<span class="hljs-number">09</span>h<br><br>- BCD格式码存放<br>  - 四位<span class="hljs-number">01</span>表示<span class="hljs-number">1</span><span class="hljs-number">-9</span><br>  - <span class="hljs-number">0000</span><span class="hljs-number">-0</span>,<span class="hljs-number">0001</span><span class="hljs-number">-1</span>,<span class="hljs-number">0010</span><span class="hljs-number">-2</span>  ..... <span class="hljs-number">1001</span><span class="hljs-number">-9</span><br>  - 例如<span class="hljs-number">26</span>:<span class="hljs-number">0010</span>  <span class="hljs-number">0110</span><br><br># 第十五章，外中断<br><br>##### 接口芯片和端口<br><br>外设的出入不是直接送入内存，而是相关接口芯片的端口中<br><br>##### 外中断信息<br><br>- 可屏蔽<br>- 不可屏蔽<br>- 需要看IF位，IF=<span class="hljs-number">1</span>，指令执行后中断，否则不中断<br>- sti设置TF=<span class="hljs-number">1</span>,cli <span class="hljs-keyword">if</span>=<span class="hljs-number">0</span><br>- 不可屏蔽类型码固定是<span class="hljs-number">2</span><br>  - 标志位入栈，IF=<span class="hljs-number">0</span>,TF=<span class="hljs-number">0</span>,表示此程序不能被中断<br>  - cs，ip入栈<br>  - ....<br>- 外设几乎都是和屏蔽中断<br><br>##### PC键盘的处理过程<br><br>- 按下一个键<br>- 键盘芯片产生扫描码<br>- ![image<span class="hljs-number">-20200815161038632</span>](https:<span class="hljs-comment">//i.loli.net/2020/08/15/oxVv6yfcUPwMT4n.png)</span><br>- 送入主板接口芯片寄存器，寄存器端口<span class="hljs-number">60</span>h<br>- 松开时也会送入<br>- 到达<span class="hljs-number">60</span>h时，发送int <span class="hljs-number">9</span> 中断<br>- Bios int9中断例程，<br>  - 读取<span class="hljs-number">60</span>h端口扫描码<br>  - 是字符，将扫描码与ascii送入bios键盘缓冲区（因为有些操作在操作系统之前），缓冲区中 一个按键<span class="hljs-number">16</span>位 <span class="hljs-number">8</span>位扫描码，<span class="hljs-number">8</span>位ASCII<br>  - 是控制键，转换为状态字节，写入内存中存储状态的字节单元<br>- cpu检测到，若IF=<span class="hljs-number">1</span>，引发中断去执行int9<br><br>##### 编写int <span class="hljs-number">9</span> 中断例程<br><br>##### 安装新的int <span class="hljs-number">9</span>终端例程<br><br># 第十六章，直接定址表<br><br>##### 描述了单元长度的标号<br><br>```assembly<br>assume cs:<span class="hljs-keyword">code</span><br><span class="hljs-keyword">code</span> segment<br>a:db <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<br>b:dw <span class="hljs-number">0</span><br>start :mov si,offset a;将a的偏移地址给si<br><span class="hljs-keyword">code</span> ends<br>end start<br>;若标号后边没有“:”他们可以同时描述内存地址与单元长度<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h5 id="在其他段中使用数据标号"><a href="#在其他段中使用数据标号" class="headerlink" title="在其他段中使用数据标号"></a>在其他段中使用数据标号</h5><p>有“:”的地址标号只能在代码段使用</p>
+<p>若要使用数据标号访问数据，需要assume 将寄存器与段对应</p>
+<p>例如上面的数据，访问12345678中的1  需要设置ds，si</p>
+<p>若使用a,则mov  ax,[0]即可不用管ds，因为assume ds:data</p>
+<ul>
+<li><p>存储地址</p>
+<ul>
+<li>```assembly<br>data segment<br>a db 1,2,3,4,5,6,7,8<br>b dw 0<br>c dw offset a,seg a,offset b,seg b ;<br>c dd a,b ;32bit存储地址<br>data ends<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>##### 直接定址表<br><br>##### 程序入口地址的直接定址表<br><br># 第十七章，BIOS键盘的输入磁盘读写<br><br>##### int <span class="hljs-number">9</span> 中断对键盘输入的处理<br><br>键盘缓区<span class="hljs-number">15</span>个字单元，存储扫描码，ascii<br><br>##### int <span class="hljs-number">16</span> 读取键盘缓冲区<br><br>```assembly<br>mov ah,<span class="hljs-number">0</span><br>int <span class="hljs-number">16</span>h <br>;从键盘缓冲区读取一个，并删除它<br>; ah=扫描码，al=Ascii<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>int 16h的0号功能</p>
+<ul>
+<li>检测缓冲区是否有数据</li>
+<li>没有继续上一步</li>
+<li>读取缓冲区第一个字</li>
+<li>送入ax</li>
+<li>缓冲区已读取那个字删除</li>
+</ul>
+<p>int  9向缓冲区写数据，int16h读数据，编程接受用户输入时，就是int16h</p>
+<h5 id="字符串的输入"><a href="#字符串的输入" class="headerlink" title="字符串的输入"></a>字符串的输入</h5><ul>
+<li>要求<ul>
+<li>能够输入</li>
+<li>输入时显示</li>
+<li>可以删除</li>
+</ul>
+</li>
+<li>使用栈</li>
+</ul>
+<h5 id="int-13h"><a href="#int-13h" class="headerlink" title="int 13h"></a>int 13h</h5><p>柱面号，磁道号，扇区号</p>
+<p>读取：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs assembly">ah = int 13h ;功能号，2表示读取，3表示写入<br>al=读取扇区数<br>ch=磁道号<br>cl=扇区号<br>dh=磁头号<br>dl=驱动号 0：软驱A，1：软驱B   80h：硬盘C，81h：硬盘D<br>ex:bx 向此区域读入数据<br><br>ah=0,al = 读入的扇区数<br>ah=出错代码<br></code></pre></td></tr></table></figure>
+
+<p>写入同上</p>
+<ul>
+<li>直接写入可能覆盖数据，危险</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_0_%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

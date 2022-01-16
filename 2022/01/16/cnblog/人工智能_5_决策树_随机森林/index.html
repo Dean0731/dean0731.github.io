@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="# 决策树,随机森林 # 决策树结构:if-then # 信息熵: #   例:第一届世界杯32支球队 每个队伍冠军概率1&#x2F;32 #               可得 log32(程序员认为的log一般都默认是以2为底) &#x3D; -(1&#x2F;32*log(1&#x2F;32)+1&#x2F;32*log(1&#x2F;32).....) #           2018 第21届世界杯根据历史数据获胜概率不同   log32  &amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD_5_%E5%86%B3%E7%AD%96%E6%A0%91_%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="# 决策树,随机森林 # 决策树结构:if-then # 信息熵: #   例:第一届世界杯32支球队 每个队伍冠军概率1&#x2F;32 #               可得 log32(程序员认为的log一般都默认是以2为底) &#x3D; -(1&#x2F;32*log(1&#x2F;32)+1&#x2F;32*log(1&#x2F;32).....) #           2018 第21届世界杯根据历史数据获胜概率不同   log32  &amp;g">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.696Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      47 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <div class="cnblogs_code">
+<div class="code-wrapper"><pre><span style="color: #008000;">#</span><span style="color: #008000;"> 决策树,随机森林</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 决策树结构:if-then</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 信息熵:</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   例:第一届世界杯32支球队 每个队伍冠军概率1/32</span><span style="color: #008000;">
+#</span><span style="color: #008000;">               可得 log32(程序员认为的log一般都默认是以2为底) = -(1/32*log(1/32)+1/32*log(1/32).....)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">           2018 第21届世界杯根据历史数据获胜概率不同   log32  &gt; -(1/4*log(1/4)+1/4*log(1/4).....)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">           几个log的和即为信息熵,   当概率变化时  log的和是小于log(n)的</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 信息熵与不确定性是相联系的</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   H(X)= -(P(X1)log(P(X1))+P(X2)log(P(X2))......)   概率相同时为log(n)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       信息熵越大表示 几率均等,不确定性大</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 决策树的划分依据:信息增益 (最大值对应的特征即为重要特征)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   当得知一个特征条件之后,减少的信息熵的大小 (构建决策树时,放在前边)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   得知x特征的信息,是的类y的信息的不确定性减少的程度</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   Ck表示某个类的样本数,即某类目标值的数量</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       g(D,A) 特征A对数据集D的信息增益g(D,A)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       H(D) 数据集的信息熵 (根据目标值求) H(D) = -((|C1|/|D|)/log(|C1|/|D|)+(|C2|/|D|)/log(|C2|/|D|)+......)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       H(D,A) 给定条件下D的信息熵 H(D,A) = -( (|Di|/|D|)*H(Di) )</span><span style="color: #008000;">
+#</span><span style="color: #008000;">           例:特征A为年龄,有青年,中年,老年  H(D,A) 表示为 -( 青年占所有的比例*H(青年)+ 中年,老年 )</span><span style="color: #008000;">
+#</span><span style="color: #008000;">                       H(青年) = 值看青年的数据集    根据目标值  = - ( (目标值1/所有青年数)log(目标值1/所有青年数)+....)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">    即可根据此 生成决策树</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 常用算法 (有的使用基尼系数(不在分析实现方法),有的使用信息增益)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   ID3 使用信息增益最大的原则</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   C45 信使用息增益比最大的准则</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   CART</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       回归树:平方误差最小</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       分类树 基尼系数(划分更加仔细,可以指定数的深度等等) 最小的准则 在skleran中选择划分的默认原则</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> API</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   sklearn.tree.DecisionTreeClassifier(Criterion='gini',max_depth=None,random_state=None)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   决策树分类器</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   criterion:默认是gini系数,也可选择信息增益的熵entroy</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   max_depth:树的深度大小</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   random_state:随机数种子</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   method:</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   decision_path:返回决策树的路径</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> API sklearn.tree.export_graphviz() 导出DOT格式</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   tree.export_grahviz(estimator,out_file="",features_names=[])</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   将dot转换为图片格式</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   sudo apt-get install graphviz</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   dot -Tpng tree.dot -o tree.png</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> ==================================</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 案例:泰坦尼克号------&gt;根据游客的信息,判断游客是否存活</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 数据:http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/titanic.txt</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       age 项有空缺</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   "row.names","pclass","survived","name","age","embarked","home.dest","room","ticket","boat","sex"</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   "1","1st",1,"Allen, Miss Elisabeth Walton",29.0000,"Southampton","St Louis, MO","B-5","24160 L221","2","female"</span>
+<span style="color: #0000ff;">def</span><span style="color: #000000;"> decision():
+    </span><span style="color: #0000ff;">import</span><span style="color: #000000;"> pandas as pd
+    </span><span style="color: #800000;">"""</span><span style="color: #800000;">
+    决策树
+    :return: 
+    </span><span style="color: #800000;">"""</span>
+    <span style="color: #008000;">#</span><span style="color: #008000;"> 1,获取数据</span>
+    taitan =pd.read_csv(<span style="color: #800000;">"</span><span style="color: #800000;">http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/titanic.txt</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 2,处理数据,获取特征值与目标值</span>
+    x = taitan[[<span style="color: #800000;">'</span><span style="color: #800000;">pclass</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">age</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">sex</span><span style="color: #800000;">'</span><span style="color: #000000;">]]
+    y </span>= taitan[<span style="color: #800000;">'</span><span style="color: #800000;">survived</span><span style="color: #800000;">'</span><span style="color: #000000;">]
+    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 3,处理缺失值</span>
+    x[<span style="color: #800000;">'</span><span style="color: #800000;">age</span><span style="color: #800000;">'</span>].fillna(x[<span style="color: #800000;">'</span><span style="color: #800000;">age</span><span style="color: #800000;">'</span>].mean(),inplace=True) <span style="color: #008000;">#</span><span style="color: #008000;"> inplace 表示填补</span>
+    <span style="color: #008000;">#</span><span style="color: #008000;"> 4,分割数据</span>
+    <span style="color: #0000ff;">from</span> sklearn.model_selection <span style="color: #0000ff;">import</span><span style="color: #000000;"> train_test_split
+    x_train,x_test,y_train,y_test </span>= train_test_split(x,y,test_size=0.25<span style="color: #000000;">)
+
+<pre><code class="hljs">&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 5,特征处理 (对于类别的)使用one-hot编码(将数据转换为数字的形式:例如性别,使用0,1代替)&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;from&lt;/span&gt; sklearn.feature_extraction &lt;span style=&quot;color: #0000ff;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt; DictVectorizer
+dict &lt;/span&gt;= DictVectorizer(sparse=&lt;span style=&quot;color: #000000;&quot;&gt;False)
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; to_dict() 把原来的 数据转换为 [&#123;&#39;sex&#39;:&quot;male&quot;&#125;,&#123;&#125;]格式&lt;/span&gt;
+x_train = dict.fit_transform(x_train.to_dict(orient=&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;records&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;))
+
+x_test &lt;/span&gt;= dict.transform(x_test.to_dict(orient=&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;records&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;))
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 6,决策树处理&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;from&lt;/span&gt; sklearn.tree &lt;span style=&quot;color: #0000ff;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt; DecisionTreeClassifier
+dec &lt;/span&gt;=&lt;span style=&quot;color: #000000;&quot;&gt; DecisionTreeClassifier()
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; dec = DecisionTreeClassifier(max_depth=5)&lt;/span&gt;
+</code></pre></div>
+<p><span style="color: #000000;">    dec.fit(x_train,y_train)<br>    </span><span style="color: #0000ff;">print</span>(<span style="color: #800000;">“</span><span style="color: #800000;">准确率:</span><span style="color: #800000;">“</span><span style="color: #000000;">,dec.score(x_test,y_test))<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 导出决策树结构</span><br>    <span style="color: #0000ff;">from</span> sklearn.tree <span style="color: #0000ff;">import</span><span style="color: #000000;"> export_graphviz<br>    export_graphviz(dec,out_file</span>=<span style="color: #800000;">“</span><span style="color: #800000;">./tree.dot</span><span style="color: #800000;">“</span>,feature_names=[<span style="color: #800000;">“</span><span style="color: #800000;">age</span><span style="color: #800000;">“</span>,<span style="color: #800000;">“</span><span style="color: #800000;">pclass=1st</span><span style="color: #800000;">“</span>,<span style="color: #800000;">“</span><span style="color: #800000;">pclass=2nd</span><span style="color: #800000;">“</span>,<span style="color: #800000;">“</span><span style="color: #800000;">pclass=3rd</span><span style="color: #800000;">“</span>,<span style="color: #800000;">“</span><span style="color: #800000;">女性</span><span style="color: #800000;">“</span>,<span style="color: #800000;">“</span><span style="color: #800000;">男性</span><span style="color: #800000;">“</span><span style="color: #000000;">])<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> 优点</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   简单的理解和解释 树木可视化</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   不需要归一化</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 缺点(太过于详细,有些异常点)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   创建的树不能很好的适用于测试集:过拟合</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 改进</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   减枝cart算法 (指定叶子属性:例如若到达该叶子的样本数少于5,就不要了)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   随机森林</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ==========================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 集成学习方法—-随机森林</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   集成学习方法:多个分类器或模型组合</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   什么是随机森林:包含多个分类器,最后的结果取众数</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   随机森林的过程,优势(n个样本,m个特征</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       单个树的建立过程:</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">           1,随机在n个中抽取一个样本,重复n次 样本可能重复</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">           2,随机在m个特征中选出M个特征 M&lt;m</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       建立10个树,样本,特征大多不同   随机又放回的抽样 bootstrap抽样</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> API sklearn.ensemble.RandomForestClassifier(n_estimators=10,criterion=”gini” 使用基尼系数</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ,max_depth=None,bootstrap=True,random_state=None)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   n_estimators:数量个数默认是10 一般是120,200,300,500,800,1200</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   max_features=”auto” 决策树最大的特征数量,(选取的特征太多,容易过拟合)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   auto:特征数开方,sprt=auto,log2,None</span><br><span style="color: #0000ff;">def</span><span style="color: #000000;"> random_forest():<br>    </span><span style="color: #0000ff;">import</span><span style="color: #000000;"> pandas as pd<br>    </span><span style="color: #800000;">“””</span><span style="color: #800000;"><br>   随机森林<br>    :return:<br>    </span><span style="color: #800000;">“””</span><span style="color: #000000;"><br>    taitan </span>=pd.read_csv(<span style="color: #800000;">“</span><span style="color: #800000;"><a target="_blank" rel="noopener" href="http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/titanic.txt">http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/titanic.txt</a></span><span style="color: #800000;">“</span><span style="color: #000000;">)<br>    x </span>= taitan[[<span style="color: #800000;">‘</span><span style="color: #800000;">pclass</span><span style="color: #800000;">‘</span>,<span style="color: #800000;">‘</span><span style="color: #800000;">age</span><span style="color: #800000;">‘</span>,<span style="color: #800000;">‘</span><span style="color: #800000;">sex</span><span style="color: #800000;">‘</span><span style="color: #000000;">]]<br>    y </span>= taitan[<span style="color: #800000;">‘</span><span style="color: #800000;">survived</span><span style="color: #800000;">‘</span><span style="color: #000000;">]<br>    x[</span><span style="color: #800000;">‘</span><span style="color: #800000;">age</span><span style="color: #800000;">‘</span>].fillna(x[<span style="color: #800000;">‘</span><span style="color: #800000;">age</span><span style="color: #800000;">‘</span>].mean(),inplace=<span style="color: #000000;">True)<br>    </span><span style="color: #0000ff;">from</span> sklearn.model_selection <span style="color: #0000ff;">import</span><span style="color: #000000;"> train_test_split,GridSearchCV<br>    x_train,x_test,y_train,y_test </span>= train_test_split(x,y,test_size=0.25<span style="color: #000000;">)<br>    </span><span style="color: #0000ff;">from</span> sklearn.feature_extraction <span style="color: #0000ff;">import</span><span style="color: #000000;"> DictVectorizer<br>    dict </span>= DictVectorizer(sparse=<span style="color: #000000;">False)<br>    x_train </span>= dict.fit_transform(x_train.to_dict(orient=<span style="color: #800000;">“</span><span style="color: #800000;">records</span><span style="color: #800000;">“</span><span style="color: #000000;">))<br>    x_test </span>= dict.transform(x_test.to_dict(orient=<span style="color: #800000;">“</span><span style="color: #800000;">records</span><span style="color: #800000;">“</span><span style="color: #000000;">))<br>    </span><span style="color: #0000ff;">from</span> sklearn.ensemble <span style="color: #0000ff;">import</span><span style="color: #000000;"> RandomForestClassifier<br>    rf </span>=<span style="color: #000000;"> RandomForestClassifier()<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 网格搜索与交叉验证</span><br>    gc =GridSearchCV(rf,param_grid={<span style="color: #800000;">“</span><span style="color: #800000;">n_estimators</span><span style="color: #800000;">“</span>:[120,200,300,500,800,1200],<span style="color: #800000;">“</span><span style="color: #800000;">max_depth</span><span style="color: #800000;">“</span>:[5,8,15,25,30]},cv=2<span style="color: #000000;">)<br>    gc.fit(x_train,y_train)<br>    </span><span style="color: #0000ff;">print</span>(<span style="color: #800000;">“</span><span style="color: #800000;">随机森林准确率</span><span style="color: #800000;">“</span><span style="color: #000000;">,gc.score(x_test,y_test))<br>    </span><span style="color: #0000ff;">print</span>(<span style="color: #800000;">“</span><span style="color: #800000;">随机森林选择的参数模型</span><span style="color: #800000;">“</span><span style="color: #000000;">,gc.best_params_)<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> 极好的准确率,有效使用在大数据,不需要降维</span><br><span style="color: #0000ff;">if</span> <span style="color: #800080;"><strong>name</strong></span> ==<span style="color: #800000;">“</span><span style="color: #800000;"><strong>main</strong></span><span style="color: #800000;">“</span><span style="color: #000000;">:<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;">decision()</span><br>    random_forest()</pre></p>
+</div>
+<p>&nbsp;</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E5%86%85%E6%A0%B8%E7%BA%BF%E7%A8%8B%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BA%BF%E7%A8%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD_4_k%E8%BF%91%E9%82%BB_%E8%B4%9D%E5%8F%B6%E6%96%AF_%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

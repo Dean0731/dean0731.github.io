@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="# 深度学习 #   图像识别,自然语言处理 #   机器学习                深度学习 #   分类:神经网络(简单)      神经网络(深度) #   回归                    图像:卷积神经网络 #                           自然语言处理:循环神经网络 # cpu:运行操作系统,处理业务,计算能力不是特别突出 # gpu:专门为计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_Tensorflow_1/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="# 深度学习 #   图像识别,自然语言处理 #   机器学习                深度学习 #   分类:神经网络(简单)      神经网络(深度) #   回归                    图像:卷积神经网络 #                           自然语言处理:循环神经网络 # cpu:运行操作系统,处理业务,计算能力不是特别突出 # gpu:专门为计">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.874Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      61 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <div class="cnblogs_code">
+<div class="code-wrapper"><pre><span style="color: #008000;">#</span><span style="color: #008000;"> 深度学习</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   图像识别,自然语言处理</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   机器学习                深度学习</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   分类:神经网络(简单)      神经网络(深度)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   回归                    图像:卷积神经网络</span><span style="color: #008000;">
+#</span><span style="color: #008000;">                           自然语言处理:循环神经网络</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> cpu:运行操作系统,处理业务,计算能力不是特别突出</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> gpu:专门为计算设计的</span>
+<span style="color: #0000ff;">import</span><span style="color: #000000;"> tensorflow as tf
+a </span>= tf.constant(5.0<span style="color: #000000;">)
+b </span>= tf.constant(6.0<span style="color: #000000;">)
+sum1 </span>= tf.add(a,b) <span style="color: #008000;">#</span><span style="color: #008000;"> 在session外边打印时只能查看对象</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 程序的图 a,b,sum1也有graph</span>
+graph =<span style="color: #000000;"> tf.get_default_graph()
+</span><span style="color: #0000ff;">print</span><span style="color: #000000;">(a.graph)
+</span><span style="color: #0000ff;">print</span><span style="color: #000000;">(graph)
+</span><span style="color: #008000;">#</span><span style="color: #008000;"> session()运行默认的图,当运行的元素不是默认图的时候,会报错</span>
+<span style="color: #000000;">with tf.Session() as sess:
+    </span><span style="color: #0000ff;">print</span>(sess.run(sum1)) <span style="color: #008000;">#</span><span style="color: #008000;"> 输出值</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 创建新的图</span>
+g =<span style="color: #000000;"> tf.Graph()
+with g.as_default():
+    c </span>= tf.constant(11.0<span style="color: #000000;">)
+    </span><span style="color: #0000ff;">print</span>(c.graph)  <span style="color: #008000;">#</span><span style="color: #008000;"> 与上边的图不同</span>
+
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> 图程序的空间,变量,线程等资源都在图中</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 会话运行图的程序,</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.Session(graph=c) 指定图运行, 里边run的时候要注意</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   session.run的作用:启动整个图</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   session.close:关闭,释放资源河</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> Session中的参数</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.Session(config=tf.ConfigProto(log_device_placement=True))</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 交互式session:tf.InteractiveSession()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   调用后,不用Session() 不同run 直接a.eval()也可</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   其实只要有会话的上下文环境,就可以使用eval()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 会话的run()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> run(fetches,feed_dict=None,graph=None) 运行ops与tensor</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   fetches 需要run的内容 有多个时使用[]</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 不是op不能run 例:sum2 = 1+3</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   但 sum3=1+tf.constant(3.0) 可以run(sum3)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ========================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 实时提供数据</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> placeholder</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.placeholder(dtype,shape=None,name=None)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   plt = tf.placeholder(tf.float32,[2,3]) [None,3]也可</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   run(plt,feed_dict={plt:[[1,2,3],[4,5,6]]})</span><br>input1 = tf.placeholder(tf.float32)  <span style="color: #008000;">#</span><span style="color: #008000;"> 可以说是一个占位符,使用的时候需要传入值</span><br>input2 =<span style="color: #000000;"> tf.placeholder(tf.float32)</p>
+<p>output </span>= input1*<span style="color: #000000;">input2<br>with tf.Session() as sess: </span><span style="color: #008000;">#</span><span style="color: #008000;"> 传值的时候使用feed_dict 字典 占位符对象作为键,值需要使用[] 包含</span><br>    <span style="color: #0000ff;">print</span>(sess.run(output,feed_dict={input1:[7],input2:[2.6<span style="color: #000000;">]}))<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> =============================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 张量tensor</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 将numpy中的数组封装为tensor类型</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tensor:名字,shape,dtype</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   阶:维度</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   数据类型:tf.float32,64(其实没有意义,实际还是32) int8-64,uint8,string,bool</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   print(a.shape,a.name,a.op,a.graph)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   0维:() 1维:(n) 2维:(n,m) …</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ======================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> Numpy:reshape 把原来的数据直接修改</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tensorflow中</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.reshape:创建新的张量 动态形状</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.Tensor.set_shape:更新Tensor的静态形状</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 静态形状 (当数量不确定时可以,切不能跨维度)</span><br>plt = tf.placeholder(tf.float32,[None,2])  <span style="color: #008000;">#</span><span style="color: #008000;"> shape=(?,2)</span><br>plt.set_shape([3,2])  <span style="color: #008000;">#</span><span style="color: #008000;"> shape=(3,2)</span><br>plt.set_shape([4,2])  <span style="color: #008000;">#</span><span style="color: #008000;"> 此时不能修改</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 动态形状 (注意元素个数不能改变,可跨维度)</span><br>new_plt=tf.reshape(plt,[2,3]) <span style="color: #008000;">#</span><span style="color: #008000;"> shape=(2,3)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ==========================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 有默认值的张量</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.zero(shape,dtype=tf.float32,name=None) 全为0</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.ones(shape,dtype=float32,name=None) 全为1</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.constant(value,dtype=None,shape=None,name=None) 常量张量</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.random_normal(shape,mean=0.0,stddev=1.0,dtype=float32,seed=None,name=None)  由正太分部的随机值组成的矩阵</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ==========================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 张量的类型变换</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.string_to_number(string_tensor,out_type=None,name=None) 等</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.cost(x,dtype,name=None) 万能转换</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   tf.cost(原来数据,新类型)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===========================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 数据拼接 a=[[1,2,3],[4,5,6]] b = [[7,8,9],[10,11,12]]</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.concat([a,b],axis=1) 合并后变为6列</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> api <a target="_blank" rel="noopener" href="https://www.tensorflow.org/versions/r1.0/api_guides/python/math_ops">https://www.tensorflow.org/versions/r1.0/api_guides/python/math_ops</a></span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 变量op 可以持久化, 普通的张量op不行</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 变量op需要在会话中运行初始化</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> name参数:在tensorboard中显示名字,可以让相同op名字的数据进行区分</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   设置后 Tensor(“Variable”) —-&gt;Tensor(“设置的name”)</span><br>a = tf.constant([1,2,3,4,5<span style="color: #000000;">])<br>random </span>= tf.random_normal([2,3],mean=0.0,stddev=1.0<span style="color: #000000;">)<br>var </span>= tf.Variable(initial_value=random,name=None,trainable=<span style="color: #000000;">None)<br></span><span style="color: #0000ff;">print</span><span style="color: #000000;">(a,var)<br>init </span>=<span style="color: #000000;"> tf.global_variables_initializer()<br>with tf.Session() as sess:<br>    sess.run(init)  </span><span style="color: #008000;">#</span><span style="color: #008000;"> 初始化op</span><br>    <span style="color: #0000ff;">print</span>(sess.run([a,var]))  <span style="color: #008000;">#</span><span style="color: #008000;"> 再次打印</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> ====================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 可视化</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 模块:summary</span><br><span style="color: #000000;">with tf.Session() as sess:<br>    sess.run(init)<br>    filewriter </span>=  tf.summary.FileWriter(<span style="color: #800000;">“</span><span style="color: #800000;">.</span><span style="color: #800000;">“</span>,graph=<span style="color: #000000;">sess.graph)<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> 运行后生成文件,每次运行都会生成文件,</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tensorboard –logdir=”生成的文件所在的目录”    会启动一个服务器,访问即可</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===============================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 线性回归原理及实现</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 1,转备好特征和目标值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 2,建立模型 模型参数必须是变量</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 3,求损失函数,误差  均方误差</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 4,梯度下降优化损失过程,指定学习率</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ========运算api</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.matmul(x,w) 矩阵运算</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.squqre(error) 平方 每个样本误差平方</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.reduce_mean(error) 每个列表平均值</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> ===========梯度下降api</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.train.GradientDescentOptimizer(learning_rate)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   minimize</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   返回梯度下降op</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ==============================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tensorflow 实现简单的线性回归</span><br><span style="color: #0000ff;">import</span><span style="color: #000000;"> tensorflow as tf<br></span><span style="color: #0000ff;">def</span><span style="color: #000000;"> myregression():<br>    </span><span style="color: #800000;">“””</span><span style="color: #800000;"><br>    自实现一个线性回归预测<br>    </span><span style="color: #800000;">“””</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 1,准备数据, x 特征值[100,10] y目标值[100]</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 准备x</span><br>    x = tf.random_normal([100,1],mean=1.75,stddev=0.5,name=<span style="color: #800000;">“</span><span style="color: #800000;">x_data</span><span style="color: #800000;">“</span><span style="color: #000000;">)<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 准备y,自定义出实际的w,b</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 矩阵相乘必须是二维的</span><br>    y_true= tf.matmul(x,[[0.7]])+0.8<br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 2,建立模型</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 随机的权重与偏置,让进行优化</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 只能使用变量定义,trainable控制该变量 训练的时候是否要变化</span><br>    weight = tf.Variable(tf.random_normal([1,1],mean=0.0,stddev=0.75),trainable=<span style="color: #000000;">True)<br>    bias </span>= tf.Variable(0.0,name=<span style="color: #800000;">“</span><span style="color: #800000;">b</span><span style="color: #800000;">“</span><span style="color: #000000;">)<br>    y_predcit </span>= tf.matmul(x,weight)+<span style="color: #000000;">bias<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 3,建立损失函数,均方误差</span><br>    loss = tf.reduce_mean(tf.square(y_true-<span style="color: #000000;">y_predcit))<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 4,梯度下降优化损失</span><br>    youhua = tf.train.GradientDescentOptimizer(0.1)  <span style="color: #008000;">#</span><span style="color: #008000;"> 一般0-1之间不能太大,</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 也可2,3,10等 若太大可能会出现nan:梯度爆炸</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;">       解决方案:重新设计网络,调整学习率,使用梯度截断,使用激活函数</span><br>    train_op =<span style="color: #000000;"> youhua.minimize(loss)<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 收集tensor</span><br>    tf.summary.scalar(<span style="color: #800000;">“</span><span style="color: #800000;">losses</span><span style="color: #800000;">“</span>,loss) <span style="color: #008000;">#</span><span style="color: #008000;"> 在tensorborad中 scalars 会显示在学习的过程中loss的变化曲线</span><br>    tf.summary.histogram(<span style="color: #800000;">“</span><span style="color: #800000;">weights</span><span style="color: #800000;">“</span><span style="color: #000000;">,weight)<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 定义合并tensor的op</span><br>    merged=<span style="color: #000000;">tf.summary.merge_all()<br>    saver </span>=<span style="color: #000000;"> tf.train.Saver()</p>
+<pre><code class="hljs">init &lt;/span&gt;=&lt;span style=&quot;color: #000000;&quot;&gt; tf.global_variables_initializer()
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 会话运行&lt;/span&gt;
+</code></pre></div>
+<p><span style="color: #000000;">    with tf.Session() as sess:<br>        sess.run(init)<br>        </span><span style="color: #008000;">#</span><span style="color: #008000;"> 打印不优化的train_op</span><br>        <span style="color: #0000ff;">print</span><span style="color: #000000;">(sess.run([weight,bias]))<br>        filewrite </span>= tf.summary.FileWriter(<span style="color: #800000;">“</span><span style="color: #800000;">.</span><span style="color: #800000;">“</span>,graph=<span style="color: #000000;">sess.graph)<br>        </span><span style="color: #008000;">#</span><span style="color: #008000;"> 模型恢复</span><br>        <span style="color: #008000;">#</span><span style="color: #008000;"> 模型文件存在</span><br>        <span style="color: #008000;">#</span><span style="color: #008000;"> saver.restore(“sess”,”路径”)</span></p>
+<div class="code-wrapper"><pre><code class="hljs">    &lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 循环运行优化&lt;/span&gt;
+    &lt;span style=&quot;color: #0000ff;&quot;&gt;for&lt;/span&gt; i &lt;span style=&quot;color: #0000ff;&quot;&gt;in&lt;/span&gt; range(1000&lt;span style=&quot;color: #000000;&quot;&gt;):
+
+        sess.run(train_op)
+        &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 运行合并的tensor&lt;/span&gt;
+        summary =&lt;span style=&quot;color: #000000;&quot;&gt; sess.run(merged)
+        filewrite.add_summary(summary,i)
+        &lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;print&lt;/span&gt;(&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;第&#123;&#125;次&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;.format(i),sess.run([weight, bias]))
+    saver.save(sess,&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;./reserve/model&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;)
+</code></pre></div>
+<p></span><span style="color: #0000ff;">if</span> <span style="color: #800080;"><strong>name</strong></span> ==<span style="color: #800000;">“</span><span style="color: #800000;"><strong>main</strong></span><span style="color: #800000;">“</span><span style="color: #000000;">:<br>    myregression()<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> ========================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tensorflow变量作用域tf.variable_scope()创建指定名字的变量作用域</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 不同的部分放在不同的作用域下,tensorflowboard中graph 会更加清晰,作用分明</span><br>with tf.variable_scope(<span style="color: #800000;">“</span><span style="color: #800000;">name</span><span style="color: #800000;">“</span><span style="color: #000000;">):<br>    </span><span style="color: #0000ff;">pass</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> 增加变量显示</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   添加权重参数,损失值等在tensorborad中显示</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   1,收集变量</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       tf.summary.scalar(name=””,tensir)收集对于损失函数和准确率等单值变量,name为变量值,tensor为值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       tf.summary.histogram(name=””,tensor) 收集高维度的变量参数</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   2,合并变量写入事件文件</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       merged = tf.summary.merge_all()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       运行合并:summary=sess.run(merged) 每次迭代都需要运行</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       添加:FileWriter.add_summary(summary,i)i表示第几次迭代</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ========================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tensorflow变量作用域tf.variable_scope()创建指定名字的变量作用域</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 不同的部分放在不同的作用域下,graph 会更加清晰,作用分明</span><br>with tf.variable_scope(<span style="color: #800000;">“</span><span style="color: #800000;">name</span><span style="color: #800000;">“</span><span style="color: #000000;">):<br>    </span><span style="color: #0000ff;">pass</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> 模型的保存与加载</span><br>saver = tf.train.Saver(var_list=None,max_to_keep=5<span style="color: #000000;">)<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> var_list:指定要保存和还原的变量,作为一个dict或列表传递</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> max_to_keep:指示要保留的最近检查点文件的最大数量,创建新文件时,删除旧文件,保留最新的5个</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 文件格式:checkpoint文件</span><br>saver.save(<span style="color: #800000;">“</span><span style="color: #800000;">sess对象</span><span style="color: #800000;">“</span>,<span style="color: #800000;">“</span><span style="color: #800000;">路径/文件名字</span><span style="color: #800000;">“</span><span style="color: #000000;">)<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> 第一次保存</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   checkpoint:记录模型名字,文件路径</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   name.data-00000-of-00001 数据存储文件</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   name.index name.meta</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 模型的加载</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   saver.restore(sess,”路径”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   在with放入会话中,开始优化前</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 自定义命令行参数</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 1, 首先定义有哪些参数需要在运行时指定</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 2,程序当中获取定义的命令行参数</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 名字,默认值,说明</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 以前的版本</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.app.flags.DEFINE_integer(“max_step”,100,”模型训练的步数”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf.app.flags.FLAGS.max_step 获取数据</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 新版</span><br>flags = tf.flags.FLAGS <span style="color: #008000;">#</span><span style="color: #008000;"> 定义对象</span><br>tf.flags.DEFINE_integer(<span style="color: #800000;">“</span><span style="color: #800000;">max_step</span><span style="color: #800000;">“</span>,100,<span style="color: #800000;">“</span><span style="color: #800000;">模型训练的步数</span><span style="color: #800000;">“</span><span style="color: #000000;">)<br>tf.flags.DEFINE_string(</span><span style="color: #800000;">“</span><span style="color: #800000;">file_path</span><span style="color: #800000;">“</span>,<span style="color: #800000;">“”</span>,<span style="color: #800000;">“</span><span style="color: #800000;">文件路径</span><span style="color: #800000;">“</span><span style="color: #000000;">)<br>tf.flags._FlagValuesWrapper </span><span style="color: #008000;">#</span><span style="color: #008000;"> 初始化</span><br>flags.max_step=100 <span style="color: #008000;">#</span><span style="color: #008000;"> 修改 或获取</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 定义完成后  运行文件时 python  xx.py –max-step=500 即可传入,字符串需要加引号</span></pre></p>
+</div>
+<p>&nbsp;</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_Tensorflow_2_%E6%95%B0%E6%8D%AE_%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_0_%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

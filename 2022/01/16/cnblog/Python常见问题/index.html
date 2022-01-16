@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Python python 没有多态，而是鸭子类型 多继承，没有接口，可通过语法糖实现接口的作用 lambda中只能有一句 “&#x2F;“表示之前的参数是必须是位置参数，”**“表示是后面的必须是关键字参数  Python多进程 Python 多线程是伪多线程 多线程子线程会随着主线程结束而中断，因此一般在主线程中调用thread.join()  线程方法  &#96;&#96;&#96;pythonimport threadi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/Python%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="Python python 没有多态，而是鸭子类型 多继承，没有接口，可通过语法糖实现接口的作用 lambda中只能有一句 “&#x2F;“表示之前的参数是必须是位置参数，”**“表示是后面的必须是关键字参数  Python多进程 Python 多线程是伪多线程 多线程子线程会随着主线程结束而中断，因此一般在主线程中调用thread.join()  线程方法  &#96;&#96;&#96;pythonimport threadi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20211228120459335.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20211228124409752.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.429Z">
+<meta property="article:modified_time" content="2021-12-28T05:23:07.924Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20211228120459335.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><ul>
+<li>python 没有多态，而是鸭子类型</li>
+<li>多继承，没有接口，可通过语法糖实现接口的作用</li>
+<li>lambda中只能有一句</li>
+<li>“/“表示之前的参数是必须是位置参数，”**“表示是后面的必须是关键字参数</li>
+</ul>
+<h1 id="Python多进程"><a href="#Python多进程" class="headerlink" title="Python多进程"></a>Python多进程</h1><p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20211228120459335.png" srcset="/img/loading.gif" lazyload alt="image-20211228120459335"></p>
+<h1 id="Python-多线程是伪多线程"><a href="#Python-多线程是伪多线程" class="headerlink" title="Python 多线程是伪多线程"></a>Python 多线程是伪多线程</h1><ul>
+<li><p>多线程子线程会随着主线程结束而中断，因此一般在主线程中调用thread.join()</p>
+</li>
+<li><p>线程方法</p>
+<ul>
+<li><p>```python<br>import threading<br>t = thread.Thread()<br>t.start();</p>
+<h1 id="没有返回值，若需要返回值可继承该类，在类中保存计算结果，用以获取"><a href="#没有返回值，若需要返回值可继承该类，在类中保存计算结果，用以获取" class="headerlink" title="没有返回值，若需要返回值可继承该类，在类中保存计算结果，用以获取"></a>没有返回值，若需要返回值可继承该类，在类中保存计算结果，用以获取</h1><h1 id="或者传入全局结果参数，"><a href="#或者传入全局结果参数，" class="headerlink" title="或者传入全局结果参数，"></a>或者传入全局结果参数，</h1><figure class="highlight autohotkey"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs autohotkey"><br>- ```python<br>  import <span class="hljs-keyword">thread</span> # threading 封装了<span class="hljs-keyword">thread</span><br></code></pre></td></tr></table></figure></li>
+<li><p>```python<br>import threadpool # 三方库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><br>```python<br><span class="hljs-comment"># 线程池</span><br><span class="hljs-keyword">import</span> asyncio<br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">coro</span>(<span class="hljs-params">i</span>):</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;core start&quot;</span>,i)<br>    ret = <span class="hljs-keyword">await</span> get(i) <span class="hljs-comment"># 此处为耗时的io等操作</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;core end&quot;</span>,i)<br>    <span class="hljs-keyword">return</span> ret<br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span>(<span class="hljs-params">i</span>):</span><br>    <span class="hljs-keyword">await</span> asyncio.sleep(<span class="hljs-number">5</span>)<br>    <span class="hljs-keyword">return</span> i<br>loop = asyncio.get_event_loop()<br>a = [asyncio.ensure_future(coro(i)) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)]<br>loop.run_until_complete(asyncio.wait(a))<br>loop.close()<br><span class="hljs-built_in">print</span>([i.result() <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a])<br><br><span class="hljs-keyword">import</span> concurrent.futures<br><span class="hljs-keyword">with</span> concurrent.futures.ThreadPoolExecutor() <span class="hljs-keyword">as</span> pool:<br>    results = pool.<span class="hljs-built_in">map</span>(function,args)   <span class="hljs-comment"># 注意此处是任务提一提交完，args为参数列表的列表</span><br>    <span class="hljs-comment"># result 线程的结果</span><br>    <span class="hljs-comment"># 或者</span><br>    future = pool.submit(function,args)  <span class="hljs-comment"># 每次提交一个</span><br>    future.result() <span class="hljs-comment"># 结果</span><br><br>    <span class="hljs-keyword">for</span> futures <span class="hljs-keyword">in</span> futures: <span class="hljs-comment"># 顺序执行</span><br>        xxxx<br>    <span class="hljs-keyword">for</span> futures <span class="hljs-keyword">in</span> concurrent.futures.as_completed(futures): <span class="hljs-comment"># 不会按照顺序执行，那个线程先结束先执行那个</span><br>        xxxx<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h1 id="Python协程"><a href="#Python协程" class="headerlink" title="Python协程"></a>Python协程</h1><ul>
+<li>单线程的IO多路复用，使用了单线程中IO阻塞的那一段时间，但其实还是顺序执行，按照IO阻塞切换，因此不会出现协程安全问题<ul>
+<li>可以说是异步操作</li>
+</ul>
+</li>
+<li>开销小，切换容易</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20211228124409752.png" srcset="/img/loading.gif" lazyload alt="image-20211228124409752"></p>
+<h1 id="GIL锁：全局解释器锁，Cython"><a href="#GIL锁：全局解释器锁，Cython" class="headerlink" title="GIL锁：全局解释器锁，Cython"></a>GIL锁：全局解释器锁，Cython</h1><ul>
+<li><p>cpu计算时线程需要获取GIL锁，只有一个，因此多核cpu也只有一个线程可以执行，<font color=red>主要防止多线程垃圾回收不安全</font></p>
+<ul>
+<li><p>GIL只保证有一个线程运行，但不保证线程何时切换，因此还有线程安全问题。</p>
+</li>
+<li><p>程序代码现线程安全问题还是要加LOCK</p>
+<ul>
+<li>```python<br>import threading<br>lock = threading.Lock()<br>lock.acquire()<br>lock.release()<h1 id="或者"><a href="#或者" class="headerlink" title="或者"></a>或者</h1>with lock:<div class="code-wrapper"><pre><code class="hljs">xxxx 
+</code></pre></div>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><br>      <br><br>- 执行IO操作时会释放锁，因此对于IO密集型任务，可以用多线程，计算密集型，不能发挥多核，多线程作用。<br><br>- 引用计数法+循环检测：GC<br><br><span class="hljs-comment"># 面向对象</span><br><br>- 类中的变量是静态变量，方法通过@staticmethod修饰，是静态，self.<span class="hljs-attribute">xxx</span>=yy 实例变量<br><br><span class="hljs-comment"># WWW</span><br><br>```python<br>import urllib.request<br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    data = urllib.parse.urlencode(&#123;<span class="hljs-string">&#x27;wd&#x27;</span>:<span class="hljs-string">&#x27;python&#x27;</span>&#125;).encode(<span class="hljs-string">&quot;utf8&quot;</span>)<br>    request = urllib.request.urlopen(<span class="hljs-string">&quot;http://baidu.com&quot;</span>,<span class="hljs-attribute">data</span>=data)<br>    with request:<br>        msg,hd = request.read(),request.<span class="hljs-builtin-name">info</span>()<br>        <span class="hljs-builtin-name">print</span>(msg)<br>        <span class="hljs-builtin-name">print</span>(hd)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># smtplib email 配合使用</span><br><span class="hljs-comment"># 或是unix系统中的sendmail命令</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="SOCKET"><a href="#SOCKET" class="headerlink" title="SOCKET"></a>SOCKET</h1><ul>
+<li>```python<h1 id="旧版本异步通信"><a href="#旧版本异步通信" class="headerlink" title="旧版本异步通信"></a>旧版本异步通信</h1>import asyncore<br>class HTTPClient(asyncore.dispatcher):<div class="code-wrapper"><pre><code class="hljs">def __init__(self,host):
+    #  初始化父类
+    asyncore.dispatcher.__init__(self)
+    # 创建一个socket对象
+    self.create_socket()
+    # 连接服务器端
+    self.connect((host,80))
+#发送优化
+    self.buffer = b&#39;GET /HTTP/1.1\r\nHost: www.baidu.com\r\n\r\n&#39;
+def handle_connect(self):
+    print(&#39;服务器连接成功&#39;)
+def handle_close(self):
+    print(&#39;服务器连接断开&#39;)
+    self.close()
+def readable(self):
+    return True
+def handle_read(self):
+    # 指定一次读取1024个字节，如果一次没有读完的话，那么事件循环会分多次把内容读完为止
+    print(self.recv(1024).decode())
+def writable(self):
+    return (len(self.buffer)&gt;0)
+def handle_write(self):
+    sent = self.send(self.buffer)
+    self.buffer = self.buffer[sent:]
+</code></pre></div>
+if <strong>name</strong> == ‘<strong>main</strong>‘:<div class="code-wrapper"><pre><code class="hljs">HTTPClient(&#39;www.baidu.com&#39;)
+asyncore.loop()
+</code></pre></div>
+ import asyncore<br>import socketclass EchoHandler(asyncore.dispatcher_with_send):<div class="code-wrapper"><pre><code class="hljs">def handle_read(self):
+    data = self.recv(8192)
+    if data:
+        self.send(&quot;hello&quot;.encode(&#39;utf8&#39;)+data)
+</code></pre></div>
+class EchoServer(asyncore.dispatcher):<div class="code-wrapper"><pre><code class="hljs">def __init__(self, host, port):
+    asyncore.dispatcher.__init__(self)
+    self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+    self.set_reuse_addr()
+    self.bind((host, port))
+    self.listen(5)
+def handle_accept(self):
+    pair = self.accept()
+    if pair is not None:
+        sock, addr = pair
+        print(&#39;Incoming connection from %s&#39; % repr(addr))
+        handler = EchoHandler(sock)
+</code></pre></div>
+if <strong>name</strong> == ‘<strong>main</strong>‘:<div class="code-wrapper"><pre><code class="hljs">server = EchoServer(&#39;10.101.33.82&#39;, 8080)
+asyncore.loop()
+</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><br>- ```python<br>  <span class="hljs-keyword">import</span> asyncio<br>  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle_echo</span>(<span class="hljs-params">reader, writer</span>):</span><br>      <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>          data = <span class="hljs-keyword">await</span> reader.read(<span class="hljs-number">100</span>)<br>          message = data.decode(<span class="hljs-string">&quot;gbk&quot;</span>)<br>          addr = writer.get_extra_info(<span class="hljs-string">&#x27;peername&#x27;</span>)<br>          <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Received <span class="hljs-subst">&#123;message!r&#125;</span> from <span class="hljs-subst">&#123;addr!r&#125;</span>&quot;</span>)<br>          <span class="hljs-keyword">if</span> message == <span class="hljs-string">&#x27;-1&#x27;</span>:<br>              writer.write(<span class="hljs-string">&quot;将会结束!&quot;</span>.encode(<span class="hljs-string">&quot;gbk&quot;</span>))<br>          <span class="hljs-keyword">else</span>:<br>              writer.write(message.encode(<span class="hljs-string">&quot;gbk&quot;</span>))<br>          <span class="hljs-keyword">await</span> writer.drain()<br>  <br>          <span class="hljs-keyword">if</span> message == <span class="hljs-string">&#x27;-1&#x27;</span>:<br>              writer.close()<br>              <span class="hljs-keyword">break</span><br>  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>      server = <span class="hljs-keyword">await</span> asyncio.start_server(<br>          handle_echo, <span class="hljs-string">&#x27;10.101.33.82&#x27;</span>, <span class="hljs-number">8080</span>)<br>  <br>      addr = server.sockets[<span class="hljs-number">0</span>].getsockname()<br>      <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Serving on <span class="hljs-subst">&#123;addr&#125;</span>&#x27;</span>)<br>  <br>      <span class="hljs-keyword">async</span> <span class="hljs-keyword">with</span> server:<br>          <span class="hljs-keyword">await</span> server.serve_forever()<br>  <br>  asyncio.run(main())<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 编码,utf8</span><br><span class="hljs-comment">#3字节 1110xxxx 10xxxxxx 10xxxxxx   中文:&quot;中&quot;</span><br><span class="hljs-comment"># utf8--&gt; 4e2d -》0100 1110 0010 1101</span><br><span class="hljs-string">b&#x27;\xe4\xb8\xad&#x27;</span>.decode(<span class="hljs-string">&#x27;utf8&#x27;</span>) <span class="hljs-comment"># “中“</span><br><span class="hljs-comment"># 与上边组 1110 0100 10111000 10101101 -》就是 e4b8ad</span><br></code></pre></td></tr></table></figure>
+
+<p>b’xxxxx’ xxxx 应该是字节数，例如ascii中的，或者是用16进制表示的汉字</p>
+<p>b’a’ == b’\x61’ </p>
+<p>b’\e4\xb8\xad’  按照utf8解码后就是‘中’</p>
+<h1 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a>图形界面</h1><p>Python3 Tkinter Qt</p>
+<p>wxwidgets,Kivy,Fltk</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/python%E8%A7%A3%E6%9E%90xml%E6%96%87%E4%BB%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/python%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

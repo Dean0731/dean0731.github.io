@@ -1,0 +1,1274 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="概述(redis.memcache(内存数据库,高速缓存),mongodb(文档数据库)) 入门概述 Nosql(not noly sql) 数据之间无关系,容易扩展 速度快:读11w,写8w   RDBMS VS NOSQL Rdbms:acid Nosql:cap定理,键值对存储, 组成:Kv,Cache,Persistence    3v+3高 海量volume  多样variety  实时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/redis/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="概述(redis.memcache(内存数据库,高速缓存),mongodb(文档数据库)) 入门概述 Nosql(not noly sql) 数据之间无关系,容易扩展 速度快:读11w,写8w   RDBMS VS NOSQL Rdbms:acid Nosql:cap定理,键值对存储, 组成:Kv,Cache,Persistence    3v+3高 海量volume  多样variety  实时">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/W81COBKUJMvulGE.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/Gguasz4yDvTPWcC.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/SLUhQvctN6yO1Ds.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/s6l1V4pBDwiWHqJ.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/3tQosA6rYVEWLXf.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/MHFRSOA3KhYGQzq.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/XtnPV5ADCkNi869.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/Bav129PrDMbEFGe.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/eL7SsvUY8i2Oj4P.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/a3wgAtJORQnBckT.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/69QYhNkPdyFZcug.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/WNDAEUbiOlswMLe.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/F7gnzNxIXYQSiUK.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/Xd9UHzb4rapRWuQ.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/WcpM5oH7FzqhrZg.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/dE5a3CzbXfWlcPp.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/uOkm5NEAW3j6PGS.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/2BKAzJ8wgLxqT1v.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/12/S5Ogo4N2CyEZFMi.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.444Z">
+<meta property="article:modified_time" content="2020-10-24T08:56:36.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.loli.net/2020/09/12/W81COBKUJMvulGE.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      79 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>(redis.memcache(内存数据库,高速缓存),mongodb(文档数据库))</p>
+<h6 id="入门概述"><a href="#入门概述" class="headerlink" title="入门概述"></a>入门概述</h6><ul>
+<li>Nosql(not noly sql) 数据之间无关系,容易扩展 速度快:读11w,写8w</li>
+</ul>
+<ul>
+<li>RDBMS VS NOSQL<ul>
+<li>Rdbms:acid</li>
+<li>Nosql:cap定理,键值对存储,</li>
+<li>组成:Kv,Cache,Persistence</li>
+</ul>
+</li>
+</ul>
+<h6 id="3v-3高"><a href="#3v-3高" class="headerlink" title="3v+3高"></a>3v+3高</h6><ul>
+<li><p>海量volume</p>
+</li>
+<li><p>多样variety</p>
+</li>
+<li><p>实时velocity</p>
+</li>
+<li><p>高并发,</p>
+</li>
+<li><p>高扩展,</p>
+</li>
+<li><p>高性能</p>
+</li>
+</ul>
+<h1 id="Nosql的经典应用"><a href="#Nosql的经典应用" class="headerlink" title="Nosql的经典应用"></a>Nosql的经典应用</h1><p>阿里sql 与nosql商品信息的存放</p>
+<ul>
+<li>第一代1999:Perl,CGI,Oracle</li>
+</ul>
+<ul>
+<li><p>2000java时代:JAVA,servlet</p>
+</li>
+<li><p>2001-2004:EJB(SLSB,CMP,MDB) pattern(servletLocator,Delegate,Façade,DAO,DTO)</p>
+</li>
+<li><p>2005-2007:EJB重构:spring+ibatis+webx,antx(struts前身)</p>
+<ul>
+<li>底层架构:iSearch,MQ+ESB,数据挖掘,CMS</li>
+</ul>
+</li>
+<li><p>2008-2009:Memcached集群,mysql+数据切分=cobar</p>
+</li>
+<li><p>2010:安全,镜像,应用服务器升级,秒杀,nosql,SSD</p>
+</li>
+<li><p>第四代:解决性能和海量数据问题</p>
+<ul>
+<li>大规模memcached集群,高性能服务器,kv,cnd</li>
+<li>安全问题:镜像站</li>
+</ul>
+</li>
+<li><p>第五代2011:敏捷,开放,体验</p>
+</li>
+</ul>
+<p>去IOE(去除IBM小型机,oracle数据库,EMC存储设备)-云计算</p>
+<h2 id="Nosql数据模型简介"><a href="#Nosql数据模型简介" class="headerlink" title="Nosql数据模型简介"></a>Nosql数据模型简介</h2><ul>
+<li>Kv键值</li>
+<li>Bson</li>
+<li>列簇</li>
+<li>图形</li>
+</ul>
+<h2 id="Nosql数据库的四大分类"><a href="#Nosql数据库的四大分类" class="headerlink" title="Nosql数据库的四大分类"></a>Nosql数据库的四大分类</h2><ul>
+<li><p>Kv键值</p>
+<ul>
+<li>新浪:Berkeley+redis</li>
+<li>美团:redis+tair</li>
+<li>阿里,百度:memcache+redis</li>
+</ul>
+</li>
+<li><p>文档数据库</p>
+<ul>
+<li>bson:mongodb</li>
+</ul>
+</li>
+<li><p>列存储数据库</p>
+<ul>
+<li>Cassandra,Hbase,分布式文件系统</li>
+</ul>
+</li>
+<li><p>图关系数据库</p>
+<ul>
+<li>社交网络,关系图,neo4j,infoGrid</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/W81COBKUJMvulGE.png" srcset="/img/loading.gif" lazyload alt="image-20200912203507645"></p>
+<p><img src="https://i.loli.net/2020/09/12/Gguasz4yDvTPWcC.png" srcset="/img/loading.gif" lazyload alt="image-20200912203529570"></p>
+<h1 id="在分布式数据库中CAP原理"><a href="#在分布式数据库中CAP原理" class="headerlink" title="在分布式数据库中CAP原理"></a>在分布式数据库中CAP原理</h1><ul>
+<li><p>ACID</p>
+<ul>
+<li>  A(Atomicity)原子性</li>
+<li>  C(Consistency)一致性</li>
+<li>  I(Isolation)独立性</li>
+<li>  D(Durability)持久性</li>
+</ul>
+</li>
+<li><p>CAP</p>
+<ul>
+<li>  C(Consistency)强一致性</li>
+<li>  A(Availability)可用性</li>
+<li>  P(Partition tolerance)分区容错性</li>
+</ul>
+</li>
+<li><p>CAP的3选2(注意)不能同时满足三个</p>
+<ul>
+<li>  CA:单点集群,一致性,可用性</li>
+<li>  CP:一致性,分区容错,性能不是特别高</li>
+<li>  AP:可用性,分区容错,对一致性要求低:用的较多</li>
+</ul>
+</li>
+<li><p>  经典CAP图</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/SLUhQvctN6yO1Ds.png" srcset="/img/loading.gif" lazyload alt="image-20200912203710184"></p>
+<ul>
+<li><p>Base</p>
+<ul>
+<li>  基本可用(Basically Available)</li>
+<li>  软状态(Soft state)</li>
+<li>  最终一致(Eventually consistent)</li>
+<li>  放松某时刻一致性的要求,由base解决</li>
+</ul>
+</li>
+<li><p>分布式+集群简介</p>
+<ul>
+<li>  分布式:不同服务器:不同服务模块</li>
+<li>  集群:不同服务器:相同服务模块</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis入门介绍"><a href="#Redis入门介绍" class="headerlink" title="Redis入门介绍"></a>Redis入门介绍</h1><h6 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h6><ul>
+<li><p>  Remote dictionary server(远程字典服务)</p>
+</li>
+<li><p>  c语言编写,遵守BSD协议</p>
+</li>
+<li><p>  Kv分布式存储数据库,基于内存运行,数据结构服务器</p>
+</li>
+<li><p>特点</p>
+<ul>
+<li><p>  支持持久化</p>
+</li>
+<li><p>  不仅支持kv,还提供list,set,zset,hash等</p>
+</li>
+<li><p>  支持数据备份,即master-slave模式数据备份</p>
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="做什么"><a href="#做什么" class="headerlink" title="做什么"></a>做什么</h6><ul>
+<li>支持异步将内存数据写入硬盘,</li>
+</ul>
+<ul>
+<li>发布,订阅系统消息mq+nq:消息中间件</li>
+</ul>
+<ul>
+<li>定时器,计数器</li>
+</ul>
+<ul>
+<li>最新的消息放在内存中list.</li>
+</ul>
+<h3 id="怎么做"><a href="#怎么做" class="headerlink" title="怎么做"></a>怎么做</h3><ul>
+<li>数据类型,基本操作,配置</li>
+</ul>
+<ul>
+<li>持久化,复制,RDB/AOF</li>
+</ul>
+<ul>
+<li><p>事务控制</p>
+<ul>
+<li>灵活性高,有时候事务回滚</li>
+<li>例如3条语句,回滚2条错的,另一个不会滚,与RDMS不同</li>
+</ul>
+</li>
+<li><p>复制</p>
+</li>
+</ul>
+<h1 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h1><p>下载地址:<a target="_blank" rel="noopener" href="https://github.com/dmajkic/redis/downloads">https://github.com/dmajkic/redis/downloads</a></p>
+<h1 id="Redis启动后杂项基础知识讲解"><a href="#Redis启动后杂项基础知识讲解" class="headerlink" title="Redis启动后杂项基础知识讲解"></a>Redis启动后杂项基础知识讲解</h1><ul>
+<li><p>单进程以epoll包装.linux下多路复用io</p>
+</li>
+<li><p>默认16个数据库,类似数组下标从0开始.初始默认0号库</p>
+</li>
+<li><p>Select命令切换数据库 select 7选择7号库</p>
+</li>
+<li><p>Dbsize查看当前数据库key数量</p>
+</li>
+<li><p>Flushdb:清空当前库</p>
+</li>
+<li><p>Flushall通杀全部库</p>
+</li>
+<li><p>统一密码管理,16个库都是同样密码,要么ok,要么都连不上</p>
+</li>
+<li><p>Redis索引都是从0开始</p>
+</li>
+<li><p>默认端口6379-&gt;键盘6379-&gt;merz</p>
+</li>
+<li><p>Keys d* 显示d开头的key</p>
+</li>
+</ul>
+<h1 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h1><h6 id="Redis五大数据类型string-hash-list-set-zset"><a href="#Redis五大数据类型string-hash-list-set-zset" class="headerlink" title="Redis五大数据类型string,hash,list,set,zset"></a>Redis五大数据类型string,hash,list,set,zset</h6><ul>
+<li>String:一个key一个value,二进制安全,可包含任何数据,比如图片,序列化对象,value最多512M</li>
+</ul>
+<ul>
+<li>Hash:类似java中Map, 是一个string类型的filed和value的映射表,适合存储对象</li>
+</ul>
+<ul>
+<li>List:字符串链表,按照插入顺序,可以添加元素到头部,尾部</li>
+</ul>
+<ul>
+<li>Set:实际上是map,string类型无序集合,hashtable实现</li>
+</ul>
+<ul>
+<li>Zset:string类型集合,不重复,每个元素关联一个double分数,通过分数排序,分数可重复</li>
+</ul>
+<h1 id="获得常见类型操作命令"><a href="#获得常见类型操作命令" class="headerlink" title="获得常见类型操作命令"></a>获得常见类型操作命令</h1><p><a target="_blank" rel="noopener" href="http://redisdoc.com/">http://redisdoc.com</a></p>
+<h1 id="Redis-key"><a href="#Redis-key" class="headerlink" title="Redis key"></a>Redis key</h1><ul>
+<li><p>  Key * 查看所有</p>
+</li>
+<li><p>  Exist key 判断是否存在key(返回0表示无)</p>
+</li>
+<li><p>  Move key db 当前库就没了,剪贴</p>
+</li>
+<li><p>  Expire key 秒 设置过期时间</p>
+</li>
+<li><p>  Ttl key 查看还有多少时间过期 -1 不过期 -2 已过期(移除)</p>
+</li>
+<li><p>  Type key 查看key类型</p>
+</li>
+<li><p>  Del key删除类型(一般是设置过期时间)</p>
+</li>
+<li><p>  Set key 多次会覆盖</p>
+</li>
+</ul>
+<h1 id="Redis-String"><a href="#Redis-String" class="headerlink" title="Redis String"></a>Redis String</h1><ul>
+<li><p>  单值单value</p>
+</li>
+<li><p>  Set/get/del/append/strlen:拼接字符,返回长度</p>
+</li>
+<li><p>Incr/decr/incrby/decrby,一定要是数字才能进行加减</p>
+<ul>
+<li>  Incdecrr k2:把k2的值加1,减1</li>
+<li>  Incrby/decrby k2 步长x:每次加减x</li>
+</ul>
+</li>
+<li><p>Getrange/setrange:获取指定区间的值,类似between and</p>
+<ul>
+<li>  Getrange key 0 3:获取key的0-3个字符</li>
+<li>  Setrange key 2 x:设置第下标2开始到最后为x</li>
+</ul>
+</li>
+<li><p>Setex(set with expire)键秒值/setnx(set if not exist)</p>
+<ul>
+<li>  Setx key time value;带时间设置</li>
+<li>  Setnx key value:如果存在不再添加</li>
+</ul>
+</li>
+<li><p>Mset/mget/msetnx</p>
+<ul>
+<li>  Mset k1 v1 k2 v2 k3 v3:一次设置多个</li>
+<li>  Mget k1 k2 k3:获取,注意不能超出k4</li>
+<li>  Msetnx k1 v1 k2 v2 k3 v3 k4 v4:存在的不再插入,不存在的也不再插入</li>
+</ul>
+</li>
+<li><p>  Getset(先get再set)</p>
+</li>
+</ul>
+<h1 id="Redis-list"><a href="#Redis-list" class="headerlink" title="Redis list"></a>Redis list</h1><ul>
+<li><p>  单值多value(l在上,r在下)</p>
+</li>
+<li><p>  Lpush/rpush/lrange(已存在是添加是append)</p>
+</li>
+</ul>
+<blockquote>
+<p>Lpush list 0 1 2 3 4 5:0-5左边添加list, 正进反出</p>
+<p>lrange list 0 -1:输出</p>
+<p>rpush list 0 1 2 3 4 5:5-0右边添加list,正进正出</p>
+</blockquote>
+<ul>
+<li>  Lpop/rpop</li>
+</ul>
+<blockquote>
+<p>Lpop list:返回输出第一个,切弹出</p>
+<p>Rpop lsit: 返回输出第一个,切弹出</p>
+</blockquote>
+<ul>
+<li>  Lindex:按照索引下标获得元素</li>
+</ul>
+<blockquote>
+<p>Lindex list 2:获取下标2元素</p>
+</blockquote>
+<ul>
+<li><p>  Llen list:长度</p>
+</li>
+<li><p>  Lrem key n v1:删除n个v1元素</p>
+</li>
+<li><p>  Ltrim key start end:截取指定范围给再给key(包括end):截取后赋给自己</p>
+</li>
+<li><p>  Rpoplpush 源列表 目的列表:把源列表头 给目的列表</p>
+</li>
+<li><p>  Lset key index value:设置下标index的值</p>
+</li>
+<li><p>  Linsert key before/after v1:v1前后插入v1</p>
+</li>
+<li><p>  若值全部移除,对应键也就消失,头尾操作极高,中间较慢</p>
+</li>
+</ul>
+<h1 id="Redis-set"><a href="#Redis-set" class="headerlink" title="Redis set"></a>Redis set</h1><ul>
+<li><p>  单值多value</p>
+</li>
+<li><p>Sadd/smembers/sismember</p>
+<ul>
+<li>  Sad set01 1 1 2 2 3 3:只插入3 个,自己会去重</li>
+<li>  Smember set:查看</li>
+<li>  Sismember set01 2:判断是否存在</li>
+</ul>
+</li>
+<li><p>  Scard:获得集合里面元素个数</p>
+</li>
+<li><p>  Srem key value:删除元素value</p>
+</li>
+<li><p>  Srandmember key 3:</p>
+</li>
+<li><p>  Spop key:随机弹出一个</p>
+</li>
+<li><p>  Smove key1 key2 numINkey1:将key1中的某个值移入key2</p>
+</li>
+<li><p>数学集合类</p>
+<ul>
+<li>  差集:sdiff sdiff set1 set2:返回差集(在第一个里面,不再第二个里面)</li>
+<li>  交集:sinter ……</li>
+<li>  并集:sunion…..</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis-hash"><a href="#Redis-hash" class="headerlink" title="Redis hash"></a>Redis hash</h1><ul>
+<li><p>  Kv模式不变,但v是一个键值对</p>
+</li>
+<li><p>Hset/hget/hmset/hmget/hgetall/hdel</p>
+<ul>
+<li>  Hset user id 11: key –&gt;user value -&gt;id 11</li>
+<li>  Hget user id:获取;</li>
+<li>  Hmset:设置多个</li>
+<li>  Hmget:得到多个</li>
+<li>  Hgetall:得到所有</li>
+<li>  Hdel key value:删除</li>
+</ul>
+</li>
+<li><p>  Hlen:返回长度</p>
+</li>
+<li><p>  Exists user id:判断是否存在</p>
+</li>
+<li><p>Hkeys/hvals</p>
+<ul>
+<li>  Hkeys user:得到所有的 key (id name)</li>
+<li>  Hvals user:得到对应值</li>
+</ul>
+</li>
+<li><p>Hincrby/hincrbyfloat</p>
+<ul>
+<li>  Hincrby user id 2:使id 加2</li>
+<li>  Hincrbyfloat ….:改小数的值属性</li>
+</ul>
+</li>
+<li><p>  Hsetnx:添加,若不存在</p>
+</li>
+</ul>
+<h1 id="Redis-zset-sorted-set-有序集合"><a href="#Redis-zset-sorted-set-有序集合" class="headerlink" title="Redis zset(sorted set)有序集合"></a>Redis zset(sorted set)有序集合</h1><p>Set k1 v1 k2 v2</p>
+<p>Zset k1 score1(分数) v1 k2 score2 v2(比set多一个分数,用来排序)</p>
+<ul>
+<li><p>Zadd/zrange:两个值是一个整体</p>
+<ul>
+<li>  Zrange key 0 -1:取出(v1 v2)</li>
+<li>  Zrange key 0 -1 withscores:取出(v1 socre1 v2 score2)</li>
+</ul>
+</li>
+<li><p>Zrangebyscore key score1 score2 小到大:返回范围内的(v1..不带score)</p>
+<ul>
+<li>  score1 score2:都包含</li>
+<li>  (score1 (score2:都不包含</li>
+</ul>
+</li>
+<li><p>  Limit 2 5:在返回的结果进行截取(从结果下标2开始截取5个)</p>
+</li>
+<li><p>  Zrem key v1:删除v1</p>
+</li>
+<li><p>  Zcard key:返回数量 v的数量 不带分数</p>
+</li>
+<li><p>  Zcount key score1 score2:统计分数内个数</p>
+</li>
+<li><p>  Zrank key v1:返回v1下标</p>
+</li>
+<li><p>  Zscore key v1:返回v1的score</p>
+</li>
+<li><p>  Zrevrank key v1:逆序获得下标值</p>
+</li>
+<li><p>  Zrevrange key 0 -1:逆序输出 v1 v2</p>
+</li>
+<li><p>  Zrevrangebyscore key 90 60(大到小):返回v2 v1</p>
+</li>
+</ul>
+<h1 id="Units单位"><a href="#Units单位" class="headerlink" title="Units单位"></a>Units单位</h1><ul>
+<li>  1k=1000bytes;1kb=1024bytes;</li>
+<li>  不区分大小写;不支持bit;</li>
+</ul>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><ul>
+<li>  Window不用更改,linux要改为yes:守护进程</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/s6l1V4pBDwiWHqJ.png" srcset="/img/loading.gif" lazyload alt="image-20200912205055983"></p>
+<ul>
+<li>  进程管道id文件 windows没有</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/3tQosA6rYVEWLXf.png" srcset="/img/loading.gif" lazyload alt="image-20200912205110285"></p>
+<ul>
+<li><p>  Port 6379</p>
+</li>
+<li><p>  Tcp-backlog 511</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/MHFRSOA3KhYGQzq.png" srcset="/img/loading.gif" lazyload alt="image-20200912205143972"></p>
+<p>windwos中在network部分设置tcp的backlog ,是一个连接队列,队列总和=未完成3次握手+已完成三次握手在高并发环境下需要一个高backlog值,避免客户端连接缓慢,注意:linux内核会将这个值减小到/proc.sys/net/core/somacconn的值所以需要确认增大somaxconn和tcp_syn_backlog两个值来达到效果</p>
+<ul>
+<li>  绑定的网卡端口</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/XtnPV5ADCkNi869.png" srcset="/img/loading.gif" lazyload alt="image-20200912205223789"></p>
+<ul>
+<li><p>  Timeout 0; 空闲多少秒后关闭空闲连接 0表示不断</p>
+</li>
+<li><p>  Tcp-keepalive:单位为s 设置为0不进行keepalive检测,建议60s，每隔60秒检查一下状态是否良好</p>
+</li>
+<li><p>Loglevel:日志级别默认四个</p>
+<ul>
+<li>  debug (最详细:a lot of information, useful for development/testing)</li>
+<li>   verbose (many rarely useful info, but not a mess like the debug level)</li>
+<li>  notice (moderately verbose, what you want in production probably)</li>
+<li>  warning (最少:only very important / critical messages are logged)</li>
+</ul>
+</li>
+<li><p>  Logfile “”:日志文件</p>
+</li>
+<li><p>  Syslog-enabled no:系统日志开关</p>
+</li>
+<li><p>  Syslog-ident redis:系统日志文件名</p>
+</li>
+<li><p>  Syslog-facility local0(值可以是user或local0到local7) window没有</p>
+</li>
+<li><p>  Database 16 :16个数据库</p>
+</li>
+<li><p>  存内存数据到硬盘</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/Bav129PrDMbEFGe.png" srcset="/img/loading.gif" lazyload alt="image-20200912205432562"></p>
+<ul>
+<li><p>​    备份条件:Save time 修改次数(save “”)不备份</p>
+<ul>
+<li>  15min内至少一个key变化</li>
+<li>  5min内10个key变化</li>
+<li>  1min内10000key变化</li>
+</ul>
+</li>
+<li><p>  执行shutdown时会执行备份</p>
+</li>
+<li><p>  手动备份save命令</p>
+</li>
+<li><p>  Fushall也会执行save</p>
+</li>
+<li><p>  Stop-writes-on-bgsave-error   备份出错停止写入,</p>
+</li>
+<li><p>  Rdbchecksum:压缩校验crc64算法,10%性能损耗</p>
+</li>
+<li><p>  rdbcompression:是否启动压缩</p>
+</li>
+</ul>
+<h1 id="Replication复制"><a href="#Replication复制" class="headerlink" title="Replication复制"></a>Replication复制</h1><ul>
+<li><p>  Config get requirepass 获得当前用户密码串,此时应为””空串</p>
+</li>
+<li><p>Config get dir :获取服务启动路径(dir 配置文件中)</p>
+<ul>
+<li>  当前路径</li>
+<li>  当配置完path或用完整路径时,即返回的是那个目录路径</li>
+</ul>
+</li>
+<li><p>  Config set requirepass “123456”,(立即加验证)此时再次ping报错</p>
+</li>
+<li><p>  Auth 123456 即可</p>
+</li>
+<li><p>Maxmemory-policy:对于那些不常用的数据,占内存:过期策略</p>
+<ul>
+<li>   volatile-lru(最近最少使用:这对设置了过期时间的建) -&gt; remove the key with an expire set using an LRU algorithm</li>
+<li>  allkeys-lru -&gt; remove any key according to the LRU algorithm</li>
+<li>  volatile-random(随机过期的键删除:对有过期时间的有效) -&gt; remove a random key with an expire set</li>
+<li>  allkeys-random -&gt; remove a random key, any key</li>
+<li>  volatile-ttl(有限时间内:移除ttl只最小的,即即将过期的) -&gt; remove the key with the nearest expire time (minor TTL)</li>
+<li>  noeviction (默认永不过期,针对写操作,会返回错误信息)-&gt; don&#39;t expire at all, just return an error on write operations</li>
+</ul>
+</li>
+<li><p>Maxmemory-samples</p>
+<ul>
+<li>  设置样本数量:lru算法最小ttl算法都是非精确的,设置样本大小,redis会默认检查这么多个key并选择其中lru的那个..</li>
+</ul>
+</li>
+</ul>
+<h1 id="Append-only-mode追加比rdb较好"><a href="#Append-only-mode追加比rdb较好" class="headerlink" title="Append only mode追加比rdb较好"></a>Append only mode追加比rdb较好</h1><ul>
+<li>  开关,改变后启动时会有appendonly.aof:记录所有写操作</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/eL7SsvUY8i2Oj4P.png" srcset="/img/loading.gif" lazyload alt="image-20200912205834706"></p>
+<ul>
+<li><p>最后一秒:故障.可能日志文件损坏,</p>
+<ul>
+<li>  两者可同时存在,先加载aof,若失败</li>
+<li>  就会加载dump.rdb</li>
+</ul>
+</li>
+<li><p>  修复aof: redis-check-aof --fix appendonly.aof</p>
+</li>
+<li><p>  Appendfilename:日志文件名字</p>
+</li>
+<li><p>Appendfsync</p>
+<ul>
+<li>  Always:同步化持久,每次改变立即记录(性能差)</li>
+<li>  Everysec:出厂设置,异步操作每秒记录,会损失1秒</li>
+<li>  No:</li>
+</ul>
+</li>
+<li><p>  No-appendfsync-on-rewrite:重写时是否运用appendfsync 用no即可保证数据安全</p>
+</li>
+<li><p>  Auto-aof-rewrite-min-size:设置重写的基准值</p>
+</li>
+<li><p>  Auto-aof-rewrite-percentage:设置重写的基准值</p>
+</li>
+</ul>
+<h1 id="常见配置redis-conf介绍"><a href="#常见配置redis-conf介绍" class="headerlink" title="常见配置redis.conf介绍"></a>常见配置redis.conf介绍</h1><ul>
+<li>  Redis 守护进程启动 daemonize no-&gt;yes</li>
+<li>  一守护进程方式启动时 pid会写入/var/run/redis.pid prefile / var/run/redis.pid指定</li>
+<li>  Port 6379</li>
+<li>  Bind 127.0.0.1</li>
+<li>  Timeout 300</li>
+<li>  Loglevel 日志级别 debug,verbose,notice,warning 默认 verbose</li>
+<li>  Logfile stdout:标准输出路径</li>
+<li>  Database 16</li>
+<li>  Dir ./:变值</li>
+<li>  Requirepass …</li>
+<li>  Maxclient xxx:最大连接数</li>
+<li>Maxmemory xx:启动时,加载数据,达到最大,尝试清除将到期,或已到期key处理后,<ul>
+<li>  又达到最大,无法写,仍可读.对于新的vm机制,会把key放入内存value放在swap区</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h1><h6 id="RDB-Redis-DataBase"><a href="#RDB-Redis-DataBase" class="headerlink" title="RDB(Redis DataBase)"></a>RDB(Redis DataBase)</h6><ul>
+<li><p>是什么</p>
+<ul>
+<li>  在指定时间内将数据写入磁盘,即snapshot快照,恢复时写入内存</li>
+<li>  Redis会单独创建(fork)子进程进行持久化,会先将数据写入到临时文件,等待持久化过程结束,再用临时文件替换上次的文件,整个过程主进程不需要io</li>
+<li>  大规模数据恢复,数据完整性不是很敏感,rdb比aof更高效,</li>
+<li>  缺点最后一次持久化数据可能丢失(每5min备份一次,可能最后一次备份时故障)</li>
+</ul>
+</li>
+<li><p>Fork</p>
+<ul>
+<li>  复制一个与当前进程一样的进程,所有基本数据与原进程一致,但作为它的子进程运行</li>
+</ul>
+</li>
+<li><p>  Rdb保存的是dump.rdb文件</p>
+</li>
+<li><p>  配置位置 redis.conf</p>
+</li>
+<li><p>如何触发rdb快照</p>
+<ul>
+<li>  配置文件中默认的快照配置</li>
+<li>  命令save或是bgsave</li>
+<li>  Save:只管保存其他不管,全部阻塞</li>
+<li>  Bgsave:异步快照,备份同时可以响应请求,可以lastsave获取最后一次成功快照时间</li>
+<li>  执行flushall 也会产生备份,但是空文件,无意义</li>
+</ul>
+</li>
+<li><p>如何恢复</p>
+<ul>
+<li>  将备份文件移入 redis安装目录</li>
+</ul>
+</li>
+<li><p>优势</p>
+<ul>
+<li>  适合大规模数据恢复,对数据一致性完整性要求不高</li>
+</ul>
+</li>
+<li><p>劣势</p>
+<ul>
+<li>  最后一次可能丢失,fork的时候内存数据克隆,性能问题</li>
+</ul>
+</li>
+<li><p>如何停止</p>
+<ul>
+<li>  Redis-cli config set save “”</li>
+</ul>
+</li>
+<li><p>  小总结</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/a3wgAtJORQnBckT.png" srcset="/img/loading.gif" lazyload alt="image-20200912210104993"></p>
+<h6 id="AOF-Append-Only-File-修复最后一次读写"><a href="#AOF-Append-Only-File-修复最后一次读写" class="headerlink" title="AOF(Append Only File:修复最后一次读写)"></a>AOF(Append Only File:修复最后一次读写)</h6><ul>
+<li><p>是什么</p>
+<ul>
+<li>  以日志形式记录每个写操作,</li>
+<li>  日志只追加文件,redis启动会读取文件重新构建数据,</li>
+<li>  重启根据日志内容再次执行以完成恢复工作</li>
+</ul>
+</li>
+<li><p>  Aof保存的是appendonly.aof</p>
+</li>
+<li><p>  配置位置</p>
+</li>
+<li><p>Aof启动/恢复/修复</p>
+<ul>
+<li>正常恢复:<ul>
+<li>  启动设置为appendonly no-&gt;yes</li>
+<li>  将所有数据aof文件复制到对应目录(config get dir)</li>
+<li>  重启</li>
+</ul>
+</li>
+<li>异常恢复:<ul>
+<li>  启动:设置yes</li>
+<li>  找到被写坏的aof文件</li>
+<li>  修复:redis-check-aof --fix name</li>
+<li>  恢复:重启</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Rewrite</p>
+<ul>
+<li>是什么?<ul>
+<li>  Aof采用追加方式,文件越来越大,增加重写</li>
+<li>  当文件大小超过所设阈值时,aof内容压缩</li>
+<li>  只保留可以恢复数据的最小指令集,使用命令</li>
+<li>  Bgrewriteaof</li>
+</ul>
+</li>
+<li>重写原理<ul>
+<li>  Aof增加,会fork新进程将文件重写:注意不是读取aof,</li>
+<li>  读取内存中数据重写了一个aof,与快照类似</li>
+</ul>
+</li>
+<li>触发机制<ul>
+<li>  记录上次重写时aof大小,切大于64M</li>
+<li>  <img src="https://i.loli.net/2020/09/12/69QYhNkPdyFZcug.png" srcset="/img/loading.gif" lazyload alt="image-20200912210304234"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>优势</p>
+<ul>
+<li>  每秒同步,每修改同步,不同步</li>
+</ul>
+</li>
+<li><p>劣势</p>
+<ul>
+<li>  Aof文件远大于rdb,回复速度慢</li>
+<li>  运行效率慢,尽量使用美妙同步策略,若不同步,效率与rdb相同</li>
+</ul>
+</li>
+<li><p>  小总结</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/WNDAEUbiOlswMLe.png" srcset="/img/loading.gif" lazyload alt="image-20200912210333888"></p>
+<h1 id="总结which-one"><a href="#总结which-one" class="headerlink" title="总结which one"></a>总结which one</h1><ul>
+<li>官网建议:完整性低,快速-&gt;rdb</li>
+</ul>
+<ul>
+<li>只做缓存:可以不使用任何备份,不用持久化</li>
+</ul>
+<ul>
+<li>同时开启两种:先aof,aof比rdb完整.建议保留rdb</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/F7gnzNxIXYQSiUK.png" srcset="/img/loading.gif" lazyload alt="image-20200912210403808"></p>
+<h1 id="Redis的事务"><a href="#Redis的事务" class="headerlink" title="Redis的事务"></a>Redis的事务</h1><ul>
+<li><p>是什么：一次多个命令,所有命令都会序列化,按顺序串行</p>
+</li>
+<li><p>能干嘛：一个队列中,一次性,顺序性,排他性,</p>
+</li>
+<li><p>怎么做</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/Xd9UHzb4rapRWuQ.png" srcset="/img/loading.gif" lazyload alt="image-20200912210540693"></p>
+<ul>
+<li><p>常用命令</p>
+<ul>
+<li>  Case 1:正常执行</li>
+<li>  Case 2:放弃事务</li>
+<li>  Case 3:全体连坐</li>
+<li>  Case 4:冤头债主</li>
+<li>Case 5:watch监控<ul>
+<li>  悲观锁/乐观锁/cas(check and set)</li>
+<li>  悲观锁:修改时上锁</li>
+<li>  乐观锁:不会上锁,更新时判断有没有他人更新过数据,用版本号机制</li>
+<li>  提交版本必须大于记录当前版本才能执行更新</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>小结</p>
+<ul>
+<li>  Watch类似乐观锁</li>
+<li>  监控的数据被改,exec命令会被抛弃,返回nullmulti-bulk通知失败</li>
+</ul>
+</li>
+</ul>
+<h6 id="3阶段"><a href="#3阶段" class="headerlink" title="3阶段"></a>3阶段</h6><ul>
+<li>Multi开启事务</li>
+<li>命令入队</li>
+<li>执行exec</li>
+</ul>
+<h6 id="3特性"><a href="#3特性" class="headerlink" title="3特性"></a>3特性</h6><ul>
+<li>单独的隔离操作:不会被其他客户端命令打断</li>
+</ul>
+<ul>
+<li>没有隔离级别</li>
+</ul>
+<ul>
+<li>不保证原子性:冤头债主:全体连坐</li>
+</ul>
+<h1 id="Redis的发布订阅-了解"><a href="#Redis的发布订阅-了解" class="headerlink" title="Redis的发布订阅(了解)"></a>Redis的发布订阅(了解)</h1><ul>
+<li>是什么：进程间的一种消息通信模式,发送者pub发送,订阅者sub接受</li>
+<li>命令</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/WcpM5oH7FzqhrZg.png" srcset="/img/loading.gif" lazyload alt="image-20200912210903972"></p>
+<p>源-&gt;channel-&gt;client</p>
+<h6 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h6><p><img src="https://i.loli.net/2020/09/12/dE5a3CzbXfWlcPp.png" srcset="/img/loading.gif" lazyload alt="image-20200912210929351"></p>
+<h1 id="Redis的复制"><a href="#Redis的复制" class="headerlink" title="Redis的复制"></a>Redis的复制</h1><ul>
+<li><p>是什么</p>
+<ul>
+<li>Replication:主从复制,主机更新后,根据配置策略,自动同步到备机的matser/salver机制</li>
+<li>Master:写;slave:读</li>
+</ul>
+</li>
+<li><p>能干嘛</p>
+<ul>
+<li>读写分离</li>
+<li>容灾恢复</li>
+</ul>
+</li>
+<li><p>怎么做</p>
+<ul>
+<li>配从库不配主库</li>
+<li>从库配置:slaveof主库ip主库端口<ul>
+<li>每次master断开之后都要重新连接,除非配置进redis.conf</li>
+</ul>
+</li>
+<li>修改配置文件(不同的几个库)<ul>
+<li>拷贝多个redis.conf</li>
+<li>开启daemonize yes</li>
+<li>Pid文件名字</li>
+<li>指定端口</li>
+<li>Log文件名字</li>
+<li>Dump.rdb名字</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常用三招(以不同配置文件啊启动数据库)</p>
+<ul>
+<li>一主二仆<ul>
+<li>  分别连接数据库</li>
+<li>  :Info replication//显示状态 都是master</li>
+<li>  :主机添加数据v1</li>
+<li>  :丛机:slaveof 主机ip port (全量复制,从机变为slave:只能读)</li>
+<li>  :主机:又加数据v2</li>
+<li>  :丛机 get v2可以获得,注意也能get v1</li>
+<li>  当主机故障:从机连接状态down,从机原地待命,主机随时连接</li>
+<li>  从机故障:再次恢复时:身份变为master,再次slaveof</li>
+</ul>
+</li>
+<li>薪火相传<ul>
+<li>  上一个slave可以使下一个slaver的master,slaver同样可以接受其他slaves的链接和同步请求,和减少主库的压力</li>
+<li>  中途变更转向:会清除之前数据.</li>
+<li>  中间的slave的身份:还是slave ,担有连接的slave</li>
+</ul>
+</li>
+<li>反客为主<ul>
+<li>  从机:Slaveof no one:状态变为master</li>
+<li>  其他主机要同步时:要再次slaveof……</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="复制原理"><a href="#复制原理" class="headerlink" title="复制原理"></a>复制原理</h6><ul>
+<li>Slave启动后连接到master 会发送sync命令同步</li>
+</ul>
+<ul>
+<li>Master接到后,若此时有修改数据命令,完成后再处理同步</li>
+</ul>
+<ul>
+<li>全量复制:slave接收到数据库文件后</li>
+</ul>
+<ul>
+<li>增量复制:master继续将新数据传给slave时,但只要是重新连接都会一次同步所有</li>
+</ul>
+<h6 id="哨兵模式sentinel"><a href="#哨兵模式sentinel" class="headerlink" title="哨兵模式sentinel"></a>哨兵模式sentinel</h6><p>自动的反客为主:</p>
+<ul>
+<li><p>  调整结构:一主二仆</p>
+</li>
+<li><p>  自定义/myredis目录下新建sentinel.conf文件,名字不能错</p>
+</li>
+<li><p>主机配置哨兵sentinel.conf(可监控多个master)</p>
+<ul>
+<li>  Sentinel monitor 数据库名字(自己起) 127.0.0.1 6379 1(选择主机方案,票数高的作为主机)</li>
+</ul>
+</li>
+<li><p>启动redis-sentinel sentinel.conf</p>
+<ul>
+<li>  此时 主机故障, 一段时间后 会在从机中选出一个作为主机,(不用手动更改)</li>
+<li>  主机恢复时:slave:变为新主机的slave(有延迟)</li>
+</ul>
+</li>
+</ul>
+<h6 id="复制的缺点"><a href="#复制的缺点" class="headerlink" title="复制的缺点"></a>复制的缺点</h6><p>复制延时,slave多问题更严重</p>
+<h1 id="Redis的java客户端-jedis"><a href="#Redis的java客户端-jedis" class="headerlink" title="Redis的java客户端(jedis)"></a>Redis的java客户端(jedis)</h1><h2 id="Jedis常用操作"><a href="#Jedis常用操作" class="headerlink" title="Jedis常用操作"></a>Jedis常用操作</h2><ul>
+<li>  测试</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs java">Jedis jedis = <span class="hljs-keyword">new</span> Jedis(<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-number">6379</span>);<br>System.out.println(jedis.ping());<br>Set jedis.set(<span class="hljs-string">&quot;k1&quot;</span>,<span class="hljs-string">&quot;v1&quot;</span>);<br>Get jedis.get(<span class="hljs-string">&quot;k1&quot;</span>)<br>Set&lt;String&gt; listSet = jedis.keys(<span class="hljs-string">&quot;*&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>事物提交</p>
+<p><img src="https://i.loli.net/2020/09/12/uOkm5NEAW3j6PGS.png" srcset="/img/loading.gif" lazyload alt="image-20200912211405853"></p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/09/12/2BKAzJ8wgLxqT1v.png" srcset="/img/loading.gif" lazyload alt="image-20200912211415906"></p>
+<p>若事物执行时数据被更改,在执行exec时不会报错,只是事物内容不再执行</p>
+<ul>
+<li><p>主从复制</p>
+<ul>
+<li><p>两个库,先各自独立</p>
+</li>
+<li><div class="code-wrapper"><pre><code class="Java">Jedis jedis_M = new Jedis(&quot;127.0.0.1&quot;,6379);
+Jedis jedis_S = new Jedis(&quot;127.0.0.1&quot;,6380);
+jedis_S.slaveof(&quot;127.0.0.1&quot;, 6379);
+jedis_M.set(&quot;k&quot;, &quot;v&quot;);
+String result=jedis_S.get(&quot;k&quot;);
+System.out.println(result);
+//很可能获取不到(主从关系没建立)太快了,再次执行即可
+</code></pre></div>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Jedispool"><a href="#Jedispool" class="headerlink" title="Jedispool"></a>Jedispool</h2><p><img src="https://i.loli.net/2020/09/12/S5Ogo4N2CyEZFMi.png" srcset="/img/loading.gif" lazyload alt="image-20200912211505137"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/RSA/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/python%E8%A7%A3%E6%9E%90xml%E6%96%87%E4%BB%B6/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

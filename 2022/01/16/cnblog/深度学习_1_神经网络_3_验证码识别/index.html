@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="验证码识别1，分割 2，整体识别 一张图片n个字母   即不再是一个目标值，是n个 ​    例：NZPP ​    N ——&gt;[0.01，0.02,0.03…….] 概率    N——-&gt;[0，0,0,0,1…….] one-hot编码 ​    Z——–&gt;[0.01，0.02,0.03…….]         Z——-&gt;[0,1,0,0,0……] ​    最后得出n*">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C_3_%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="验证码识别1，分割 2，整体识别 一张图片n个字母   即不再是一个目标值，是n个 ​    例：NZPP ​    N ——&gt;[0.01，0.02,0.03…….] 概率    N——-&gt;[0，0,0,0,1…….] one-hot编码 ​    Z——–&gt;[0.01，0.02,0.03…….]         Z——-&gt;[0,1,0,0,0……] ​    最后得出n*">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.899Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="验证码识别"><a href="#验证码识别" class="headerlink" title="验证码识别"></a>验证码识别</h1><p>1，分割</p>
+<p>2，整体识别 一张图片n个字母   即不再是一个目标值，是n个</p>
+<p>​    例：NZPP</p>
+<p>​    N ——&gt;[0.01，0.02,0.03…….] 概率    N——-&gt;[0，0,0,0,1…….] one-hot编码</p>
+<p>​    Z——–&gt;[0.01，0.02,0.03…….]         Z——-&gt;[0,1,0,0,0……]</p>
+<p>​    最后得出n*26个概率 </p>
+<p>​    交叉熵计算</p>
+<p>​        目标值：[0,0,0,1……] [0,0,0,1……] [0,0,0,1……] [0,0,0,1……] </p>
+<p>​        经过网络输出：[1.2,2.3,5.6……]</p>
+<p>​        经过softmax得出概率：[0.01,0.02,…….]</p>
+<p>​        损失：104 个目标值m与概率n值相乘 mlogn，one-hot由于很多为0   最可得出一个样本的损失值为：1log()+1log()+1log()+1log()=损失值</p>
+<h2 id="验证码案例"><a href="#验证码案例" class="headerlink" title="验证码案例"></a>验证码案例</h2><p>1，处理数据 图片—–标签      图片路径–&gt;序号–&gt;验证码值—–&gt;转化为数字</p>
+<p>使用tfrecords</p>
+<p>2，识别验证码</p>
+<ul>
+<li><p>x = [100,20*80*3]</p>
+<p>​    w=[20*80*3,4*26]     bias=[4*26]</p>
+<p>​    y_predict = [100,4*26]（这得出概率值）</p>
+</li>
+<li><p>先把目标值[100,4] 转化为one_hot编码  —-&gt;[100,4,26] </p>
+<p>​        Api：tf.ont_hot([[13,25,11,24],[….],[…]],depth=26,axis=2,on_value=1.0)</p>
+<p>​        将目标值转化为[100,4*26]   与预测值交叉熵计算</p>
+</li>
+<li><p>梯度下降优化</p>
+</li>
+<li><p>精确值</p>
+<p>tf.equal(tf.argmax(y_true,2),tf.argmax(y_predict,2))     [100,4,26]   2 —-&gt;26</p>
+<p>再求平均值</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br><br>FLAGS = tf.flags.FLAGS<br>tf.flags.DEFINE_string(<span class="hljs-string">&quot;captcha_dir&quot;</span>, <span class="hljs-string">&quot;dataPath/.tfrecords&quot;</span>, <span class="hljs-string">&quot;验证码文件路径&quot;</span>)<br>tf.flags.DEFINE_string(<span class="hljs-string">&quot;batch_size&quot;</span>, <span class="hljs-number">100</span>, <span class="hljs-string">&quot;每批次训练的样本数&quot;</span>)<br>tf.flags.DEFINE_string(<span class="hljs-string">&quot;letter_num&quot;</span>, <span class="hljs-number">26</span>, <span class="hljs-string">&quot;目标值的分类&quot;</span>)<br>tf.flags.DEFINE_string(<span class="hljs-string">&quot;label_num&quot;</span>, <span class="hljs-number">4</span>, <span class="hljs-string">&quot;目标值个数&quot;</span>)<br>tf.flags._FlagValuesWrapper<br><br><span class="hljs-comment"># 定义一个权重初始化函数</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">weight_variables</span>(<span class="hljs-params">shape</span>):</span><br>    weight = tf.Variable(tf.random_normal(mean=<span class="hljs-number">0.0</span>, stddev=<span class="hljs-number">1.0</span>, shape=shape), name=<span class="hljs-string">&quot;w&quot;</span>)<br>    <span class="hljs-keyword">return</span> weight<br><br><span class="hljs-comment"># 定义一个权重初始化函数</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bias_Variables</span>(<span class="hljs-params">shape</span>):</span><br>    bias = tf.Variable(tf.constant(<span class="hljs-number">0.0</span>, shape=shape), name=<span class="hljs-string">&quot;b&quot;</span>)<br>    <span class="hljs-keyword">return</span> bias<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_and_decode</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    读取数据API</span><br><span class="hljs-string">    :return:image_batch,label_batch</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 1,构建文件队列</span><br>    file_queue = tf.train.start_queue_runners([FLAGS.captcha_dir])<br>    <span class="hljs-comment"># 2,构建阅读器，读取文件内容，默认一个样本</span><br>    reader = tf.TFRecordReader()<br>    <span class="hljs-comment"># 3,读取文件内容</span><br>    key, value = reader.read(file_queue)<br>    <span class="hljs-comment"># tfrecords 格式需要解析</span><br>    features = tf.parse_single_example(value, features=&#123;<br>        <span class="hljs-string">&quot;image&quot;</span>: tf.FixedLengthFeature([], tf.string),<br>        <span class="hljs-string">&quot;label&quot;</span>: tf.FixedLengthFeature([], tf.string),<br>    &#125;)<br>    <span class="hljs-comment"># 解析内容，字符串内容</span><br>    image = tf.decode_rwa(features[<span class="hljs-string">&quot;image&quot;</span>], tf.uint8)<br>    label = tf.decode_rwa(features[<span class="hljs-string">&quot;label&quot;</span>], tf.uint8)<br>    <span class="hljs-comment"># 改变形状</span><br>    image_reshape = tf.reshape(image, [<span class="hljs-number">20</span>, <span class="hljs-number">80</span>, <span class="hljs-number">3</span>])<br>    label_reshape = tf.reshape(label, [FLAGS.label_num])<br>    <span class="hljs-comment"># 进行批处理，每次读取的样本数，就是每次训练的样本数</span><br>    image_batch, label_batch = tf.train.batch([image_reshape, label_reshape], batch_size=FLAGS.batch_size,num_threads=<span class="hljs-number">1</span>, capacity=FLAGS.batch_size)<br>    <span class="hljs-keyword">return</span> image_batch, label_batch<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fc_model</span>(<span class="hljs-params">image</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    进行预测结果</span><br><span class="hljs-string">    :param image:特征值</span><br><span class="hljs-string">    :return:y_predict 【100,104】</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">with</span> tf.variable_scope(<span class="hljs-string">&quot;model&quot;</span>):<br>        <span class="hljs-comment"># 转化图片为二维</span><br>        image_reshape = tf.reshape(image, [-<span class="hljs-number">1</span>, <span class="hljs-number">20</span> * <span class="hljs-number">80</span> * <span class="hljs-number">3</span>])<br>        <span class="hljs-comment"># 1,随机初始化权重，偏值</span><br>        weight = weight_variables([<span class="hljs-number">20</span> * <span class="hljs-number">80</span> * <span class="hljs-number">3</span>, FLAGS.label_num * FLAGS.letter_num])<br>        bias = bias_Variables([FLAGS.label_num * FLAGS.letter_num])<br>        <span class="hljs-comment"># 2,进行全连接层计算 没有使用卷积神经网络 [100,4*26]</span><br>        y_predict = tf.matmul(tf.cast(image_reshape, tf.float32), weight) + bias<br>        <span class="hljs-keyword">return</span> y_predict<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">transform_to_onthot</span>(<span class="hljs-params">label</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    将读取文件的目标值转化为ont-hot编码</span><br><span class="hljs-string">    :param label:【100,4】   【【1,2,3,4】,【5,6,7,8】.....】</span><br><span class="hljs-string">    :return:[100,4,26]</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    label_onehot = tf.one_hot(label, depth=FLAGS.letter_num, on_value=<span class="hljs-number">1.0</span>, asix=<span class="hljs-number">2</span>)<br>    <span class="hljs-keyword">return</span> label_onehot<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">captcharec</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;验证码识别程序&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 1,读取验证码的数据文件</span><br>    image_batch, label_batch = read_and_decode()<br>    <span class="hljs-comment"># 2,输入图片特征数据建立模型，得出预测结果</span><br>    <span class="hljs-comment"># 一层全连接神经网络进行预测</span><br>    <span class="hljs-comment"># matrix【100,20,80,3】---》转化为二维*【20*80*3，4*26】+【4*26】=【100,104】</span><br>    y_predict = fc_model(image_batch)<br>    <span class="hljs-comment"># 3,转换目标值为ont-hot编码 [100,4,26]</span><br>    y_true = transform_to_onthot(label_batch)<br>    <span class="hljs-comment"># 4,交叉熵损失计算</span><br>    <span class="hljs-keyword">with</span> tf.variable_scope(<span class="hljs-string">&quot;sotf_cross&quot;</span>):<br>        <span class="hljs-comment"># y_true[100,4,26] ---&gt; [100,104]</span><br>        loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(<br>            labels=tf.reshape(y_true, [FLAGS.batch_size, FLAGS.label_num * FLAGS.letter_num]), logits=y_predict))<br>    <span class="hljs-comment"># 5,优化损失</span><br>    <span class="hljs-keyword">with</span> tf.variable_scope(<span class="hljs-string">&quot;opt&quot;</span>):<br>        train_op = tf.train.GradientDescentOptimizer(<span class="hljs-number">0.01</span>).minimize(loss)<br>    <span class="hljs-comment"># 6,准确率计算</span><br>    <span class="hljs-keyword">with</span> tf.variables_scope(<span class="hljs-string">&quot;acc&quot;</span>):<br>        <span class="hljs-comment"># 比较目标值与与与测试 4个位置是否全部相同, 三维比较  需要将预测值转换为三维</span><br>        equal_list = tf.equal(tf.argmax(y_true, <span class="hljs-number">2</span>),<br>                              tf.argmax(tf.reshape(y_predict, [FLAGS.batch_size, FLAGS.label_num, FLAGS.letter_num]),<span class="hljs-number">2</span>))<br>        accuracy = tf.reduce_mean(tf.cast(equal_list.tf.float32))<br>    <span class="hljs-comment"># 7,开启会话训练</span><br>    init_op = tf.golbal_variables_initilizer()<br>    <span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>        sess.run(init_op)<br><br>        <span class="hljs-comment"># 定义线程协调器，开启线程</span><br>        coord = tf.train.Coordinator()<br>        <span class="hljs-comment"># 开启线程取读取文件</span><br>        threads = tf.train.start_queue_runners(sess, coord=coord)<br>        <span class="hljs-comment"># 训练</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5000</span>):<br>            sess.run(train_op)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第%d次准确率是：%f&quot;</span> % (i, accuracy.<span class="hljs-built_in">eval</span>()))<br>        <span class="hljs-comment"># 回收</span><br>        coord.request_stop()<br>        coord.join(threads)<br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C_4_%E5%88%86%E5%B8%83%E5%BC%8FTensorflow/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C_2_%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

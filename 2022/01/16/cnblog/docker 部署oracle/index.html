@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Oracle数据库服务器Docker映像文档Oracle Database Server 12c R2是行业领先的关系数据库服务器。Oracle数据库服务器Docker映像包含在Oracle Linux 7上运行的Oracle数据库服务器12.2.0.1企业版。该映像包含具有一个pdb的多租户配置中的默认数据库。 有关Oracle Database Server 12c R2的更多信息，请参考ht">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/docker%20%E9%83%A8%E7%BD%B2oracle/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="Oracle数据库服务器Docker映像文档Oracle Database Server 12c R2是行业领先的关系数据库服务器。Oracle数据库服务器Docker映像包含在Oracle Linux 7上运行的Oracle数据库服务器12.2.0.1企业版。该映像包含具有一个pdb的多租户配置中的默认数据库。 有关Oracle Database Server 12c R2的更多信息，请参考ht">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.003Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="Oracle数据库服务器Docker映像文档"><a href="#Oracle数据库服务器Docker映像文档" class="headerlink" title="Oracle数据库服务器Docker映像文档"></a>Oracle数据库服务器Docker映像文档</h1><p>Oracle Database Server 12c R2是行业领先的关系数据库服务器。Oracle数据库服务器Docker映像包含在Oracle Linux 7上运行的Oracle数据库服务器12.2.0.1企业版。该映像包含具有一个pdb的多租户配置中的默认数据库。</p>
+<p>有关Oracle Database Server 12c R2的更多信息，请参考<a target="_blank" rel="noopener" href="http://docs.oracle.com/en/database/">http://docs.oracle.com/en/database/</a></p>
+<h3 id="登录Docker商店"><a href="#登录Docker商店" class="headerlink" title="登录Docker商店"></a>登录Docker商店</h3><p>使用您的凭证登录Docker Store</p>
+<p><code>$ docker login</code></p>
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><p><code>$ docker pull store/oracle/database-enterprise:12.2.0.1</code></p>
+<h3 id="启动Oracle数据库服务器实例"><a href="#启动Oracle数据库服务器实例" class="headerlink" title="启动Oracle数据库服务器实例"></a>启动Oracle数据库服务器实例</h3><p>启动Oracle数据库服务器实例就像执行一样简单</p>
+<p><code>$ docker run -d -it --name &lt;Oracle-DB&gt; store/oracle/database-enterprise:12.2.0.1</code></p>
+<p>其中<code>&lt;Oracle-DB&gt;</code>，容器的名称<code>12.2.0.1</code>是Docker映像标签。</p>
+<p>当该<code>STATUS</code>字段显示<code>(healthy)</code>在的输出中时，数据库服务器就可以使用了<code>docker ps</code>。</p>
+<h3 id="连接到数据库服务器容器"><a href="#连接到数据库服务器容器" class="headerlink" title="连接到数据库服务器容器"></a>连接到数据库服务器容器</h3><p>使用<code>sys</code>用户连接到数据库的默认密码是<code>Oradoc_db1</code>。</p>
+<h4 id="从容器内部连接"><a href="#从容器内部连接" class="headerlink" title="从容器内部连接"></a>从容器内部连接</h4><p>可以通过执行SQL * Plus来连接数据库服务器，</p>
+<p><code>$ docker exec -it &lt;Oracle-DB&gt; bash -c &quot;source /home/oracle/.bashrc; sqlplus /nolog&quot;</code></p>
+<h4 id="从容器外部连接"><a href="#从容器外部连接" class="headerlink" title="从容器外部连接"></a>从容器外部连接</h4><p>数据库服务器为通过SQL <em>Net协议的</em> Oracle客户端连接公开端口1521，<em>为Oracle XML DB</em>公开端口<em>5500。</em>可以使用<em>SQL</em> Plus或任何JDBC客户端从容器外部连接到数据库服务器。</p>
+<p>要从容器外部进行连接，请使用<code>-P</code>或<code>-p</code>选项as来启动容器，</p>
+<p><code>$ docker run -d -it --name &lt;Oracle-DB&gt; -P store/oracle/database-enterprise:12.2.0.1</code></p>
+<p>选项<code>-P</code>表示端口由Docker分配。通过执行以下操作可以发现映射的端口</p>
+<p><code>$ docker port &lt;Oracle-DB&gt;</code> <code>1521/tcp -&gt; 0.0.0.0:&lt;mapped host port&gt;</code></p>
+<p>使用它<code>&lt;mapped host port&gt;</code>并在环境变量指向的目录中<code>&lt;ip-address of host&gt;</code>创建。<code>tnsnames.ora``TNS_ADMIN</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">ORCLCDB=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=&lt;ip-address of host&gt;)(PORT=&lt;mapped host port&gt;))<br>    (CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=ORCLCDB.localdomain)))<br>ORCLPDB1=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=&lt;ip-address&gt; of host)(PORT=&lt;mapped host port&gt;))<br>    (CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=ORCLPDB1.localdomain)))<br></code></pre></td></tr></table></figure>
+
+<p>要使用SQL * Plus从容器外部进行连接，</p>
+<p><code>$ sqlplus sys/Oradoc_db1@ORCLCDB as sysdba</code></p>
+<h3 id="自定义配置"><a href="#自定义配置" class="headerlink" title="自定义配置"></a>自定义配置</h3><p>Oracle数据库服务器容器还提供用于启动容器的自定义配置参数。所有自定义配置参数都是可选的。可以在ENV文件（<code>ora.conf</code>）中提供以下自定义配置参数列表。</p>
+<h4 id="DB-SID"><a href="#DB-SID" class="headerlink" title="DB_SID"></a><code>DB_SID</code></h4><p>此参数更改<code>ORACLE_SID</code>数据库的。默认值设置为 <code>ORCLCDB</code>。</p>
+<h4 id="DB-PDB"><a href="#DB-PDB" class="headerlink" title="DB_PDB"></a><code>DB_PDB</code></h4><p>此参数修改PDB的名称。默认值设置为<code>ORCLPDB1</code>。</p>
+<h4 id="DB-MEMORY"><a href="#DB-MEMORY" class="headerlink" title="DB_MEMORY"></a><code>DB_MEMORY</code></h4><p>此参数设置Oracle服务器的内存要求。此值确定要为SGA和PGA分配的内存量。默认值设置为2GB。</p>
+<h4 id="DB-DOMAIN"><a href="#DB-DOMAIN" class="headerlink" title="DB_DOMAIN"></a><code>DB_DOMAIN</code></h4><p>此参数设置要用于数据库服务器的域。默认值为 <code>localdomain</code>。</p>
+<p>使用自定义配置参数启动Oracle数据库服务器</p>
+<p><code>$ docker run -d -it --name &lt;Oracle-DB&gt; -P --env-file ora.conf store/oracle/database-enterprise:12.2.0.1</code></p>
+<p>确保的自定义值<code>DB_SID</code>，<code>DB_PDB</code>并<code>DB_DOMAIN</code>在tnsnames.ora中更新。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>该Docker映像具有以下限制。</p>
+<ol>
+<li>支持单个实例数据库。</li>
+<li>不支持Dataguard。</li>
+<li>不支持数据库选项和修补程序。</li>
+</ol>
+<h2 id="修改SYS用户默认密码"><a href="#修改SYS用户默认密码" class="headerlink" title="修改SYS用户默认密码"></a>修改SYS用户默认密码</h2><p>使用默认密码启动Oracle数据库服务器<code>Oradoc_db1</code>。创建容器时使用的密码不安全，应更改。要更改密码，请使用SQL * Plus连接到数据库并执行</p>
+<p><code>alter user sys identified by &lt;new-password&gt;;</code></p>
+<h2 id="资源需求"><a href="#资源需求" class="headerlink" title="资源需求"></a>资源需求</h2><p>容器的最低要求是8GB磁盘空间和2GB内存。</p>
+<h2 id="数据库日志"><a href="#数据库日志" class="headerlink" title="数据库日志"></a>数据库日志</h2><p>可以使用以下命令查看数据库警报日志</p>
+<p><code>$ docker logs &lt;Oracle-DB&gt;</code></p>
+<p>哪里 是容器的名称</p>
+<h2 id="重用现有数据库"><a href="#重用现有数据库" class="headerlink" title="重用现有数据库"></a>重用现有数据库</h2><p>该Oracle数据库服务器映像使用Docker数据卷来存储数据文件，重做日志，审核日志，警报日志和跟踪文件。数据量安装在的容器内部<code>/ORCL</code>。要使用<code>docker run</code>命令启动具有数据量的数据库，</p>
+<p><code>$ docker run -d -it --name &lt;Oracle-DB&gt; -v OracleDBData:/ORCL store/oracle/database-enterprise:12.2.0.1</code></p>
+<p><code>OracleDBData</code>是Docker创建并安装在容器内部的数据卷<code>/ORCL</code>。通过重用<code>OracleDBData</code>数据卷，可以将持久化的数据文件与另一个容器重用。</p>
+<h2 id="使用主机系统目录进行数据量"><a href="#使用主机系统目录进行数据量" class="headerlink" title="使用主机系统目录进行数据量"></a>使用主机系统目录进行数据量</h2><p>要将主机系统上的目录用于数据量，</p>
+<p><code>$ docker run -d -it --name &lt;Oracle-DB&gt; -v /data/OracleDBData:/ORCL store/oracle/database-enterprise:12.2.0.1</code></p>
+<p><code>/data/OracleDBData</code>主机系统中的目录在哪里。</p>
+<h2 id="Oracle-Database-Server-12-2-0-1企业版Slim-Variant"><a href="#Oracle-Database-Server-12-2-0-1企业版Slim-Variant" class="headerlink" title="Oracle Database Server 12.2.0.1企业版Slim Variant"></a>Oracle Database Server 12.2.0.1企业版Slim Variant</h2><p><code>12.2.0.1-slim</code>EE 的Slim Variant（标签）减少了磁盘空间（4GB）的要求，并加快了容器的启动速度。该映像不支持以下功能-分析，Oracle R，Oracle标签安全性，Oracle文本，Oracle Application Express和Oracle DataVault。使用苗条的变体</p>
+<p><code>$ docker run -d -it --name &lt;Oracle-DB&gt; store/oracle/database-enterprise:12.2.0.1-slim</code></p>
+<p>其中<code>&lt;Oracle-DB&gt;</code>，容器的名称<code>12.2.0.1-slim</code>是Docker映像标签。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/docker_%E8%BF%9B%E9%98%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/docker%20%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

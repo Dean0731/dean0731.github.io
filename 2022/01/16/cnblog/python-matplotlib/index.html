@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="# matplotlib 画图工具 import matplotlib.pyplot as plt import pandas as pd import numpy as np from pandas.core.series import Series # 自定义数据 X &#x3D; Series(np.array([1,2,3,4,5])) Y &#x3D; Series(np.array([1,5,2.7,3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/python-matplotlib/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="# matplotlib 画图工具 import matplotlib.pyplot as plt import pandas as pd import numpy as np from pandas.core.series import Series # 自定义数据 X &#x3D; Series(np.array([1,2,3,4,5])) Y &#x3D; Series(np.array([1,5,2.7,3">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.328Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <div class="cnblogs_code">
+<div class="code-wrapper"><pre><span style="color: #008000;">#</span><span style="color: #008000;"> matplotlib 画图工具</span>
+<span style="color: #0000ff;">import</span><span style="color: #000000;"> matplotlib.pyplot as plt
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> pandas as pd
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> numpy as np
+</span><span style="color: #0000ff;">from</span> pandas.core.series <span style="color: #0000ff;">import</span><span style="color: #000000;"> Series
+</span><span style="color: #008000;">#</span><span style="color: #008000;"> 自定义数据</span>
+X = Series(np.array([1,2,3,4,5<span style="color: #000000;">]))
+Y </span>= Series(np.array([1,5,2.7,3.8,4.9<span style="color: #000000;">]))
+Y1 </span>= (np.random.random((1,5))*10<span style="color: #000000;">)[0]
+X1 </span>= [1,2,3,4,5<span style="color: #000000;">]
+
+<p></span><span style="color: #008000;">#</span><span style="color: #008000;"> =================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 折线图</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> xxx 文件有两列组成 DATE(yyyy/MM/dd),VALUE</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> unrate = pd.read_csv(“xxx”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 修改日期格式(yyyy-MM-dd)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> unrate[‘DATE’] = pd.to_datetime(unrate[‘DATE’])</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.plot() # 若不传入数据图像为空(只显示画图域)  只有 xy轴   范围为0-1 (0.0 0.2 0.4 0.6     1.0)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.plot(X,Y) # 线x轴后y轴</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.xticks(rotation=45)  # 设置x轴上的数字倾斜角度</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.yticks(rotation=45)  # 设置y轴上的数字倾斜角度</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.xlabel(‘x’)  # 给xy轴加标签 注意中文可能出错</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.ylabel(‘y’)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.title(‘title’)  # 标题</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.show()  # 显示图像</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> =========================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 子图操作</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig = plt.figure(figsize=(3,6)) # figsize画图域的长与宽</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig = plt.figure()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax1 = fig.add_subplot(2,2,1)  # 三个画图域  第一张图 左上角序号为1</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax2 = fig.add_subplot(2,2,2)  # 右上角 序号2</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax3 = fig.add_subplot(2,2,4)  # 右下角序号4</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 有三个画图域:一张大图  里边三个小图 ,注意尽量保持每个域 中前两个量都相同如全都是(2,2,<em>) 否则图像可能会重合</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   大图分为 2</em>2 ,序号从左到右,上到下 1-4</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax1.plot(X,Y)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax2.plot(X,Y)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> =================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 在一个图上画多条线</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig = plt.figure()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.plot(X,Y,c=”red”,label=”first”)  # 添加label,</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.plot(X1,Y1,c=”blue”,label=”second”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.legend(loc=”best”)  # 可以在图中显示 不同线的标注信息</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 指定位置 best 表示自定义最好位置, upper left 左上角  lower ,center left,right等</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 条形图与散点图</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.subplots(X,Y,0.3) # 不能此种方式直接画</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig,ax = plt.subplots()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.bar(X,Y,0.3) # 0.3表示柱形的宽度</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.bar(X1,Y1,0.5)  # X1 表示的是每个柱距离0的大小 Y1是柱的高度</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_xticklabels([“a”,”b”,”c”,”d”,”e”],rotation=45) # 定义x轴要显示的内容 本例为1,2,3,4,5</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_xticks([1,2,3,4,5]) # 指明x轴上1,2,3,4,5那些需要显示</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_ylabel(“y”)  # y轴标签</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_xlabel(“x”)  # x轴标签</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_title(“title”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ——————————-</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 横向柱状图</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig,ax = plt.subplots()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.barh(X1,Y1,0.3) # x 变为竖着的</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_yticks()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_yticklabels(yy)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig,ax = plt.subplots()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.scatter(X1,Y1)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_xlabel(“X”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_ylabel(“Y”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ———————</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 子图</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig = plt.figure()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax1 = fig.add_subplot(2,1,1)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax2 = fig.add_subplot(2,1,2)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax1 … ax2 …</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> —————–</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 直方图</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig,ax = plt.subplots()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.hist(Y1)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.hist([1,1,1,3,3,3,4,4,4,5,5,5,5,5,5,51])</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_ylim(0,3) # 设置y轴区间大小</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_xlim(0,5) # 设置y轴区间大小</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 接受一组数据,假如数据是可比较的,</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 在x轴上会分区间显示, 数值大小在改区间的数的个数  区间个数 通过bins修改</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 通过range=(2,5) 控制x轴显示的范围  只显示2到5范围内的</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ======================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 盒图</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> fig,ax = plt.subplots()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.boxplot([[1,2,3],2,3,4,5,6,7])</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_xticklabels([“a”,”b”],rotation=90) # x轴上显示的标签</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.set_ylim(0.5) # 范围</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> boxplot([]) list中可为几个数值,也可以为[] ,即每个[] 对应x上一项</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 注意最多两层 [[],[]] 三层报错</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 图的主要作用是 容易看出一个[] 中四等分出的值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">  a–&gt; 1,1.5,2,2.5,3   b–&gt;2 ….</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ====================================</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> fig,ax = plt.subplots()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.tick_params(bottom=”on”)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> for key,spine in ax.spines.items():</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">     spine.set_visible(False)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.plot(X,Y)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.plot(X1,Y1)</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> 细节设置</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.plot(c=(0/255,10/255,164/255),linewidth=3) # 设置宽度,颜色:颜色使用元祖方式表示,固定格式</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ax.text(x,y,”zz”) # 在x,y点处添加zz字符</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> plt.show()</span></pre></div></p>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_Highlighter">
+<div class="code-wrapper"><pre class="brush:python;gutter:true;">import matplotlib.pyplot as plt
+import json
+import numpy as np
+import matplotlib
+font = {'family': 'MicroSoft YaHei','weight': 'bold','size': 10} # 中文乱码
+matplotlib.rc("font", **font)
+file = r'temp2.txt'
+car = []
+bus = []
+van = []
+others = []
+X = []
+with open(file,'r') as f:
+    data = [json.loads(line) for line in f.readlines()]
+for i,line in enumerate(data):
+    X.append(i)
+    temp = line.get(str(i))
+    car.append(temp.get('car'))
+    bus.append(temp.get('bus'))
+    van.append(temp.get('van'))
+    others.append(temp.get('others'))
+X = np.divide(X,60)
+plt.plot()
+plt.plot(X,car,label='car')
+plt.plot(X,bus,label='bus')
+plt.plot(X,van,label='van')
+plt.plot(X,others,label='other')
+plt.plot(X,np.sum([car,van,bus,others],axis=0),label='sum')
+plt.legend(loc=2)
+plt.xlabel('运行时间(分钟)')
+plt.ylabel('数量')
+plt.title('车辆流统计')
+plt.show()
+</pre></div>
+</div>
+<p>　　</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/python-numpy/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/python%20%E5%8D%8F%E7%A8%8B%E6%96%B0%E7%89%88/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

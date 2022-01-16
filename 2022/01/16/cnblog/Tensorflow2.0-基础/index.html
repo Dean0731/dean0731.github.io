@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="数据载体   python：list，列表 numpy：ndarray tensorflow：tensor，多维数组    可使用不同数据类型，可嵌套不连续存放，动态指针数组 效率低，占空间大 由于高度灵活性，不适合做数值计算 数据类型相同每个元素占空间相同，连续存储占空间小，读写速度快占用的是内存，只能在cup运算 可运行于gpu，tpu支持多种计算环境高速实现复杂算法   数据类型 tenso">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/Tensorflow2.0-%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="数据载体   python：list，列表 numpy：ndarray tensorflow：tensor，多维数组    可使用不同数据类型，可嵌套不连续存放，动态指针数组 效率低，占空间大 由于高度灵活性，不适合做数值计算 数据类型相同每个元素占空间相同，连续存储占空间小，读写速度快占用的是内存，只能在cup运算 可运行于gpu，tpu支持多种计算环境高速实现复杂算法   数据类型 tenso">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/nzsRIO9C2rijelm.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/Anwqu3zslP6DCpg.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/ezPho6tDSGOnkXB.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/y4hFtG9W3b8v7YJ.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/aEzyjgQn1epsZJl.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/wEqa54FeYJ1fNK3.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/Dod1EKMsyW2PTYR.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/Z8XOxvL9FcAfH4S.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/bXBMWdFjD3gOelN.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/8ePZDLKbl42vkzV.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/08/aJSx1gWf7iZ5cVw.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.550Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.loli.net/2020/06/08/nzsRIO9C2rijelm.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      43 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="数据载体"><a href="#数据载体" class="headerlink" title="数据载体"></a>数据载体</h1><table>
+<thead>
+<tr>
+<th>python：list，列表</th>
+<th>numpy：ndarray</th>
+<th>tensorflow：tensor，多维数组</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可使用不同数据类型，可嵌套<br>不连续存放，<br>动态指针数组 效率低，占空间大 <br>由于高度灵活性，不适合做数值计算</td>
+<td>数据类型相同<br>每个元素占空间相同，连续存储<br>占空间小，读写速度快<br>占用的是内存，只能在cup运算</td>
+<td>可运行于gpu，tpu<br>支持多种计算环境<br>高速实现复杂算法</td>
+</tr>
+</tbody></table>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><ul>
+<li><p>tensorflow张量就是多维数组，不管是多少维的，都是张量</p>
+</li>
+<li><p>tensorflow数字默认类型：tf.int32,tf.float32,不同类型不能操作</p>
+</li>
+<li><p>numpy默认的小数是float64，</p>
+</li>
+</ul>
+<p>转换数据类型时：低–&gt;高,防止数据溢出</p>
+<p>整数转bool，0F，非零T</p>
+<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><ul>
+<li><p>```python<br>a = tf.convert_to_tensor(numpy数据) # 将numpy数组转为tensor</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs autohotkey"><br>- ```python<br>  tf.is_tensor(a) #检查是否是张量 <br></code></pre></td></tr></table></figure></li>
+<li><p>```python<br>isinstance(a,tf.Tensor)<br>isinstance(a,numpy.ndarray)</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br><span class="hljs-comment"># 特殊张量</span><br><br>![image-<span class="hljs-number">20200608121339812</span>](https:<span class="hljs-regexp">//i</span>.loli.net<span class="hljs-regexp">/2020/</span><span class="hljs-number">06</span><span class="hljs-regexp">/08/</span>SCKwja9AEsr7zgf.png)<br><br>```python<br>tf.zeros(shape,dtype) <span class="hljs-comment"># 全0张量，默认是float32</span><br>tf.ones()<br></code></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">tf.fill(shape,value) <span class="hljs-comment"># 自动判断数据类型，填充相同数字</span><br>tf.constant(<span class="hljs-number">9</span>,[<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]) <span class="hljs-comment"># 也可以</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">tf.random.normal(shape,mean,stddev,dtype) <span class="hljs-comment"># 正态随机分布，默认均值为0，标准差为1，float32</span><br>tf.random.truncated_normal(shape,mean,stddev,dtype)<br><span class="hljs-comment"># 截断的正态分布，截断标准是2倍标准差，值不会偏离均值2倍标准差</span><br>tf.random.uniform(shape,<span class="hljs-built_in">min</span>,<span class="hljs-built_in">max</span>,,<span class="hljs-built_in">type</span>) <span class="hljs-comment"># 均匀分布，不包含最大，包括最小</span><br>tf.random.shuffle(x) <span class="hljs-comment"># 沿着第一维打乱</span><br>tf.random.set_seed(<span class="hljs-number">8</span>) <span class="hljs-comment"># 设置随机种子，仅仅一次有效</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">tf.<span class="hljs-built_in">range</span>(start,limit,delta,dtype)<span class="hljs-comment"># 创建序列，前闭后开，默认从0开始，步长为1</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="张量属性"><a href="#张量属性" class="headerlink" title="张量属性"></a>张量属性</h1><ul>
+<li>ndim：维度</li>
+<li>dtype：类型</li>
+<li>shape：形状</li>
+<li>tf.shape(a):张量形式返回形状</li>
+<li>tf.size(a):总数</li>
+<li>tf.rank(a):维度</li>
+</ul>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
+<li>在cup中张量与numpy共享内存，只是使用不同方式读取使用它</li>
+<li>多维张量内存中是一位数组连续存储</li>
+</ul>
+<h1 id="改变形状"><a href="#改变形状" class="headerlink" title="改变形状"></a>改变形状</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">b = tf.reshape(tensor,shape)<br></code></pre></td></tr></table></figure>
+
+<p>轴也可以是负数，表示从后向前</p>
+<p><img src="https://i.loli.net/2020/06/08/nzsRIO9C2rijelm.png" srcset="/img/loading.gif" lazyload alt="image-20200608123050283"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">tf.expand_dims(<span class="hljs-built_in">input</span>,axis) <span class="hljs-comment"># 增加维度，维度长度为1</span><br>a = tf.constant([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]) <span class="hljs-comment"># shape(2,)</span><br>b = tf.expand_dims(a,<span class="hljs-number">1</span>) <span class="hljs-comment"># shape(2,1) 元素数不变形状变了而已</span><br>c = tf.expand_dims(a,<span class="hljs-number">0</span>) <span class="hljs-comment"># shape(1,2)</span><br><br>a = tf.<span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>)<br>b = tf.reshape(a,[<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>])<br>b1 = tf.expand_dims(b,<span class="hljs-number">0</span>) <span class="hljs-comment"># shape(1.2,3,4)</span><br>b1 = tf.expand_dims(b,<span class="hljs-number">1</span>) <span class="hljs-comment"># shape(2,1,3,4)</span><br>b1 = tf.expand_dims(b,<span class="hljs-number">2</span>) <span class="hljs-comment"># shape(2,3,1,4)</span><br>b1 = tf.expand_dims(b,<span class="hljs-number">3</span>) <span class="hljs-comment"># shape(2,3,4,1)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 删除维度 只能删除长度为1的维度,并不会改变数量，只是改变了存储</span><br>tf.squeeze(<span class="hljs-built_in">input</span>,axis)<br><br>a = tf.<span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>)<br>b = tf.reshape(a,[<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>])<br>tf.squeeze(t) <span class="hljs-comment">#shape-&gt;(2,3,4)</span><br>tf.squeeze(t,[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>]) <span class="hljs-comment"># shape-&gt;(1,3,4)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#交换维度,改变了视图，也改变了存储顺序</span><br>tf.transpose(a,perm)  <span class="hljs-comment"># 对于二维张量，默认是转置</span><br><span class="hljs-comment"># x.shape--&gt;(2,3)</span><br>tf.transpose(x,[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>]) <span class="hljs-comment"># shape-&gt;(3,2)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 拼接,不会增加维度</span><br>tf.concat(tensor,axis) <span class="hljs-comment">#</span><br><span class="hljs-comment"># 分割张量</span><br>tf.split(value,num_or_size,axis=<span class="hljs-number">0</span>)<br><span class="hljs-comment"># num_or_size:2 表示平均切位2个</span><br><span class="hljs-comment"># [1:2:1] ,按比例切割</span><br><br><span class="hljs-comment"># 只改变视图，存储顺序不变</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 堆叠与分解</span><br>tf.stack(values,axis) <span class="hljs-comment"># </span><br>a = tf.constant([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>])<br>b = tf.constant([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>])<br>tf.stack((x,y),axis=<span class="hljs-number">0</span>) <span class="hljs-comment"># shape(2,3)</span><br>tf.stack((x,y),axis=<span class="hljs-number">1</span>) <span class="hljs-comment"># shape(3,2)</span><br><br><br><br>tf.unstack(values,axis)<br>a = tf.constant([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]])<br>tf.stack(a,axis=<span class="hljs-number">0</span>) <span class="hljs-comment"># shape(3,) 2个</span><br>tf.stack(a,axis=<span class="hljs-number">1</span>) <span class="hljs-comment"># shape(2,) 3个</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 索引</span><br><span class="hljs-comment"># 与numpy几乎相同</span><br><span class="hljs-comment"># 一维:a[1],二维:a[1][1],a[1,1],三维:a[1][1][1],a[1,1,1]</span><br><br><span class="hljs-comment"># 切片[起始:结束:步长]，步长为负数表示反向切片</span><br><span class="hljs-comment"># 前闭后开，起始，结束，步长可省略</span><br><span class="hljs-comment"># 二维数据，与一维类似，逗号隔开</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据提取</span><br>tf.gather(params,indices)<br>a = tf.<span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>)<br>tf.gather(a,[<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]) <span class="hljs-comment"># 从a中提取0,2,3下标的元素</span><br><br>a = tf.random.normal([<span class="hljs-number">4</span>,<span class="hljs-number">5</span>])<br>tf.gather(a,axis=<span class="hljs-number">0</span>,[<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]) <span class="hljs-comment"># 去获取0 2 3行</span><br>tf.gather(a,axis=<span class="hljs-number">1</span>,[<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]) <span class="hljs-comment"># 去获取0 2 3列</span><br><span class="hljs-comment"># 每次只有一个维度</span><br><span class="hljs-comment"># 多维获取</span><br>tf.gather_nd(b,[[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">1</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]]) <span class="hljs-comment"># 指定每个元素坐标</span><br>tf.gather_nd(三维元素,[[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">1</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]]) <span class="hljs-comment"># 指定每个元素坐标，此时采样的是三个点，每个点三个通道</span><br>tf.gather_nd(三维元素,[[<span class="hljs-number">0</span>],[<span class="hljs-number">1</span>],[<span class="hljs-number">2</span>]]) <span class="hljs-comment"># 类似获取三个面</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h1><h2 id="一元线性回归"><a href="#一元线性回归" class="headerlink" title="一元线性回归"></a>一元线性回归</h2><ul>
+<li><p>平均损失函数：$Loss=\frac{1}{2}\mathop{\sum}\limits_{i=1}^{n}(y_i-\bar{y_i})^2=\frac{1}{2}\mathop{\sum}\limits_{i=1}^{n}(y_i-(wx_i+b))^2$</p>
+</li>
+<li><p>均方误差：$Loss=\frac{1}{2n}\mathop{\sum}\limits_{i=1}^{n}(y_i-\bar{y_i})^2$</p>
+<ul>
+<li>$\frac{1}{2}$是为了求导方便，</li>
+<li>使用平方做误差，防止正负误差抵消</li>
+<li>此时Loss与误差单调性相同</li>
+</ul>
+</li>
+</ul>
+<p><font color=red>基于均方误差最小化求解模型的方法：最小二乘法</font></p>
+<p>w,b作为自变量，取何值时，Loss最小？，求极值问题：极值点偏导数为0</p>
+<p>$\frac{\partial Loss}{\partial w}=\mathop{\sum}\limits_{i=1}^{n}(y_i-b-w_i)(-x_i)=0$</p>
+<p>$\frac{\partial Loss}{\partial b}=\mathop{\sum}\limits_{i=1}^{n}(y_i-b-w_i)(-1)=0$</p>
+<p><img src="https://i.loli.net/2020/06/08/Anwqu3zslP6DCpg.png" srcset="/img/loading.gif" lazyload alt="image-20200608142106038"></p>
+<h2 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h2><ul>
+<li>解析解：严格推导得出，任意精度满足方程</li>
+<li>数值解：近似计算得到，给定精度下满足方程</li>
+</ul>
+<p><img src="https://i.loli.net/2020/06/08/ezPho6tDSGOnkXB.png" srcset="/img/loading.gif" lazyload alt="image-20200608143534763"></p>
+<p>$步长=\eta \frac{df(x)}{dx},\eta:学习率$</p>
+<p>$x^{(k+1)}=x^k-步长$</p>
+<ul>
+<li>根据斜率实现自适应调整步长</li>
+<li>自动确定下一次方向</li>
+<li>保证收敛性</li>
+</ul>
+<p>二元凸函数类似：</p>
+<p><img src="https://i.loli.net/2020/06/08/y4hFtG9W3b8v7YJ.png" srcset="/img/loading.gif" lazyload alt="image-20200608144115993"></p>
+<p>梯度：$\vec{gard}f(x,y)=\frac{\partial f(x,y)}{\partial x}\vec{i}+\frac{\partial f(x,y)}{\partial y}\vec{j}$</p>
+<p>只要损失函数是凸函数，就可以使用梯度下降法，最快速度更新w，得到极值点，</p>
+<p><font color=red>凹凸性定义国内外方式不同，很可能相反</font></p>
+<p><img src="https://i.loli.net/2020/06/08/aEzyjgQn1epsZJl.png" srcset="/img/loading.gif" lazyload alt="image-20200608145907632"></p>
+<p><img src="https://i.loli.net/2020/06/08/wEqa54FeYJ1fNK3.png" srcset="/img/loading.gif" lazyload alt="image-20200608145923365"></p>
+<p><img src="https://i.loli.net/2020/06/08/Dod1EKMsyW2PTYR.png" srcset="/img/loading.gif" lazyload alt="image-20200608150020916"></p>
+<p><img src="https://i.loli.net/2020/06/08/Z8XOxvL9FcAfH4S.png" srcset="/img/loading.gif" lazyload alt="image-20200608150238087"></p>
+<p>对于凸函数，只要学习率足够小，可以一定收敛，但极大会震荡，极小会很难收敛</p>
+<p>超参数：开始先定义的</p>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br>x = np.array([<span class="hljs-number">137.97</span>,<span class="hljs-number">104.50</span>,<span class="hljs-number">100.00</span>,<span class="hljs-number">124.32</span>,<span class="hljs-number">79.20</span>,<span class="hljs-number">99.00</span>,<span class="hljs-number">124.00</span>,<span class="hljs-number">114.00</span>,<span class="hljs-number">106.69</span>,<span class="hljs-number">138.05</span>,<span class="hljs-number">53.75</span>,<span class="hljs-number">46.91</span>,<span class="hljs-number">68.00</span>,<span class="hljs-number">63.02</span>,<span class="hljs-number">81.26</span>,<span class="hljs-number">86.21</span>])<br>y = np.array([<span class="hljs-number">145.00</span>,<span class="hljs-number">110.00</span>,<span class="hljs-number">93.00</span>,<span class="hljs-number">116.00</span>,<span class="hljs-number">65.32</span>,<span class="hljs-number">104.00</span>,<span class="hljs-number">118.00</span>,<span class="hljs-number">91.00</span>,<span class="hljs-number">62.00</span>,<span class="hljs-number">133.00</span>,<span class="hljs-number">51.00</span>,<span class="hljs-number">45.00</span>,<span class="hljs-number">78.50</span>,<span class="hljs-number">69.65</span>,<span class="hljs-number">75.69</span>,<span class="hljs-number">95.30</span>])<br><br>learning_rate=<span class="hljs-number">0.00001</span><br><span class="hljs-built_in">iter</span>=<span class="hljs-number">100</span><br>display_step=<span class="hljs-number">10</span><br><br>mse=[]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-built_in">iter</span>+<span class="hljs-number">1</span>):<br>    <span class="hljs-comment"># 计算偏导数，根据导数公式带入数据即可</span><br>    dL_dw=np.mean(x*(w*x+b-y))<br>    dL_db=np.mean(w*x+b-y)<br>    <br>    w=w-learning_rate*dL_dw<br>    b=b-learning_rate*dL_db<br>    <br>    pred=w*x+b<br>    Loss=np.mean(np.square(y-pred))/<span class="hljs-number">2</span><br>    mse.append(Loss)<br>    <span class="hljs-keyword">if</span> i %display_step==<span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;i:%i,Loss:%f,w:%f,b:%f&quot;</span>%(i,mse[i],w,b))<br>        <br>     plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>]=[<span class="hljs-string">&#x27;SimHei&#x27;</span>]<br>plt.figure()<br>plt.scatter(x,y,color=<span class="hljs-string">&#x27;red&#x27;</span>,label=<span class="hljs-string">&quot;销售记录&quot;</span>)<br>plt.scatter(x,pred,color=<span class="hljs-string">&quot;blue&quot;</span>,label=<span class="hljs-string">&quot;梯度下降法&quot;</span>)<br>plt.plot(x,pred,color=<span class="hljs-string">&quot;blue&quot;</span>)<br>plt.plot(x,<span class="hljs-number">0.89</span>*x+<span class="hljs-number">5.41</span>,color=<span class="hljs-string">&quot;red&quot;</span>)<br><br>plt.xlabel(<span class="hljs-string">&quot;Area&quot;</span>,fontsize=<span class="hljs-number">14</span>)<br>plt.ylabel(<span class="hljs-string">&quot;Price&quot;</span>,fontsize=<span class="hljs-number">14</span>)<br>plt.legend(loc=<span class="hljs-string">&quot;upper left&quot;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/06/08/bXBMWdFjD3gOelN.png" srcset="/img/loading.gif" lazyload alt="image-20200608154745250"></p>
+<h3 id="多元例子"><a href="#多元例子" class="headerlink" title="多元例子"></a>多元例子</h3><p>数据归一化/标准化：将数值限制在范围内，防止某个属性影响过大</p>
+<p>线性归一化：$x*=\frac{x-min}{max-min}$等比例缩放[0,1]</p>
+<p>标准归一化：$x*=\frac{x-\mu}{\sigma}$,归一化均值为0，方差为1，</p>
+<p>非线性归一化:对数，指数，正切</p>
+<p>根据数据确定</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">dL_dw=np.matmul(np.transpose(X),np.matmul(X,W)-Y)<br>W=W-lrarning_rate*dL_dW<br>pred =np.matmul(X,W)<br></code></pre></td></tr></table></figure>
+
+<h3 id="自动求导"><a href="#自动求导" class="headerlink" title="自动求导"></a>自动求导</h3><p>tf.Variavle()可训练变量，可修改，有assign(),assgin_add()等，x.trainable属性等</p>
+<p>tf.constant不同，是不可修改的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> GradienTape(persistent=<span class="hljs-literal">True</span>,watch_access_variables=Flase) <span class="hljs-keyword">as</span> tape:<br>    tape.watch(x)<br>    y=tf.square(x)<br>grad=tape.gradient(<span class="hljs-string">&#x27;函数&#x27;</span>,<span class="hljs-string">&#x27;自变量&#x27;</span>) <span class="hljs-comment"># </span><br><span class="hljs-comment"># persistent 为true可多次调用gradient</span><br><span class="hljs-comment"># 	为True时最后要 del tape</span><br><span class="hljs-comment"># watch默认为True，为False时需要手动watch变量</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/06/08/8ePZDLKbl42vkzV.png" srcset="/img/loading.gif" lazyload alt="image-20200608174933672"></p>
+<p><img src="https://i.loli.net/2020/06/08/aJSx1gWf7iZ5cVw.png" srcset="/img/loading.gif" lazyload alt="image-20200608175043042"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Tensorflow2.0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/tensorflow2.0%20%E8%AF%84%E4%BC%B0%E5%87%BD%E6%95%B0/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

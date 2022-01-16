@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="LaTeX编辑数学公式基本语法元素LaTeX中的数学模式有两种形式: inline 和 display。  前者是指在正文插入行间数学公式,后者独立排列,可以有或没有编号。   行间公式(inline)  用$将公式括起来。   块间公式(displayed)  用$$将公式括起来是无编号的形式 还有[…..]的无编号独立公式形式但Markdown好像不支持。 块间元素默认是居中显示的。    各">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/Typora%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="LaTeX编辑数学公式基本语法元素LaTeX中的数学模式有两种形式: inline 和 display。  前者是指在正文插入行间数学公式,后者独立排列,可以有或没有编号。   行间公式(inline)  用$将公式括起来。   块间公式(displayed)  用$$将公式括起来是无编号的形式 还有[…..]的无编号独立公式形式但Markdown好像不支持。 块间元素默认是居中显示的。    各">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181104140244618.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhcHB5ZGF5X2Q=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212904441-554542957.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212932605-1732823111.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212941269-1382661531.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212948912-513780346.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212956496-1425718002.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625213005652-128589564.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181104140310286.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhcHB5ZGF5X2Q=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2022-01-16T12:20:07.594Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181104140244618.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhcHB5ZGF5X2Q=,size_16,color_FFFFFF,t_70">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="LaTeX编辑数学公式基本语法元素"><a href="#LaTeX编辑数学公式基本语法元素" class="headerlink" title="LaTeX编辑数学公式基本语法元素"></a>LaTeX编辑数学公式基本语法元素</h1><h2 id="LaTeX中的数学模式有两种形式"><a href="#LaTeX中的数学模式有两种形式" class="headerlink" title="LaTeX中的数学模式有两种形式:"></a>LaTeX中的数学模式有两种形式:</h2><ul>
+<li><p>inline 和 display。</p>
+<ul>
+<li>前者是指在正文插入行间数学公式,后者独立排列,可以有或没有编号。</li>
+</ul>
+</li>
+<li><p>行间公式(inline)</p>
+<ul>
+<li>用$将公式括起来。</li>
+</ul>
+</li>
+<li><p>块间公式(displayed)</p>
+<ul>
+<li>用$$将公式括起来是无编号的形式</li>
+<li>还有[…..]的无编号独立公式形式但Markdown好像不支持。</li>
+<li>块间元素默认是居中显示的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="各类希腊字母编辑表"><a href="#各类希腊字母编辑表" class="headerlink" title="各类希腊字母编辑表"></a>各类希腊字母编辑表</h2><p><img src="https://img-blog.csdnimg.cn/20181104140244618.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhcHB5ZGF5X2Q=,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="希腊字母编辑表"><br><img src="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212904441-554542957.png" srcset="/img/loading.gif" lazyload><br><img src="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212932605-1732823111.png" srcset="/img/loading.gif" lazyload><br><img src="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212941269-1382661531.png" srcset="/img/loading.gif" lazyload><br><img src="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212948912-513780346.png" srcset="/img/loading.gif" lazyload><br><img src="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625212956496-1425718002.png" srcset="/img/loading.gif" lazyload><br><img src="https://img2020.cnblogs.com/blog/1333782/202006/1333782-20200625213005652-128589564.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><h2 id="上下标、根号、省略号"><a href="#上下标、根号、省略号" class="headerlink" title="上下标、根号、省略号"></a>上下标、根号、省略号</h2><ul>
+<li>下标：x_i:$x_i$</li>
+<li>上标：x^2: $x^2$</li>
+<li>注意：上下标如果多于一个字母或者符号，需要用一对{}括起来 x_{i1}: $x_{i1}$ $x^{at}$</li>
+<li>根号: \sqrt[n]{5}:  $\sqrt[n]{5}$    </li>
+<li>省略号：\cdots:  $\cdots$</li>
+</ul>
+</li>
+<li><h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><ul>
+<li><p>基本运算符+ - * ÷</p>
+<ul>
+<li><p>求和: </p>
+<ul>
+<li>\sum_1^n: $\sum_1^n$</li>
+<li>\sum_{x,y}: $\sum_{x,y}$</li>
+</ul>
+</li>
+<li><p>积分:</p>
+<ul>
+<li>\int_1^n: $\int_1^n$</li>
+</ul>
+</li>
+<li><p>极限</p>
+<ul>
+<li>lim_{x \to \infy}: $lim_{x \to \infty}$</li>
+</ul>
+</li>
+<li><p>行列式</p>
+<ul>
+<li><p>```markdown<br>$$<br>X=\left|</p>
+<div class="code-wrapper"><pre><code class="hljs">\begin&#123;matrix&#125;
+    x_&#123;11&#125; &amp; x_&#123;12&#125; &amp; \cdots &amp; x_&#123;1d&#125;\\
+    x_&#123;21&#125; &amp; x_&#123;22&#125; &amp; \cdots &amp; x_&#123;2d&#125;\\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    x_&#123;11&#125; &amp; x_&#123;12&#125; &amp; \cdots &amp; x_&#123;1d&#125;\\
+\end&#123;matrix&#125;
+</code></pre></div>
+<p>\right|<br>$$</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><pre><code class="hljs taggerscript"><br>    $$<br>    X=<span class="hljs-symbol">\l</span>eft|<br>    	<span class="hljs-symbol">\b</span>egin&#123;matrix&#125;<br>    		x_&#123;11&#125; &amp; x_&#123;12&#125; &amp; <span class="hljs-symbol">\c</span>dots &amp; x_&#123;1d&#125;<span class="hljs-symbol">\\</span><br>    		x_&#123;21&#125; &amp; x_&#123;22&#125; &amp; <span class="hljs-symbol">\c</span>dots &amp; x_&#123;2d&#125;<span class="hljs-symbol">\\</span><br>    		<span class="hljs-symbol">\v</span>dots &amp; <span class="hljs-symbol">\v</span>dots &amp; <span class="hljs-symbol">\d</span>dots &amp; <span class="hljs-symbol">\v</span>dots <span class="hljs-symbol">\\</span><br>    		x_&#123;11&#125; &amp; x_&#123;12&#125; &amp; <span class="hljs-symbol">\c</span>dots &amp; x_&#123;1d&#125;<span class="hljs-symbol">\\</span><br>    	<span class="hljs-symbol">\e</span>nd&#123;matrix&#125;<br>    <span class="hljs-symbol">\r</span>ight|<br>    $$<br><br>- 矩阵<br><br>  - ```markdown<br>    $$<br>    	<span class="hljs-symbol">\b</span>egin&#123;matrix&#125; <br>    	1 &amp; x &amp; x^2<span class="hljs-symbol">\\</span> <br>    	1 &amp; y &amp; y^2<span class="hljs-symbol">\\</span> <br>    	1 &amp; z &amp; z^2<span class="hljs-symbol">\\</span> <br>    	<span class="hljs-symbol">\e</span>nd&#123;matrix&#125;<br>    $$<br></code></pre></td></tr></table></figure>
+
+<p>$$<br>\begin{matrix} </p>
+<div class="code-wrapper"><pre><code class="hljs">1 &amp; x &amp; x^2\\ 
+1 &amp; y &amp; y^2\\ 
+1 &amp; z &amp; z^2\\ 
+\end&#123;matrix&#125;
+</code></pre></div>
+<p>$$</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h2 id="箭头"><a href="#箭头" class="headerlink" title="箭头"></a>箭头</h2><ul>
+<li><img src="https://img-blog.csdnimg.cn/20181104140310286.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhcHB5ZGF5X2Q=,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></li>
+</ul>
+</li>
+<li><h2 id="分段函数"><a href="#分段函数" class="headerlink" title="分段函数"></a>分段函数</h2><ul>
+<li><p>```markdown<br>$$<br>f(n)=</p>
+<div class="code-wrapper"><pre><code class="hljs">\begin&#123;cases&#125;
+    n/2, &amp; \text&#123;if $n$ is even&#125;\\
+    3n+1,&amp; \text&#123;if $n$ is odd&#125;
+\end&#123;cases&#125;
+</code></pre></div>
+<p>$$</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><br>    <span class="hljs-variable">$$</span> f(n)= \<span class="hljs-keyword">begin</span>&#123;cases&#125; 	n/<span class="hljs-number">2</span>, &amp; \text&#123;if <span class="hljs-variable">$n</span><span class="hljs-variable">$ </span>is even&#125;\\ 	<span class="hljs-number">3</span>n+<span class="hljs-number">1</span>,&amp; \text&#123;if <span class="hljs-variable">$n</span><span class="hljs-variable">$ </span>is odd&#125; \<span class="hljs-keyword">end</span>&#123;cases&#125; <span class="hljs-variable">$$</span><br><br>- <span class="hljs-comment">## 方程组</span><br><br>  - ```markdown<br>    <span class="hljs-variable">$$</span><br>    \left\&#123;<br>    	\<span class="hljs-keyword">begin</span>&#123;array&#125;&#123;c&#125;<br>    		a_1x+b_1y+c_1z=d_1\\<br>    		a_2x+b_2y+c_2z=d_2\\<br>    		a_3x+b_3y+c_3z=d_3<br>    	\<span class="hljs-keyword">end</span>&#123;array&#125;<br>    \right.<br>    <span class="hljs-variable">$$</span><br></code></pre></td></tr></table></figure>
+
+<p>$$ \left{ \begin{array}{c}     a_1x+b_1y+c_1z=d_1\     a_2x+b_2y+c_2z=d_2\     a_3x+b_3y+c_3z=d_3 \end{array} \right. $$</p>
+</li>
+</ul>
+</li>
+<li><h2 id="常用公式"><a href="#常用公式" class="headerlink" title="常用公式"></a>常用公式</h2><ul>
+<li><p>线性模型</p>
+<ul>
+<li><p>```markdown<br>$$</p>
+<div class="code-wrapper"><pre><code class="hljs">h(\theta) = \sum_&#123;j=0&#125; ^n \theta_j x_j
+</code></pre></div>
+<p>$$</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs gams"><br>    <span class="hljs-symbol">$</span><span class="hljs-symbol">$</span> h(\theta) = \sum_&#123;j=<span class="hljs-number">0</span>&#125; ^n \theta_j x_j <span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br><br>- 均方误差<br><br>  - ```markdown<br>    <span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>    	J(\theta) = \<span class="hljs-built_in">frac</span>&#123;<span class="hljs-number">1</span>&#125;&#123;<span class="hljs-number">2</span>m&#125;\sum_&#123;i=<span class="hljs-number">0</span>&#125;^m(y^i - h_\theta(x^i))^<span class="hljs-number">2</span><br>    <span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br></code></pre></td></tr></table></figure>
+
+<p>$$ J(\theta) = \frac{1}{2m}\sum_{i=0}^m(y^i - h_\theta(x^i))^2 $$</p>
+</li>
+</ul>
+</li>
+<li><p>求积公式</p>
+<ul>
+<li><p>```markdown<br>$$</p>
+<div class="code-wrapper"><pre><code class="hljs">H_c=\sum_&#123;l_1+\dots +l_p&#125;\prod^p_&#123;i=1&#125; \binom&#123;n_i&#125;&#123;l_i&#125;
+</code></pre></div>
+<p>$$</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript"><br>    <span class="hljs-symbol">\$</span>$ H_c=<span class="hljs-symbol">\s</span>um_&#123;l_1+<span class="hljs-symbol">\d</span>ots +l_p&#125;<span class="hljs-symbol">\p</span>rod^p_&#123;i=1&#125; <span class="hljs-symbol">\b</span>inom&#123;n_i&#125;&#123;l_i&#125; <span class="hljs-symbol">\$</span>$<br><br>- 批量梯度下降<br><br>  - ```markdown<br>    $$<br>    	<span class="hljs-symbol">\f</span>rac&#123;<span class="hljs-symbol">\p</span>artial J(<span class="hljs-symbol">\t</span>heta)&#125;&#123;<span class="hljs-symbol">\p</span>artial<span class="hljs-symbol">\t</span>heta_j&#125; = -<span class="hljs-symbol">\f</span>rac1m<span class="hljs-symbol">\s</span>um_&#123;i=0&#125;^m(y^i - 	h_<span class="hljs-symbol">\t</span>heta(x^i))x^i_j<br>    $$<br></code></pre></td></tr></table></figure>
+
+<p>$$ \frac{\partial J(\theta)}{\partial\theta_j} = -\frac1m\sum_{i=0}^m(y^i -     h_\theta(x^i))x^i_j $$</p>
+</li>
+</ul>
+</li>
+<li><p>推导过程</p>
+<ul>
+<li>```markdown<br>$$<br>\begin{align}<div class="code-wrapper"><pre><code class="hljs">\frac&#123;\partial J(\theta)&#125;&#123;\partial\theta_j&#125;
+&amp; = -\frac1m\sum_&#123;i=0&#125;^m(y^i - h_\theta(x^i)) \frac&#123;\partial&#125;&#123;\partial\theta_j&#125;(y^i-h_\theta(x^i))\\
+&amp; = -\frac1m\sum_&#123;i=0&#125;^m(y^i-h_\theta(x^i)) \frac&#123;\partial&#125;&#123;\partial\theta_j&#125;(\sum_&#123;j=0&#125;^n\theta_j x^i_j-y^i)\\
+&amp;=-\frac1m\sum_&#123;i=0&#125;^m(y^i -h_\theta(x^i)) x^i_j
+</code></pre></div>
+\end{align}<br>$$<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript"><br>      $$<br>      <span class="hljs-symbol">\b</span>egin&#123;align&#125;<br>      	<span class="hljs-symbol">\f</span>rac&#123;<span class="hljs-symbol">\p</span>artial J(<span class="hljs-symbol">\t</span>heta)&#125;&#123;<span class="hljs-symbol">\p</span>artial<span class="hljs-symbol">\t</span>heta_j&#125;<br>      	&amp; = -<span class="hljs-symbol">\f</span>rac1m<span class="hljs-symbol">\s</span>um_&#123;i=0&#125;^m(y^i - h_<span class="hljs-symbol">\t</span>heta(x^i)) <span class="hljs-symbol">\f</span>rac&#123;<span class="hljs-symbol">\p</span>artial&#125;&#123;<span class="hljs-symbol">\p</span>artial<span class="hljs-symbol">\t</span>heta_j&#125;(y^i-h_<span class="hljs-symbol">\t</span>heta(x^i))<span class="hljs-symbol">\\</span><br>      	&amp; = -<span class="hljs-symbol">\f</span>rac1m<span class="hljs-symbol">\s</span>um_&#123;i=0&#125;^m(y^i-h_<span class="hljs-symbol">\t</span>heta(x^i)) <span class="hljs-symbol">\f</span>rac&#123;<span class="hljs-symbol">\p</span>artial&#125;&#123;<span class="hljs-symbol">\p</span>artial<span class="hljs-symbol">\t</span>heta_j&#125;(<span class="hljs-symbol">\s</span>um_&#123;j=0&#125;^n<span class="hljs-symbol">\t</span>heta_j x^i_j-y^i)<span class="hljs-symbol">\\</span><br>      	&amp;=-<span class="hljs-symbol">\f</span>rac1m<span class="hljs-symbol">\s</span>um_&#123;i=0&#125;^m(y^i -h_<span class="hljs-symbol">\t</span>heta(x^i)) x^i_j<br>      <span class="hljs-symbol">\e</span>nd&#123;align&#125;<br>      $$<br><br>- ## 字符下标<br><br>  - ```markdown<br>    $$<br>    <span class="hljs-symbol">\m</span>ax <span class="hljs-symbol">\l</span>imits_&#123;a&lt;x&lt;b&#125;<span class="hljs-symbol">\&#123;</span>f(x)<span class="hljs-symbol">\&#125;</span>	<br>    $$<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>$$ \max \limits_{a&lt;x&lt;b}{f(x)}     $$</p>
+</li>
+</ul>
+</li>
+<li><p>end</p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Ubuntu%20%E6%9B%B4%E6%94%B9%E8%BD%AF%E4%BB%B6%E6%BA%90/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/Thinkphp/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

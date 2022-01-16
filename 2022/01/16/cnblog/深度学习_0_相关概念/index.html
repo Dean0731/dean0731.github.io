@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="SVM损失函数  L1 &#x3D; max(0,5.1-3.2+1)+max(0,-1.7-3.2+1)     l2 &#x3D; ……   损失函数:L&#x3D;(L1+L2+L3)&#x2F;3  当所有的分数几乎相同时:L&#x3D;分类数-1   (就是max中的那个1.共有类数-1个)  为什么使用平均值?     无论分数如何变化loss不会改变  最优化w并不是唯一的,若w1对应loss为0,2*w 对应loss也为0 因此要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_0_%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="SVM损失函数  L1 &#x3D; max(0,5.1-3.2+1)+max(0,-1.7-3.2+1)     l2 &#x3D; ……   损失函数:L&#x3D;(L1+L2+L3)&#x2F;3  当所有的分数几乎相同时:L&#x3D;分类数-1   (就是max中的那个1.共有类数-1个)  为什么使用平均值?     无论分数如何变化loss不会改变  最优化w并不是唯一的,若w1对应loss为0,2*w 对应loss也为0 因此要">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102551220-61380614.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102547583-969485859.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102550514-1551560771.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102626518-774043186.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.867Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102551220-61380614.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="SVM损失函数"><a href="#SVM损失函数" class="headerlink" title="SVM损失函数"></a>SVM损失函数</h1><p><img src="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102551220-61380614.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>L1 = max(0,5.1-3.2+1)+max(0,-1.7-3.2+1)     l2 = ……   损失函数:L=(L1+L2+L3)/3</p>
+</li>
+<li><p>当所有的分数几乎相同时:L=分类数-1   (就是max中的那个1.共有类数-1个)</p>
+</li>
+<li><p>为什么使用平均值?     无论分数如何变化loss不会改变</p>
+</li>
+<li><p>最优化w并不是唯一的,若w1对应loss为0,2*w 对应loss也为0</p>
+<p>因此要选择正确的w      L=原来的L+λR(w)(正则项)    λ为超参数</p>
+</li>
+<li><p>常见的是L2正则化</p>
+</li>
+</ul>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><p><img src="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102547583-969485859.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102550514-1551560771.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><ol>
+<li>图片:32*32*3</li>
+<li>卷积核:3*3*3 前两个 3是卷积核大小,后一个是图片通道数,指定步长后滑动一次生成 一个[x,y,1]</li>
+<li>假设有n个卷积核,这样就生成[x,y,n]    缩小图片大小,厚度增加</li>
+<li>参数:n个卷积核 n*3*3 +n(偏执)</li>
+</ol>
+<h2 id="池化"><a href="#池化" class="headerlink" title="池化:"></a>池化:</h2><ol>
+<li>对于32*32*3的图片  —–&gt;28*28*64  卷积</li>
+<li>28*28*64  ——-&gt; 14*14*64 池化</li>
+<li>通常也有滤波器 2*2  每次滑动步长为2 意思就是不重叠         </li>
+<li>池化方法通常是最大池化法:在2*2的4个值中选取最大的作为结果  没有参数,64的深度不变</li>
+<li>通常使用最大池化,不是均值池化:因为它表示的是神经元在某一区域的感知,    (只可意会,不和言传)</li>
+<li>一般不用0填充</li>
+</ol>
+<h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h1><p><img src="https://img2018.cnblogs.com/blog/1333782/201911/1333782-20191130102626518-774043186.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="批量归一化-Btach-Normalization"><a href="#批量归一化-Btach-Normalization" class="headerlink" title="批量归一化:Btach Normalization"></a>批量归一化:Btach Normalization</h2><p>（x-均值）/标准差    是的均值变为0</p>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>dropout</p>
+<h2 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h2><h2 id="深度学习框架"><a href="#深度学习框架" class="headerlink" title="深度学习框架"></a>深度学习框架</h2><p>caffe2—-》caffe2:文件形式，不用写代码，</p>
+<p>torch—–》pytorch:动态图，定义，计算一起  科研型</p>
+<p>theano—-》tensorflow：静态图，先定义图，后运行  产品类</p>
+<p>keras：作为Tensorflow的高级应用程序接口   面向对象</p>
+<h2 id="CNN框架"><a href="#CNN框架" class="headerlink" title="CNN框架"></a>CNN框架</h2><p>神经网络架构：AlexNet，VGGNet，GoogleNet，ResNet</p>
+<p>其他的架构：NIN,WIDE ResNeT</p>
+<p>leNet：数字识别领域</p>
+<p>AlexNet：卷积，池化，归一化，在卷积，池化，全连接  与LeNet类似，只不过层数变多</p>
+<p>Vgg 16 19</p>
+<p>GoogleNet 22 没有全连接层</p>
+<p>ResNet 152层 残差网络</p>
+<p>1，CNN，卷积神经网络，是以卷积为核心的一大类网络。<br>2，LeNet、AlexNet、VGG、GoogLeNet，属于CNN。<br>3 ，RCNN、Fast RCNN、Faster RCNN、YOLO、YOLOv2、SSD，也属于CNN，但和2是另一条路线。<br>2和3的区别在于，2属于用于图像分类的CNN，3属于用于目标检测的CNN。</p>
+<h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><p>…</p>
+<h2 id="图像语义分割：一张图片上有不同类的物体，用方框画出"><a href="#图像语义分割：一张图片上有不同类的物体，用方框画出" class="headerlink" title="图像语义分割：一张图片上有不同类的物体，用方框画出"></a>图像语义分割：一张图片上有不同类的物体，用方框画出</h2><p>1，图像划分为n多小块（可能是每个像素就是一块，但复杂度高 ），分别识别属于那一类，然后合在一起 </p>
+<p>​        对于相邻或重复的块，可以共享计算</p>
+<p>2，全连接卷积网络</p>
+<h1 id="分类定位"><a href="#分类定位" class="headerlink" title="分类定位"></a>分类定位</h1><p>知道物体数量</p>
+<h1 id="对象识别：目标检测"><a href="#对象识别：目标检测" class="headerlink" title="对象识别：目标检测"></a>对象识别：目标检测</h1><p>使用框框框主一类事物</p>
+<p>1，框框大小变化位置移动，以此寻找目标位置      计算量大</p>
+<p>2，寻找点状n个点状候选区（1000-2000），经过卷积计算RCNN</p>
+<p>3，fast-rcnn</p>
+<p>4，ssd 图片分为nxn的网格，检测每个格中概率</p>
+<p>5，mask rcnn</p>
+<h1 id="PCA-主成分分析-降维方法"><a href="#PCA-主成分分析-降维方法" class="headerlink" title="PCA:主成分分析 降维方法"></a>PCA:主成分分析 降维方法</h1><h2 id="生成式模型：无监督学习的一种"><a href="#生成式模型：无监督学习的一种" class="headerlink" title="生成式模型：无监督学习的一种"></a>生成式模型：无监督学习的一种</h2><p>pixelRNNs</p>
+<p>pixelCNNs</p>
+<p>自编码器VAE</p>
+<p>生成式对抗网络</p>
+<h1 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h1><p>​    自动驾驶</p>
+<p>​    人脸检测与识别</p>
+<p>​    行为识别</p>
+<p>​    目标计数</p>
+<h2 id="实时目标检测"><a href="#实时目标检测" class="headerlink" title="实时目标检测"></a>实时目标检测</h2><p>​    目标分类，定位目标</p>
+<p>​    实时性与性能 需要平衡</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0_1_Tensorflow_1/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="# pandas 数据预处理 基于numpy # 读取csv文件(逗号隔开的文件) import pandas,os,numpy as np path &#x3D; r&quot;D:\desktop\Workspace\PythonWorkSpace\Machine-Learning\asstes\csv\2019_student_teacher.csv&quot; student_teacher &#x3D; pandas.rea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/python-pandas/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="# pandas 数据预处理 基于numpy # 读取csv文件(逗号隔开的文件) import pandas,os,numpy as np path &#x3D; r&quot;D:\desktop\Workspace\PythonWorkSpace\Machine-Learning\asstes\csv\2019_student_teacher.csv&quot; student_teacher &#x3D; pandas.rea">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.367Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <div class="cnblogs_code">
+<div class="code-wrapper"><pre><span style="color: #008000;">#</span><span style="color: #008000;"> pandas 数据预处理 基于numpy</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 读取csv文件(逗号隔开的文件)</span>
+<span style="color: #0000ff;">import</span><span style="color: #000000;"> pandas,os,numpy as np
+path </span>= r<span style="color: #800000;">"</span><span style="color: #800000;">D:\desktop\Workspace\PythonWorkSpace\Machine-Learning\asstes\csv\2019_student_teacher.csv</span><span style="color: #800000;">"</span><span style="color: #000000;">
+student_teacher </span>= pandas.read_csv(path,encoding=<span style="color: #800000;">"</span><span style="color: #800000;">gbk</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+</span><span style="color: #008000;">#</span><span style="color: #008000;"> print(type(student_teacher))  # panda.core.frame.DataFrame   就像numpy中的numpy.array</span>
+<span style="color: #800000;">"""</span><span style="color: #800000;">
+序号         int64
+准考证号       int64
+姓名        object
+报考专业代码     int64
+报考专业      object
+研究方向      object
+培养模式      object
+录取导师      object
+</span><span style="color: #800000;">"""</span>
+<span style="color: #008000;">#</span><span style="color: #008000;"> print(student_teacher.dtypes) # dtype: object</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> print(student_teacher) # 打印全部信息</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> print(student_teacher.head()) # 打印前5条信息</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> print(student_teacher.head(3)) # 打印前3条信息</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> print(student_teacher.tail(5)) # 打印后边5条的信息</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> print(student_teacher.columns) #Index(['序号', '准考证号', '姓名', '报考专业代码', '报考专业', '研究方向', '培养模式', '录取导师'], dtype='object')</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> print(student_teacher.shape) # (398, 8)</span>
+
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> pandas中索引与计算,数据定位   行取数据</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher.loc[0])</span><br><span style="color: #800000;">“””</span><span style="color: #800000;"><br>序号                           1<br>准考证号           zzzzz<br>姓名                         yyy<br>报考专业代码                   85207<br>报考专业                电气工程(专业硕士)<br>研究方向      (全日制)电能质量检测与评估（研究所9）<br>培养模式                      专业学位<br>录取导师                xxxx<br>Name: 0, dtype: object<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> print(student_teacher.loc[1:3])</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher.loc[[1,2,3]])</span><br><span style="color: #800000;">“””</span><span style="color: #800000;"><br>   序号             准考证号   姓名  报考专业代码        报考专业                       研究方向  培养模式            录取导师<br>1   2  kk  xxx   80800        电气工程    (全日制)电力系统规划与运行分析（研究所10）  学术学位  teacher<br>2   3  kk  yyy   85207  电气工程(专业硕士)  (全日制)电力系统监测控制与运行分析（研究所10）  专业学位   teacher<br>3   4  kk   zzz   85210        控制工程      (全日制)智能控制理论及应用（研究所13）  专业学位  teacher<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> 列取数据</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher[“报考专业”])</span><br><span style="color: #800000;">“””</span><span style="color: #800000;"><br>0      电气工程(专业硕士)<br>1            电气工程<br>2      电气工程(专业硕士)<br>3            控制工程<br>4         电子与通信工程<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> 获取多个列,注意里边是list</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher[[“报考专业”,”导师”]])</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher.columns.tolist())  # [‘序号’, ‘准考证号’, ‘姓名’, ‘报考专业代码’, ‘报考专业’, ‘研究方向’, ‘培养模式’, ‘录取导师’]</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher.loc[0][“姓名”])</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 列之间计算</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   *   new = student_teacher[x]*student_teacher[y]   对应位置相乘,注意行数相同</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   +-   维度相同 对应相加减</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   加减的若为常数 每个数值与常数+-</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 添加新列 student_teacher[‘new’]=new</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher[“序号”].max())  # 获取该列最大值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   按照序号列排序, inplace =True表示在源DataFrame上修改,否则生成新的Frame,</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   默认排序从小到大ascending=True,Flase 为从大到小</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   对于列中某些为空的 显示时为NaN, 排序是不管哪种都默认放最后</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(student_teacher.sort_values(“序号”,inplace=True,ascending=True))</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> xxx = student_teacher[“xxx”]</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> isNullOrNot = pandas.isnull(xxx)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(isNullOrNot)</span><br><span style="color: #800000;">“””</span><span style="color: #800000;"><br>为空的是True<br>0 False<br>1 True<br>…<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> xxx[isNullOrNot] # len(….) 即可获取缺失值的个数</span><br><span style="color: #800000;">“””</span><span style="color: #800000;"><br>对于一些加减乘除的操作 ,注意过滤NaN 否则计算机结果为NaN<br>student_teacher[“xxx”][isNullOrNot==False] 过滤缺失值<br>student_teacher[“xxx”].mean() 自带的直接过滤<br>为空的是True<br>0 NaN<br>…<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> 聚合函数,分组后求平均:基本思路是循环</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">  按照index分组,求values的平均值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   values= 还可以为list aggfunc 默认为mean</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> student_teacher.pivot_table(index=””,values=””,aggfunc=np.mean)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> student_teacher.dropna(axis=1,subset=[“xx”,”yy”]) # 删除 列中为空的   0删除行中为空的 若为行 使用subnet = [1,2,3]</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> student_teacher.loc[83,”序号”] # 直接定位到值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> student_teacher.sort_index(“Age”) # 按照Age排序, 结果中多添加的index列与会按照age排序</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> student_teacher.sort_index(“Age”).reset_index(drop=True) # 表示原来的index不用了,形成新的</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> def func(data):</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">     return data</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> student_teacher.apply(func) # 自定义函数</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> DataFrame 内部子结构Series</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">  例如 某一列的type 就是pandas.core.series.Series</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   student_teacher[“xx”]  可再次对它进行切片</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> =============================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 自定义Series</span><br><span style="color: #0000ff;">from</span> pandas <span style="color: #0000ff;">import</span><span style="color: #000000;"> Series<br>id</span>= student_teacher[<span style="color: #800000;">“</span><span style="color: #800000;">报考专业代码</span><span style="color: #800000;">“</span>].values  <span style="color: #008000;">#</span><span style="color: #008000;"> type 为 np.array  即把 xx 列所有内容 放入 array</span><br>name= student_teacher[<span style="color: #800000;">“</span><span style="color: #800000;">姓名</span><span style="color: #800000;">“</span>].values  <span style="color: #008000;">#</span><span style="color: #008000;"> type 为 np.array  即把 xx 列所有内容 放入 array</span><br>series =Series(name,index=<span style="color: #000000;">id)<br></span><span style="color: #008000;">#</span><span style="color: #008000;"> series =Series(id,index=name)</span><br>series[[85207,85210]] <span style="color: #008000;">#</span><span style="color: #008000;"> 对series进行查找, index 为list中值的行,index可为str类型</span><br><span style="color: #800000;">“””</span><span style="color: #800000;"><br>id1 name<br>id2 name2<br>…<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> print(series.index.tolist())</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> series.sort_index() # 按照index排序</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> series.sort_values() # 按照values排序</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> np.add(series,series) series相加 (维度相同)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> series[series&gt;50] 选取符合条件的值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> print(series[series&gt;’85200’])</span><br><span style="color: #000000;"><br>new</span>= student_teacher.set_index(<span style="color: #800000;">“</span><span style="color: #800000;">姓名</span><span style="color: #800000;">“</span>,drop=True) <span style="color: #008000;">#</span><span style="color: #008000;"> 修改索引,并返回 新的Frame</span><br><span style="color: #0000ff;">print</span>(new.loc[<span style="color: #800000;">‘</span><span style="color: #800000;">name</span><span style="color: #800000;">‘</span>]) <span style="color: #008000;">#</span><span style="color: #008000;"> 此时查找行可通过姓名属性<br /># data.drop([“xxx”],axis=1) 删除列<br /># data.query(“x&gt;1 &amp; y&lt;2”) 条件查询</span></pre></div></p>
+</div>
+<p>&nbsp;</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/python2,3%E5%8C%BA%E5%88%AB/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/python-numpy/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

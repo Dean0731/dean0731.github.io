@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在使用Wordpress密码找回功能及新用户注册邮件中的重置密码链接时，Wordpress提示&amp;ldquo;您的密码重设链接无效，请在下方请求新链接。&amp;rdquo;、&amp;ldquo;该key似乎无效&amp;rdquo;、&amp;ldquo;invalid key&amp;rdquo;。    这个其实不是wordpress的问题，邮箱收到邮件后，会将密码重置链接地址及其前后的&amp;ldquo;&lt;&gt;&amp;rdquo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/WordPress%E6%96%B0%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C%E6%97%B6%E6%8F%90%E7%A4%BA%E2%80%9C%E6%82%A8%E7%9A%84%E5%AF%86%E7%A0%81%E9%87%8D%E8%AE%BE%E9%93%BE%E6%8E%A5%E6%97%A0%E6%95%88%E2%80%9D/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="在使用Wordpress密码找回功能及新用户注册邮件中的重置密码链接时，Wordpress提示&amp;ldquo;您的密码重设链接无效，请在下方请求新链接。&amp;rdquo;、&amp;ldquo;该key似乎无效&amp;rdquo;、&amp;ldquo;invalid key&amp;rdquo;。    这个其实不是wordpress的问题，邮箱收到邮件后，会将密码重置链接地址及其前后的&amp;ldquo;&lt;&gt;&amp;rdquo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.blog.csdn.net/20170227095303226?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDU1OTgwNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20170227095342398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDU1OTgwNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="article:published_time" content="2022-01-16T12:20:07.639Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170227095303226?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDU1OTgwNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>在使用Wordpress密码找回功能及新用户注册邮件中的重置密码链接时，Wordpress提示&ldquo;您的密码重设链接无效，请在下方请求新链接。&rdquo;、&ldquo;该key似乎无效&rdquo;、&ldquo;invalid key&rdquo;。</p>
+</blockquote>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://img.blog.csdn.net/20170227095303226?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDU1OTgwNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" srcset="/img/loading.gif" lazyload alt="" /></p>
+<blockquote>
+<p>这个其实不是wordpress的问题，邮箱收到邮件后，会将密码重置链接地址及其前后的&ldquo;&lt;&gt;&rdquo;一起当成链接地址生成超链接，点击此超链接后，由于传给wordpress的参数不对（多了个&gt;），例如把鼠标移到下图的红色框的连接上，并看到浏览器左下角的URL提示连接，会发现多了一个&ldquo;&gt;&rdquo;，所以wordpress提示密码重设链接无效。</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20170227095342398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDU1OTgwNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>&emsp;&emsp;此问题主要影响忘记密码时的找回密码功能及新用户注册时，系统给新用户发送的密码设置功能。可通过以下两个步骤解决此问题：</p>
+<p>&nbsp;</p>
+<ul>
+<li>解决找回密码时提示&ldquo;您的密码重设链接无效&rdquo;：</li>
+</ul>
+<p>&emsp;&emsp;打开WP根目录下的 wp-login.php，找到如下代码（374行左右）：</p>
+<div class="cnblogs_code">
+<div class="code-wrapper"><pre>$message .= '&lt;' . network_site_url("wp-login.php?action=rp&amp;key=$key&amp;login=" . rawurlencode($user_login), 'login') . "&gt;\r\n";</pre></div>
+</div>
+<div>
+<div>&emsp;&emsp;修改为：</div>
+<div>
+<div class="cnblogs_code">
+<div class="code-wrapper"><pre>$message .= network_site_url("wp-login.php?action=rp&amp;key=$key&amp;login=" . rawurlencode($user_login), 'login') . "\r\n";</pre></div>
+</div>
+</div>
+<div>
+<p>&emsp;&emsp;即去掉两个尖括号即可。</p>
+<p>&nbsp;</p>
+</div>
+</div>
+<ul>
+<li>解决新用户注册时，点击邮件中的重置密码链接提示&ldquo;您的密码重设链接无效&rdquo;：</li>
+</ul>
+<p>&nbsp;&emsp;&emsp;打开WP安装目录下的/wp-includes/pluggable.php，找到如下代码（1741行左右）：</p>
+<div class="cnblogs_code">
+<div class="code-wrapper"><pre>$message .= '&lt;' . network_site_url("wp-login.php?action=rp&amp;key=$key&amp;login=" . rawurlencode($user-&gt;user_login), 'login') . "&gt;\r\n\r\n";</pre></div>
+</div>
+<p>&emsp;&emsp;修改为：</p>
+<div class="cnblogs_code">
+<div class="code-wrapper"><pre>$message .= network_site_url("wp-login.php?action=rp&amp;key=$key&amp;login=" . rawurlencode($user-&gt;user_login), 'login') . "\r\n\r\n";</pre></div>
+</div>
+<p>&emsp;&emsp;以上修改后，用户收到的密码重置及新用户收到的密码设置邮件将不会再包含&ldquo;&lt;&gt;&rdquo;,用户再邮箱中点击链接后即可正常重置或者设置密码。以上修改涉及到Wordpress源代码的修改，每次升级Wordpress后修改会被覆盖，必须重新进行以上修改。</p>
+<p>&emsp;&emsp;另一种解决方式：把下面的代码加入当前主题的functions.php里面就可以了。</p>
+<div class="cnblogs_code">
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码"><img src="https://common.cnblogs.com/images/copycode.gif" srcset="/img/loading.gif" lazyload alt="复制代码" /></a></span></div>
+<div class="code-wrapper"><pre>/**
+* 修复WordPress找回密码提示&ldquo;抱歉，该key似乎无效&rdquo;问题 */ function reset_password_message( $message, $key ) { if ( strpos($_POST['user_login'], '@') ) { $user_data = get_user_by('email', trim($_POST['user_login']));
+} else { $login = trim($_POST['user_login']); $user_data = get_user_by('login', $login);
+} $user_login = $user_data-&gt;user_login; $msg = __('有人要求重设如下帐号的密码：'). "\r\n\r\n"; $msg .= network_site_url() . "\r\n\r\n"; $msg .= sprintf(__('用户名：%s'), $user_login) . "\r\n\r\n"; $msg .= __('若这不是您本人要求的，请忽略本邮件，一切如常。') . "\r\n\r\n"; $msg .= __('要重置您的密码，请打开下面的链接：'). "\r\n\r\n"; $msg .= network_site_url("wp-login.php?action=rp&amp;key=$key&amp;login=" . rawurlencode($user_login), 'login') ; return $msg;
+}
+add_filter('retrieve_password_message', reset_password_message, null, 2);</pre></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码"><img src="https://common.cnblogs.com/images/copycode.gif" srcset="/img/loading.gif" lazyload alt="复制代码" /></a></span></div>
+</div>
+<div>&nbsp;</div>
+<p>&emsp;&emsp;这种办法的缺点是，每次换主题都要重新把代码添加到主题的function.php文件中。</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E4%B8%8E%E6%88%96%E9%9D%9E%E8%BF%90%E7%AE%97/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/vue%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

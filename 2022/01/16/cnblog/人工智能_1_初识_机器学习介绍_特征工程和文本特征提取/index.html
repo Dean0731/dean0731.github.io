@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="# 人工智能:预测,分类 # 人工智能: #   自动的工作 #   机器学习(包含深度学习) # 以前的限制因素:计算能力,数据,算法发展 # 用途: #   图像识别 #       识别图片中不同的地方(医学CT) 不用人工识别 #       图片艺术化(可以替代ps) #       无人驾驶 #       人脸识别 #   自然语言处理 #       语音识别 #       自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD_1_%E5%88%9D%E8%AF%86_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BB%8B%E7%BB%8D_%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E5%92%8C%E6%96%87%E6%9C%AC%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="# 人工智能:预测,分类 # 人工智能: #   自动的工作 #   机器学习(包含深度学习) # 以前的限制因素:计算能力,数据,算法发展 # 用途: #   图像识别 #       识别图片中不同的地方(医学CT) 不用人工识别 #       图片艺术化(可以替代ps) #       无人驾驶 #       人脸识别 #   自然语言处理 #       语音识别 #       自">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.661Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <div class="cnblogs_code">
+<div class="code-wrapper"><pre><span style="color: #008000;">#</span><span style="color: #008000;"> 人工智能:预测,分类</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 人工智能:</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   自动的工作</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   机器学习(包含深度学习)</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 以前的限制因素:计算能力,数据,算法发展</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 用途:</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   图像识别</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       识别图片中不同的地方(医学CT) 不用人工识别</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       图片艺术化(可以替代ps)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       无人驾驶</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       人脸识别</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   自然语言处理</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       语音识别</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       自动写报告</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   传统预测</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       性能评估</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       NLP</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       推荐系统</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> 机器学习的数据:文件格式,csv(逗号分隔值)</span><span style="color: #008000;">
+#</span><span style="color: #008000;">   不使用数据库:</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       1,性能瓶颈,数量过多,2,3GB 读取慢</span><span style="color: #008000;">
+#</span><span style="color: #008000;">       2,数据格式不符合机器学习要求的格式</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> pandas:读取工具,速度非常快</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> sklearn:对于特征的处理提供了强大的接口</span><span style="color: #008000;">
+#</span><span style="color: #008000;"> numpy:(释放了GIL) 速度快</span>
+
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> 数据集</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   kaggle ,大数据竞赛平台</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   UCI,覆盖面广</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   scikit-learn,数据量小,方便学习</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> 常用数据集的结构组成:特征值+目标值</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> dataFrame:行锁引,列索引</span><br><span style="color: #800000;">“””</span><span style="color: #800000;"> 身高 体重 肤色,头发长度   (特征值)               目标值<br>1                                                 男  女<br>2<br>有些数据集可以没有目标值<br>dataFrame:缺失值,数据转换<br>机器学习:重复值 不需要去重<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> 特征工程</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   是什么:将原始数据转换为更好的代表预测模型的潜在问题特征的过程,提高预测效果</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   意义:直接影响预测结果</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   scikit-learn库介绍:包含许多机器学习算法实现</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       pip install scikit-learn即可 需要先安装 numpy,pandas等库</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   数据特征的提取</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 特征值化  —&gt; 转化为数字</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===========================================================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 对字典进行特征抽取</span><br><span style="color: #0000ff;">from</span> sklearn.feature_extraction <span style="color: #0000ff;">import</span><span style="color: #000000;"> DictVectorizer<br></span><span style="color: #0000ff;">def</span><span style="color: #000000;"> dictvec():<br>    </span><span style="color: #800000;">“””</span><span style="color: #800000;"><br>    字典数据抽取<br>    :return: None<br>    </span><span style="color: #800000;">“””</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 实例化</span><br>    dict = DictVectorizer(sparse=<span style="color: #000000;">False)<br>    data </span>=<span style="color: #000000;"> dict.fit_transform([<br>        {</span><span style="color: #800000;">“</span><span style="color: #800000;">city</span><span style="color: #800000;">“</span>: <span style="color: #800000;">“</span><span style="color: #800000;">北京</span><span style="color: #800000;">“</span>, <span style="color: #800000;">“</span><span style="color: #800000;">templature</span><span style="color: #800000;">“</span>: 100<span style="color: #000000;">},<br>        {</span><span style="color: #800000;">“</span><span style="color: #800000;">city</span><span style="color: #800000;">“</span>: <span style="color: #800000;">“</span><span style="color: #800000;">天津</span><span style="color: #800000;">“</span>, <span style="color: #800000;">“</span><span style="color: #800000;">templature</span><span style="color: #800000;">“</span>: 30<span style="color: #000000;">},<br>        {</span><span style="color: #800000;">“</span><span style="color: #800000;">city</span><span style="color: #800000;">“</span>: <span style="color: #800000;">“</span><span style="color: #800000;">上海</span><span style="color: #800000;">“</span>, <span style="color: #800000;">“</span><span style="color: #800000;">templature</span><span style="color: #800000;">“</span>: 60<span style="color: #000000;">},<br>                        ])<br>    </span><span style="color: #0000ff;">print</span>(dict.get_feature_names()) <span style="color: #008000;">#</span><span style="color: #008000;"> [‘city=上海’, ‘city=北京’, ‘city=天津’, ‘templature’]</span><br>    <span style="color: #0000ff;">print</span>(data)  <span style="color: #008000;">#</span><span style="color: #008000;"> 矩阵</span></p>
+<p><span style="color: #800000;">“””</span><span style="color: #800000;"><br>  (0, 1)    1.0<br>  (0, 3)    100.0<br>  (1, 2)    1.0<br>  (1, 3)    30.0<br>  (2, 0)    1.0<br>  (2, 3)    60.0<br>[‘city=上海’, ‘city=北京’, ‘city=天津’, ‘templature’] feature_names<br>[[  0.   1.   0. 100.] One-hot编码  对于每条数据,若属于摸个特征标记为1,否则为0<br> [  0.   0.   1.  30.]<br> [  1.   0.   0.  60.]]<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> 注意:把字典中一些类别的一些数据转化为特征,对于数字类型不进行转换</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">       对于数组类型,若有特征值,需要转换为字典  (切转化时选择有效的特征值)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> DictVectorizer(Sparse=True,….) 默认转化为矩阵,改为false变为数组</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   DictVectorizer.fit_transform(X) X 为字典或迭代器  返回一个sparse矩阵</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   DictVectorizer.inverse_transform(X) X 数组或sparse  返回一个之前的格式</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   DictVectorizer.get_feature_names() 返回类别类型</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   DictVectorizer.trasnsform(X) 按照原先的标准转换</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> ===========================================================================================</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 对文本进行抽取</span><br><span style="color: #0000ff;">from</span> sklearn.feature_extraction.text <span style="color: #0000ff;">import</span><span style="color: #000000;"> CountVectorizer<br></span><span style="color: #0000ff;">import</span><span style="color: #000000;"> jieba<br></span><span style="color: #0000ff;">def</span><span style="color: #000000;"> countvec():<br>    cv </span>= CountVectorizer()  <span style="color: #008000;">#</span><span style="color: #008000;"> 里边没有参数</span><br>    res =<span style="color: #000000;"> cv.fit_transform([ # 传入的需要是 空格分开的词的形式,因此对于中文需要处理<br>        </span><span style="color: #800000;">“</span><span style="color: #800000;">life is short,I like python,life is too long</span><span style="color: #800000;">“</span>,<span style="color: #008000;">#</span><span style="color: #008000;"> 每个看做短文章</span><br>        <span style="color: #800000;">“</span><span style="color: #800000;">a is the first of alphabet</span><span style="color: #800000;">“</span><span style="color: #000000;">,<br>        </span><span style="color: #800000;">“</span> <span style="color: #800000;">“</span>.join(list(jieba.cut(<span style="color: #800000;">“</span><span style="color: #800000;">下载jieba-0.39.zip然后解压。记住路径。cmd进入命令输入界面，首先cd到我们刚刚解压文件的路径。%这一步有问题就百度cd完以后，python setup.py install然后就会出现安装进度条，结束。确定有没有安装成功，进入任意一个prompt输入import jieba，看看有没有提示报错。如果没有，就是安装成功了。</span><span style="color: #800000;">“</span><span style="color: #000000;">))),<br>    ])<br>    </span><span style="color: #0000ff;">print</span><span style="color: #000000;">(cv.get_feature_names())<br>    </span><span style="color: #0000ff;">print</span><span style="color: #000000;">(res.toarray())<br></span><span style="color: #800000;">“””</span><span style="color: #800000;"><br>[‘39’, ‘alphabet’, ‘cd’, ‘cmd’, ‘first’, ‘import’, ‘install’, ‘is’, ‘jieba’, ‘life’, ‘like’, ‘long’, ‘of’, ‘prompt’, ‘py’, ‘python’, ‘setup’, ‘short’, ‘the’, ‘too’, ‘zip’, ‘一个’, ‘一步’, ‘下载’, ‘以后’, ‘任意’, ‘出现’, ‘刚刚’, ‘命令’, ‘如果’, ‘安装’, ‘就是’, ‘成功’, ‘我们’, ‘报错’, ‘提示’, ‘文件’, ‘有没有’, ‘没有’, ‘然后’, ‘界面’, ‘百度’, ‘看看’, ‘确定’, ‘结束’, ‘解压’, ‘记住’, ‘路径’, ‘输入’, ‘进入’, ‘进度条’, ‘问题’, ‘首先’]<br>[[0 0 0 0 0 0 0 2 0 2 1 1 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0<br>  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]<br> [0 1 0 0 1 0 0 1 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0<br>  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]<br> [1 0 2 1 0 1 1 0 2 0 0 0 0 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 1 1 3 1 2 1 1 1<br>  1 2 1 2 1 1 1 1 1 2 1 2 2 2 1 1 1]]<br>统计每个词在文章中出现的次数<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> 文本特征抽取:Count    文本分类(词的不同) 情感分析</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 单个字母,汉字,符号不统计  英文他们没有具体的代表性,因此 汉字 需要分词 pip install jieba</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> import jieba jieba.cut(“xxxxxx”) 返回值是词语生成器 list(ret)转换为list   “ “.join(list)转为空格隔开的字符串</span></p>
+<p><span style="color: #008000;">#</span><span style="color: #008000;"> 对于一些常用的词语 ‘我们’ 等 不能很好地区分 ———–&gt;tf idf (朴素贝叶斯也要使用)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf:term frequency 词的频率   出现的次数</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> idf:逆文档的频率inverse document frequecy log(总文档数量/该词出现的文档数量)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> tf*idf —-&gt;重要性 得出改次在该文档中的重要性</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 每篇文档每个词都有重要性,不同文章的同一个词重要性不同</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 如果一个文章中的 一个词在文章中重要性高,没其文章中低——&gt;改词可用于区分分类</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> 语法</span><span style="color: #008000;"><br>#</span><span style="color: #008000;"> TfidfVectorizer(stop_words=None,…..)</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   返回权重矩阵</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   TfidfVectorizer.fit_transform(X) 可迭代对象,返回sparse矩阵</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   TfidfVectorizer.inverse_transform(X) 反向</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">   TfidfVectorizer.get_feature_names() 单词列表</span><br><span style="color: #0000ff;">from</span> sklearn.feature_extraction.text <span style="color: #0000ff;">import</span><span style="color: #000000;"> TfidfVectorizer<br></span><span style="color: #0000ff;">def</span><span style="color: #000000;"> tfidfvec():<br>    tfidf </span>=<span style="color: #000000;"> TfidfVectorizer()<br>    data </span>=<span style="color: #000000;"> tfidf.fit_transform([<br>        </span><span style="color: #800000;">“</span><span style="color: #800000;">life is short,I like python,life is too long</span><span style="color: #800000;">“</span>,<span style="color: #008000;">#</span><span style="color: #008000;"> 每个看做短文章</span><br>        <span style="color: #800000;">“</span><span style="color: #800000;">a is the first of alphabet</span><span style="color: #800000;">“</span><span style="color: #000000;">,<br>        </span><span style="color: #800000;">“</span> <span style="color: #800000;">“</span>.join(list(jieba.cut(<span style="color: #800000;">“</span><span style="color: #800000;">下载jieba-0.39.zip然后解压。记住路径。cmd进入命令输入界面，首先cd到我们刚刚解压文件的路径。%这一步有问题就百度cd完以后，python setup.py install然后就会出现安装进度条，结束。确定有没有安装成功，进入任意一个prompt输入import jieba，看看有没有提示报错。如果没有，就是安装成功了。</span><span style="color: #800000;">“</span><span style="color: #000000;">))),<br>    ])<br>    </span><span style="color: #0000ff;">print</span><span style="color: #000000;">(tfidf.get_feature_names())<br>    </span><span style="color: #0000ff;">print</span><span style="color: #000000;">(data.toarray())<br></span><span style="color: #800000;">“””</span><span style="color: #800000;"><br>[‘39’, ‘alphabet’, ‘cd’, ‘cmd’, ‘first’, ‘import’, ‘install’, ‘is’, ‘jieba’, ‘life’, ‘like’, ‘long’, ‘of’, ‘prompt’, ‘py’, ‘python’, ‘setup’, ‘short’, ‘the’, ‘too’, ‘zip’, ‘一个’, ‘一步’, ‘下载’, ‘以后’, ‘任意’, ‘出现’, ‘刚刚’, ‘命令’, ‘如果’, ‘安装’, ‘就是’, ‘成功’, ‘我们’, ‘报错’, ‘提示’, ‘文件’, ‘有没有’, ‘没有’, ‘然后’, ‘界面’, ‘百度’, ‘看看’, ‘确定’, ‘结束’, ‘解压’, ‘记住’, ‘路径’, ‘输入’, ‘进入’, ‘进度条’, ‘问题’, ‘首先’]</p>
+<h1 id="返回权重矩阵-显示每个文章的特征值-每行代表一篇文章-每列表示一个词-在该文章中的重要性-是否存在-若存在显示为重要性-不存在为0"><a href="#返回权重矩阵-显示每个文章的特征值-每行代表一篇文章-每列表示一个词-在该文章中的重要性-是否存在-若存在显示为重要性-不存在为0" class="headerlink" title="返回权重矩阵,显示每个文章的特征值(每行代表一篇文章,每列表示一个词,在该文章中的重要性),是否存在,若存在显示为重要性,不存在为0"></a>返回权重矩阵,显示每个文章的特征值(每行代表一篇文章,每列表示一个词,在该文章中的重要性),是否存在,若存在显示为重要性,不存在为0</h1><p>[[0.         0.         0.         0.         0.         0.<br>  0.         0.46088245 0.         0.60600504 0.30300252 0.30300252<br>  0.         0.         0.         0.23044123 0.         0.30300252<br>  0.         0.30300252 0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.        ]<br> [0.         0.46735098 0.         0.         0.46735098 0.<br>  0.         0.35543247 0.         0.         0.         0.<br>  0.46735098 0.         0.         0.         0.         0.<br>  0.46735098 0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.         0.<br>  0.         0.         0.         0.         0.        ]<br> [0.11353496 0.         0.22706991 0.11353496 0.         0.11353496<br>  0.11353496 0.         0.22706991 0.         0.         0.<br>  0.         0.11353496 0.11353496 0.08634626 0.11353496 0.<br>  0.         0.         0.11353496 0.11353496 0.11353496 0.11353496<br>  0.11353496 0.11353496 0.11353496 0.11353496 0.11353496 0.11353496<br>  0.34060487 0.11353496 0.22706991 0.11353496 0.11353496 0.11353496<br>  0.11353496 0.22706991 0.11353496 0.22706991 0.11353496 0.11353496<br>  0.11353496 0.11353496 0.11353496 0.22706991 0.11353496 0.22706991<br>  0.22706991 0.22706991 0.11353496 0.11353496 0.11353496]]<br></span><span style="color: #800000;">“””</span><br><span style="color: #008000;">#</span><span style="color: #008000;"> =============================================================================================</span><br><span style="color: #0000ff;">if</span> <span style="color: #800080;"><strong>name</strong></span>==<span style="color: #800000;">“</span><span style="color: #800000;"><strong>main</strong></span><span style="color: #800000;">“</span><span style="color: #000000;">:<br></span><span style="color: #008000;">#</span><span style="color: #008000;">   dictvec()</span><span style="color: #008000;"><br>#</span><span style="color: #008000;">     countvec()</span><br><span style="color: #000000;">    tfidfvec()<br>    </span><span style="color: #0000ff;">pass</span></pre></div></p>
+</div>
+<p>&nbsp;</p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD_2_%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

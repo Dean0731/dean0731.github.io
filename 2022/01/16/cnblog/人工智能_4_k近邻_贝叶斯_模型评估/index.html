@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="机器学习常用算法 k近邻算法   求出未知点 与周围最近的 k个点的距离   查看这k个点中大多数是哪一类   根号((x已知-x未知)^2+(y已知-y未知)^2)  即平面间2点距离公式   收异常点影响较大,因此需要做标准化处理   API:sklearn.neighbors.KNeighborsClassifier(n_neighbors&#x3D;5,algorithm&#x3D;&quot;auto&quot;)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD_4_k%E8%BF%91%E9%82%BB_%E8%B4%9D%E5%8F%B6%E6%96%AF_%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="机器学习常用算法 k近邻算法   求出未知点 与周围最近的 k个点的距离   查看这k个点中大多数是哪一类   根号((x已知-x未知)^2+(y已知-y未知)^2)  即平面间2点距离公式   收异常点影响较大,因此需要做标准化处理   API:sklearn.neighbors.KNeighborsClassifier(n_neighbors&#x3D;5,algorithm&#x3D;&quot;auto&quot;)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1333782/201910/1333782-20191005115818655-2067406970.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.684Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1333782/201910/1333782-20191005115818655-2067406970.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      15k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      122 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <div class="cnblogs_code">
+<div class="code-wrapper"><pre><span style="color: #000000;">机器学习常用算法
+k近邻算法
+  求出未知点 与周围最近的 k个点的距离
+  查看这k个点中大多数是哪一类
+  根号((x已知</span>-x未知)^2+(y已知-y未知)^2<span style="color: #000000;">)  即平面间2点距离公式
+  收异常点影响较大,因此需要做标准化处理
+  API:sklearn.neighbors.KNeighborsClassifier(n_neighbors</span>=5,algorithm=<span style="color: #800000;">"</span><span style="color: #800000;">auto</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+      algorithm:{</span><span style="color: #800000;">"</span><span style="color: #800000;">auto</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">ball_tree</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">kd_tree</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">brute</span><span style="color: #800000;">"</span><span style="color: #000000;">}
+          效率不同
+          ball_tree:会使用BallTree
+          kd_tree:会使用KdTree
+          auto:尝试根据传递的fit方法的值决定最适合的算法
+      n_neighbors: 邻居数,默认为5
+处理:
+  时间特征:需要转为年,月,日,时,分,秒 ,当做几个新的特征处理,并不是全部要加入,要根据结果选择加入
+  目标值:可以去掉某些目标值
+</span><span style="color: #0000ff;">from</span> sklearn.neighbors <span style="color: #0000ff;">import</span><span style="color: #000000;"> KNeighborsClassifier
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> knnCls():
+    </span><span style="color: #800000;">"""</span><span style="color: #800000;">
+    预测鸢尾花的种类
+    :return:
+    </span><span style="color: #800000;">"""</span>
+    <span style="color: #008000;">#</span><span style="color: #008000;"> 读取数据</span>
+    <span style="color: #0000ff;">from</span> sklearn.datasets <span style="color: #0000ff;">import</span><span style="color: #000000;"> load_iris
+    iris </span>=<span style="color: #000000;"> load_iris()
+    </span><span style="color: #0000ff;">print</span><span style="color: #000000;">(iris.feature_names)
+    </span><span style="color: #0000ff;">print</span>(iris.data[0:5<span style="color: #000000;">,:])
+    </span><span style="color: #0000ff;">print</span><span style="color: #000000;">(iris.data)
+
+<pre><code class="hljs">&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 处理数据&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 1,缩小数据  对于csv中的数据可使用 data.query(&quot;id&amp;gt;8 &amp;amp; money &amp;lt;2000&quot;) 等过滤掉一些数据&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 2,时间处理&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;   time_value = pd.to_datetime(data中的时间列,unit=&quot;s&quot;) unit 表示时间最小的单位&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;        time_value格式为 1970-01-01 00:00:00 注意不能单独获取年月日&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;   time_value=pd.DatatimeIndex(time_value) 此时转换为字典格式的时间&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;   增加特征,例如年相同,就不能当做特征&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;       data[&#39;day&#39;] = time_value.day,weekday,hour等不建议使用 此方式&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;           建议使用data.loc[&quot;day&quot;] = xxx&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;       pandas使用data.drop([&quot;time&quot;],axis=1) 删除原来的时间戳,&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;       数组使用np.delete(data,[1,2,3等列],axis=1) 删除原来的时间戳&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 3,目标值处理&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     目标值过多,单有的目标值数量太少,可以忽略&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     分组求和,本例中 可表示为 把数量少于n个的种类删除(虽然本类中目标值只有3个,其实不用删除,只为演示效果)&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     group = data.groupby(&quot;目标值列名&quot;).count()&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     此时返回结果 列数不变,目标值列名列为所有的目标值,其他列不再是值,而是分组后该组的个数&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     tf = group[group[&#39;非目标值列列名&#39;]&amp;gt;n].reset_index()&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     data = data[data[目标列列名].isin(tf.目标列列名)]&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     取出目标值 y =data[&quot;目标列&quot;]&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     取出目标值 x =data.drop([&quot;目标列&quot;],axis=1)&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;     x_train,y_train,x_test,y_test数据分割 train_test_spilt&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 特征工程(标准化)&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;   x_train 进行fit_transform&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;   注意 也需要对 x_test进行标准化,注意使用 transform即可, 即 使用 训练集的参数进行标准化&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;   标准化对数据最后结果影响很大&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 算法处理&lt;/span&gt;
+knn = KNeighborsClassifier(n_neighbors=5&lt;span style=&quot;color: #000000;&quot;&gt;)
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; fit ,predict,score&lt;/span&gt;
+</code></pre></div>
+<p><span style="color: #000000;">    knn.fit(x_train,y_train)<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 得出结果</span><br>    y_predict = knn.predict(x_test) <span style="color: #008000;">#</span><span style="color: #008000;"> 得出预测目标值</span><br>    <span style="color: #008000;">#</span><span style="color: #008000;"> 得出准确率</span><br>    knn.score(x_test,y_test) <span style="color: #008000;">#</span><span style="color: #008000;"> 也可以使用y_predict与y_test 得出</span><br>    <span style="color: #0000ff;">return</span><span style="color: #000000;"> None<br>问题1:k的取值问题,很大,很小?<br>    很大:易受异常点影响<br>    很小:容易受k值(数量)波动<br>性能问题:每一个未知数来都需要与全部数据进行计算<br>    很费时间<br>调参:n_neighbors 的合适值</p>
+<p>优点:易于理解,易实现,无需参数(算法里边的参数)估计,无需训练<br>缺点:计算慢,耗内存,必须有k</p>
+<p>朴素(条件独立)贝叶斯算法 (需要学习概率相关内容)<br>概率:<br>  条件概率:P(A1,A2</span>|B) = P(A1|B)<em>P(A2|<span style="color: #000000;">B)  A1,A2 不能相互影响  应该是条件独立<br>  联合概率 P(A,B) </span>= P(A)</em><span style="color: #000000;">P(B)<br>例:常用与对于文章的分类<br>  每个文章会计算属于每个分类的概率,比较数据那个的概率较大,就是该分类<br>P(科技</span>|<span style="color: #000000;">文章1)  文档<br>P(科技</span>|<span style="color: #000000;">词1,词2…..)  文档:词1,词2….  (多个条件下 x的概率)<br>朴素贝叶斯</span>-<span style="color: #000000;">贝叶斯公式<br /><img src="https://img2018.cnblogs.com/blog/1333782/201910/1333782-20191005115818655-2067406970.png" srcset="/img/loading.gif" lazyload alt="" /></span></pre></p>
+<p>&nbsp;</p>
+<div class="code-wrapper"><pre><span style="color: #000000;"></span></pre></div>
+<p>&nbsp;P(A|B)=P(B|A)P(A)/P(B)</p>
+<div class="code-wrapper"><pre>=====================================<span style="color: #000000;">
+个人体会:例 有两个箱子 A:两黑,两白球 B两黑球,1白球
+  随机从两个盒子中拿出一个球,是白球, 求是从A中拿出的概率
+  P(A</span>|白) = (P(白|A)P(A))/P(白) = 0.5*0.5/(1/2*1/2+1/2*1/3)=7/12<span style="color: #000000;">
+  P(B</span>|白) = (P(白|B)P(B))/P(白) = 1/3*0.5/(1/2*1/2+1/2*2/3)=5/12<br />贝叶斯推导:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lliuye/p/9178090.html">https://www.cnblogs.com/lliuye/p/9178090.html</a>
+=====================================<span style="color: #000000;">
+  求在包含这些词的情况下是科技类的概率</span>=在科技分类下这些词(这个文档)出现的概率*科技类的概率/<span style="color: #000000;">在所有文档中,这些词的概率
+  P(C</span>|W)=(P(W|C)P(C))/<span style="color: #000000;">P(W)
+      W为给定文档的特征值(频数统计,预测文档提供),C为文档类别
+      可理解为:P(C</span>|F1,F2.....)=(P(F1,F2..|C)P(C))/<span style="color: #000000;">P(F1,F2,....)
+  P(C):每个文档类别的概率(某类文档数</span>/<span style="color: #000000;">文档总数)
+  P(W</span>|<span style="color: #000000;">C):给定列别下 特征(词)的概率
+      P(F1</span>|C) = Ni/<span style="color: #000000;">N (表示该次出现在科技文章中的概率)   F1,F2.....的概率乘积  表示 科技类文章中这些词都出现的概率
+          Ni为F1词在c类所有文档中出现的次数,(科技类文章中改词的次数)
+          N为c类文档下所有词的总和 .(科技类文章中 所有的词 和)
+  有些情况下得到文章属于某类的概率为0,不合理
+      解决办法:拉普拉斯平滑系数  P(F1</span>|C) = (Ni+a)/N+<span style="color: #000000;">am
+          a:指定系数一般为1,m为训练文档中出现的特征词的个数
+算法API sklearn.native_bayes.MultinomiaNB
+  sklearn.native_bayes.MultinomiaNB(alpha</span>=1.0<span style="color: #000000;">) 拉普拉斯平滑系数,不属于超参数
+例:新闻分类
+</span><span style="color: #0000ff;">from</span> sklearn.datasets <span style="color: #0000ff;">import</span><span style="color: #000000;"> fetch_20newsgroups
+</span><span style="color: #0000ff;">from</span> sklearn.model_selection <span style="color: #0000ff;">import</span><span style="color: #000000;"> train_test_split
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> naviebayes():
+    </span><span style="color: #800000;">"""</span><span style="color: #800000;">
+    朴素贝叶斯进行文章分类
+    :return:
+    </span><span style="color: #800000;">"""</span>
+    <span style="color: #008000;">#</span><span style="color: #008000;"> 加载数据,进行分割</span>
+    news = fetch_20newsgroups(subset=<span style="color: #800000;">"</span><span style="color: #800000;">all</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+    x_train,x_test,y_train,y_test </span>= train_test_split(news.data,news.target,test_size=0.25<span style="color: #000000;">)
+    </span><span style="color: #008000;">#</span><span style="color: #008000;"> 生成文章特征词</span>
+    <span style="color: #0000ff;">from</span> sklearn.feature_extraction.text <span style="color: #0000ff;">import</span><span style="color: #000000;"> TfidfVectorizer
+    </span><span style="color: #0000ff;">from</span> sklearn.metrics.classification <span style="color: #0000ff;">import</span><span style="color: #000000;"> classification_report
+    tf </span>=<span style="color: #000000;"> TfidfVectorizer()
+
+<pre><code class="hljs">&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;以训练集中词的列表进行 每篇文章重要性统计&lt;/span&gt;
+x_train =&lt;span style=&quot;color: #000000;&quot;&gt; tf.fit_transform(x_train)
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; print(tf.get_feature_names()) # 全部文章中所有的词&lt;/span&gt;
+x_test =&lt;span style=&quot;color: #000000;&quot;&gt; tf.transform(x_test)
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 朴素贝叶斯进行评估&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;from&lt;/span&gt; sklearn.naive_bayes &lt;span style=&quot;color: #0000ff;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt; MultinomialNB
+mlt &lt;/span&gt;= MultinomialNB(alpha=1.0&lt;span style=&quot;color: #000000;&quot;&gt;)
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;print(x_train) # .toarray 可转化为二维数组&lt;/span&gt;
+&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&quot;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;
+(0, 122986)    0.1189432263044612 # 第一篇文章中 feature_names下标122986的这个词 出现的频率
+(0, 139798)    0.25782353561208343
+(0, 117722)    0.12774899257629055
+&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&quot;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;
+mlt.fit(x_train,y_train)
+y_predict &lt;/span&gt;=&lt;span style=&quot;color: #000000;&quot;&gt; mlt.predict(x_test)
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;print&lt;/span&gt;(classification_report(y_test,y_predict,target_names=&lt;span style=&quot;color: #000000;&quot;&gt;news.target_names))
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 算出准确率,由于文章词的数量确定,数据的正确性,因此 准确率不易提高&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; print(mlt.score(x_test,y_test))&lt;/span&gt;
+</code></pre></div>
+<p><span style="color: #000000;">优点:<br>  发源于古典数学,有稳定的分类效率<br>  速度快,效率高<br>  对数据缺失不敏感,常用于文本分类<br>缺点:<br>  前提是一个词的出现与另一个无关,当词之间出现关联时,效果不好<br></span><span style="color: #0000ff;">if</span> <span style="color: #800080;"><strong>name</strong></span> == <span style="color: #800000;">“</span><span style="color: #800000;"><strong>main</strong></span><span style="color: #800000;">“</span><span style="color: #000000;">:<br>    </span><span style="color: #008000;">#</span><span style="color: #008000;"> knnCls()</span><br><span style="color: #000000;">    naviebayes()<br>    </span><span style="color: #0000ff;">pass</span><span style="color: #000000;"><br>模型评估(不仅靠准确率,还有召回率)<br>  准确率:estimator.score() 最常见是预测结果的准确率,即百分比<br>  混淆矩阵<br>准确率 </span>35%,但召回率 75%<br><span style="color: #800000;">“””</span><span style="color: #800000;">                         预测结果<br>                         正例(猫)   假例(不是猫)<br>真实结果    20正例(猫)       真正例(15)     伪反例(5)<br>真实结果    80假例(不是猫)    伪正例(60)     真反例(20)<br></span><span style="color: #800000;">“””</span><span style="color: #000000;"><br>  精确率:预测为正例的样本中,真正例的比例<br>  召回率:真实值正例中,预测为正例的比例 </span>15/20<span style="color: #000000;"> 越高越好<br>其他分类标准F1</span>-<span style="color: #000000;">SCORE 反映了模型的稳健性<br>  F1 </span>= 2<em>精确率</em>召回率/(精确率+<span style="color: #000000;">召回率)<br>API sklearn.metrics.classification_reportly(y_true,y_pred,target_names</span>=<span style="color: #000000;">None)<br>  y_true:真实目标值<br>  y_pred:估计器预测目标值<br>  terget_names:目标类别名称<br>  </span><span style="color: #0000ff;">return</span><span style="color: #000000;">:每个类(目标值)的精确率与召回率<br>模型选择与调优<br>  交叉验证:让别评估模型更加准确<br>      训练集分为n份:训练集(n</span>-1)份+<span style="color: #000000;">验证集1份 得出一个准确率 模型一<br>      再次训练集分为n份:训练集(n</span>-1)份+<span style="color: #000000;">验证集1份(就是修改验证集,可能此时第一份为验证集) 得出一个准确率 模型二<br>      ….. 依次进行 得出n个准确率   求平均 即可以作为可信一点的模型结果<br>      分为n份就称为n折交叉验证<br>  网格搜索(超参数搜索):调参数(k近邻)<br>      与交叉验证组合k </span>= 3,5,7<span style="color: #000000;"> 10折交叉验证<br>          k</span>=3 时的平均,k=<span style="color: #000000;">5的平均…  比较即可得出比较可信的k值<br>      当有两个找参数时:两两组合<br>  API sklearn.model_selection.GridSearchCV(estimator,param_grid</span>=none,cv=<span style="color: #000000;">None)<br>      estimator:估计器(knn) 此时估计器中不用再写超参数<br>      param_grid:估计参数 {</span><span style="color: #800000;">“</span><span style="color: #800000;">n_neighbors</span><span style="color: #800000;">“</span>:[1,2,3,4,5<span style="color: #000000;">]}<br>      cv:几折交叉验证<br>          不用 knn.fit predict<br>      此时返回的实例<br>          fit(x_train,y_train):输入训练数据<br>          score(x_test,y_test):准确率<br>          best_score_:在交叉验证中最好的结果<br>          best_estimator_:在交叉验证中最好的参数模型<br>          cv_results_:每次交叉验证后验证集集准确率和训练集准确率(验证集平均值)<br></span><span style="color: #0000ff;">from</span> sklearn.model_selection <span style="color: #0000ff;">import</span><span style="color: #000000;"> GridSearchCV<br>gc </span>= GridSearchCV(KNeighborsClassifier(),param_grid={<span style="color: #800000;">“</span><span style="color: #800000;">n_neighbors</span><span style="color: #800000;">“</span>:[1,2,3,4,5<span style="color: #000000;">]})<br>gc.fit(x_train,y_train)</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<div class="code-wrapper"><pre>机器学习常用算法<br /><span style="font-family: 'Consolas';">k</span>近邻算法<br />  求出未知点 与周围最近的 <span style="font-family: 'Consolas';">k</span>个点的距离<br />  查看这<span style="font-family: 'Consolas';">k</span>个点中大多数是哪一类<br />  根号<span style="font-family: 'Consolas';">((x</span>已知<span style="font-family: 'Consolas';">-x</span>未知<span style="font-family: 'Consolas';">)^</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">+(y</span>已知<span style="font-family: 'Consolas';">-y</span>未知<span style="font-family: 'Consolas';">)^</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">)  </span>即平面间<span style="font-family: 'Consolas';">2</span>点距离公式<br />  收异常点影响较大<span style="font-family: 'Consolas';">,</span>因此需要做标准化处理<br />  <span style="font-family: 'Consolas';">API:sklearn.neighbors.KNeighborsClassifier(</span><span style="color: #660099; font-family: 'Consolas';">n_neighbors</span><span style="font-family: 'Consolas';">=</span><span style="color: #0000ff; font-family: 'Consolas';">5</span><span style="font-family: 'Consolas';">,</span><span style="color: #660099; font-family: 'Consolas';">algorithm</span><span style="font-family: 'Consolas';">=</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"auto"</span><span style="font-family: 'Consolas';">)<br /></span><span style="font-family: 'Consolas';">      algorithm:{</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"auto"</span><span style="font-family: 'Consolas';">,</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"ball_tree"</span><span style="font-family: 'Consolas';">,</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"kd_tree"</span><span style="font-family: 'Consolas';">,</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"brute"</span><span style="font-family: 'Consolas';">}<br /></span>效率不同<br />          <span style="font-family: 'Consolas';">ball_tree:</span>会使用<span style="font-family: 'Consolas';">BallTree<br /></span><span style="font-family: 'Consolas';">          kd_tree:</span>会使用<span style="font-family: 'Consolas';">KdTree<br /></span><span style="font-family: 'Consolas';">          auto:</span>尝试根据传递的<span style="font-family: 'Consolas';">fit</span>方法的值决定最适合的算法<br />      <span style="font-family: 'Consolas';">n_neighbors: </span>邻居数<span style="font-family: 'Consolas';">,</span>默认为<span style="font-family: 'Consolas';">5<br /></span>处理<span style="font-family: 'Consolas';">:<br /></span>时间特征<span style="font-family: 'Consolas';">:</span>需要转为年<span style="font-family: 'Consolas';">,</span>月<span style="font-family: 'Consolas';">,</span>日<span style="font-family: 'Consolas';">,</span>时<span style="font-family: 'Consolas';">,</span>分<span style="font-family: 'Consolas';">,</span>秒 <span style="font-family: 'Consolas';">,</span>当做几个新的特征处理<span style="font-family: 'Consolas';">,</span>并不是全部要加入<span style="font-family: 'Consolas';">,</span>要根据结果选择加入<br />  目标值<span style="font-family: 'Consolas';">:</span>可以去掉某些目标值<br /><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.neighbors </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">KNeighborsClassifier<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">def </span><span style="font-family: 'Consolas';">knnCls():<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">"""<br /></span><span style="color: #808080; font-style: italic; font-family: '標楷體';">预测鸢</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">尾花的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">种类<br /></span><span style="color: #808080; font-weight: bold; font-family: 'Consolas';">:return</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">:<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    """<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    # </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">读</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">取</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.datasets </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">load_iris<br /></span><span style="font-family: 'Consolas';">    iris = load_iris()<br /></span><span style="color: #000080; font-family: 'Consolas';">print</span><span style="font-family: 'Consolas';">(iris.feature_names)<br /></span><span style="color: #000080; font-family: 'Consolas';">print</span><span style="font-family: 'Consolas';">(iris.data[</span><span style="color: #0000ff; font-family: 'Consolas';">0</span><span style="font-family: 'Consolas';">:</span><span style="color: #0000ff; font-family: 'Consolas';">5</span><span style="font-family: 'Consolas';">,:])<br /></span><span style="color: #000080; font-family: 'Consolas';">print</span><span style="font-family: 'Consolas';">(iris.data)<br /></span><span style="font-family: 'Consolas';"><br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">处</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">理</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># 1,</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">缩</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">小</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据  </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">对</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">于</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">csv</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">中的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据可使用</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"> data.query("id&gt;8 &amp; money &lt;2000") </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">等</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">过滤</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">掉一些</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># 2,</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时间处</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">理<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#   time_value = pd.to_datetime(data</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">中的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时间</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,unit="s") unit </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">表示</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时间</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">最小的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">单</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">位<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#        time_value</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">格式</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">为</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"> 1970-01-01 00:00:00 </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">注意不能</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">单独获</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">取年月日<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#   time_value=pd.DatatimeIndex(time_value) </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">此</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时转换为</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">字典格式的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时间<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#   </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">增加特征</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">例如年相同</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">就不能</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">当</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">做特征<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#       data['day'] = time_value.day,weekday,hour</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">等不建</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">议</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">使用 此方式<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#           </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">建</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">议</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">使用</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">data.loc["day"] = xxx<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #       pandas</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">使用</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">data.drop(["time"],axis=1) </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">删</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">除原</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">来</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时间</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">戳</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #       </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数组</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">使用</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">np.delete(data,[1,2,3</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">等列</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">],axis=1) </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">删</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">除原</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">来</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时间</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">戳<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># 3,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值处</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">理<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#     </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值过</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">多</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">单</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">有的目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">量太少</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">可以忽略<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#     </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">分</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">组</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">求和</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">本例中 可表示</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">为 </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">把</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">量少于</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">n</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">个</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">种类删</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">除</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">(</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">虽</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">然本</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">类</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">中目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">只有</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">3</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">个</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">其</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">实</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">不用</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">删</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">除</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">只</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">为</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">演示效果</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #     group = data.groupby("</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列名</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">").count()<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #     </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">此</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">时</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">返回</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">结</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">果 列</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">不</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">变</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列名列</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">为</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">所有的目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">其他列不再是</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">值</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">而是分</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">组</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">后</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">该组</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">个数<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#     tf = group[group['</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">非目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列列名</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">']&gt;n].reset_index()<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #     data = data[data[</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列列名</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">].isin(tf.</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列列名</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">)]<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #     </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">取出目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"> y =data["</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">"]<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #     </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">取出目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"> x =data.drop(["</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">列</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">"],axis=1)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #     x_train,y_train,x_test,y_test</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据分割</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"> train_test_spilt<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    # </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">特征工程</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">(</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">准化</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #   x_train </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">进</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">行</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">fit_transform<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    #   </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">注意 也需要</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">对</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"> x_test</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">进</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">行</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">准化</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">注意使用</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"> transform</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">即可</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">, </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">即 使用 </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">训练</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">集的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">参数进</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">行</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">准化<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#   </span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">准化</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">对数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据最后</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">结</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">果影</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">响</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">很大<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">算法</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">处</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">理<br /></span><span style="font-family: 'Consolas';">knn = KNeighborsClassifier(</span><span style="color: #660099; font-family: 'Consolas';">n_neighbors</span><span style="font-family: 'Consolas';">=</span><span style="color: #0000ff; font-family: 'Consolas';">5</span><span style="font-family: 'Consolas';">)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># fit ,predict,score<br /></span><span style="font-family: 'Consolas';">knn.fit(x_train,y_train)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">得出</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">结</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">果<br /></span><span style="color: #808080; font-family: 'Consolas';">y_predict </span><span style="font-family: 'Consolas';">= knn.predict(x_test) </span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">得出</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">预测</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">目</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">标值<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">得出准确率<br /></span><span style="font-family: 'Consolas';">knn.score(x_test,y_test) </span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">也可以使用</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">y_predict</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">与</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">y_test </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">得出<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">return None<br /></span>问题<span style="font-family: 'Consolas';">1:k</span>的取值问题<span style="font-family: 'Consolas';">,</span>很大<span style="font-family: 'Consolas';">,</span>很小<span style="font-family: 'Consolas';">?<br /></span>很大<span style="font-family: 'Consolas';">:</span>易受异常点影响<br />    很小<span style="font-family: 'Consolas';">:</span>容易受<span style="font-family: 'Consolas';">k</span>值<span style="font-family: 'Consolas';">(</span>数量<span style="font-family: 'Consolas';">)</span>波动<br />性能问题<span style="font-family: 'Consolas';">:</span>每一个未知数来都需要与全部数据进行计算<br />    很费时间<br />调参<span style="font-family: 'Consolas';">:n_neighbors </span>的合适值<br /><br />优点<span style="font-family: 'Consolas';">:</span>易于理解<span style="font-family: 'Consolas';">,</span>易实现<span style="font-family: 'Consolas';">,</span>无需参数<span style="font-family: 'Consolas';">(</span>算法里边的参数<span style="font-family: 'Consolas';">)</span>估计<span style="font-family: 'Consolas';">,</span>无需训练<span style="font-family: 'Consolas';">\<br /></span>缺点<span style="font-family: 'Consolas';">:</span>计算慢<span style="font-family: 'Consolas';">,</span>耗内存<span style="font-family: 'Consolas';">,</span>必须有<span style="font-family: 'Consolas';">k<br /></span><span style="font-family: 'Consolas';"><br /></span>朴素<span style="font-family: 'Consolas';">(</span>条件独立<span style="font-family: 'Consolas';">)</span>贝叶斯算法 <span style="font-family: 'Consolas';">(</span>需要学习概率相关内容<span style="font-family: 'Consolas';">)<br /></span>概率<span style="font-family: 'Consolas';">:<br /></span>条件概率<span style="font-family: 'Consolas';">:P(A1,A2|B) = P(A1|B)*P(A2|B)  A1,A2 </span>不能相互影响  应该是条件独立<br />  联合概率 <span style="font-family: 'Consolas';">P(A,B) = P(A)*P(B)<br /></span>例<span style="font-family: 'Consolas';">:</span>常用与对于文章的分类<br />  每个文章会计算属于每个分类的概率<span style="font-family: 'Consolas';">,</span>比较数据那个的概率较大<span style="font-family: 'Consolas';">,</span>就是该分类<br /><span style="font-family: 'Consolas';">P(</span>科技<span style="font-family: 'Consolas';">|</span>文章<span style="font-family: 'Consolas';">1)  </span>文档<br /><span style="font-family: 'Consolas';">P(</span>科技<span style="font-family: 'Consolas';">|</span>词<span style="font-family: 'Consolas';">1,</span>词<span style="font-family: 'Consolas';">2.....)  </span>文档<span style="font-family: 'Consolas';">:</span>词<span style="font-family: 'Consolas';">1,</span>词<span style="font-family: 'Consolas';">2....  (</span>多个条件下 <span style="font-family: 'Consolas';">x</span>的概率<span style="font-family: 'Consolas';">)<br /></span>朴素贝叶斯<span style="font-family: 'Consolas';">-</span>贝叶斯公式<br /><span style="font-family: 'Consolas';">=====================================<br /></span>个人体会<span style="font-family: 'Consolas';">:</span>例 有两个箱子 <span style="font-family: 'Consolas';">A:</span>两黑<span style="font-family: 'Consolas';">,</span>两白球 <span style="font-family: 'Consolas';">B</span>两黑球<span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">1</span>白球<br />  随机从两个盒子中拿出一个球<span style="font-family: 'Consolas';">,</span>是白球<span style="font-family: 'Consolas';">, </span>求是从<span style="font-family: 'Consolas';">A</span>中拿出的概率<br />  <span style="font-family: 'Consolas';">P(A|</span>白<span style="font-family: 'Consolas';">) = (P(</span>白<span style="font-family: 'Consolas';">|A)P(A))/P(</span>白<span style="font-family: 'Consolas';">) = </span><span style="color: #0000ff; font-family: 'Consolas';">0.5</span><span style="font-family: 'Consolas';">*</span><span style="color: #0000ff; font-family: 'Consolas';">0.5</span><span style="font-family: 'Consolas';">/(</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">*</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">+</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">*</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">3</span><span style="font-family: 'Consolas';">)=</span><span style="color: #0000ff; font-family: 'Consolas';">7</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">12<br /></span><span style="font-family: 'Consolas';">P(B|</span>白<span style="font-family: 'Consolas';">) = (P(</span>白<span style="font-family: 'Consolas';">|B)P(B))/P(</span>白<span style="font-family: 'Consolas';">) = </span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">3</span><span style="font-family: 'Consolas';">*</span><span style="color: #0000ff; font-family: 'Consolas';">0.5</span><span style="font-family: 'Consolas';">/(</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">*</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">+</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">*</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">3</span><span style="font-family: 'Consolas';">)=</span><span style="color: #0000ff; font-family: 'Consolas';">5</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">12<br /></span><span style="font-family: 'Consolas';">=====================================<br /></span>求在包含这些词的情况下是科技类的概率<span style="font-family: 'Consolas';">=</span>在科技分类下这些词<span style="font-family: 'Consolas';">(</span>这个文档<span style="font-family: 'Consolas';">)</span>出现的概率<span style="font-family: 'Consolas';">*</span>科技类的概率<span style="font-family: 'Consolas';">/</span>在所有文档中<span style="font-family: 'Consolas';">,</span>这些词的概率<br />  <span style="font-family: 'Consolas';">P(C|W)=(P(W|C)P(C))/P(W)<br /></span><span style="font-family: 'Consolas';">      W</span>为给定文档的特征值<span style="font-family: 'Consolas';">(</span>频数统计<span style="font-family: 'Consolas';">,</span>预测文档提供<span style="font-family: 'Consolas';">),C</span>为文档类别<br />      可理解为<span style="font-family: 'Consolas';">:P(C|F1,F2.....)=(P(F1,F2..|C)P(C))/P(F1,F2,....)<br /></span><span style="font-family: 'Consolas';">  P(C):</span>每个文档类别的概率<span style="font-family: 'Consolas';">(</span>某类文档数<span style="font-family: 'Consolas';">/</span>文档总数<span style="font-family: 'Consolas';">)<br /></span><span style="font-family: 'Consolas';">  P(W|C):</span>给定列别下 特征<span style="font-family: 'Consolas';">(</span>词<span style="font-family: 'Consolas';">)</span>的概率<br />      <span style="font-family: 'Consolas';">P(F1|C) = Ni/N (</span>表示该次出现在科技文章中的概率<span style="font-family: 'Consolas';">)   F1,F2.....</span>的概率乘积  表示 科技类文章中这些词都出现的概率<br />          <span style="font-family: 'Consolas';">Ni</span>为<span style="font-family: 'Consolas';">F1</span>词在<span style="font-family: 'Consolas';">c</span>类所有文档中出现的次数<span style="font-family: 'Consolas';">,(</span>科技类文章中改词的次数<span style="font-family: 'Consolas';">)<br /></span><span style="font-family: 'Consolas';">          N</span>为<span style="font-family: 'Consolas';">c</span>类文档下所有词的总和 <span style="font-family: 'Consolas';">.(</span>科技类文章中 所有的词 和<span style="font-family: 'Consolas';">)<br /></span>有些情况下得到文章属于某类的概率为<span style="font-family: 'Consolas';">0,</span>不合理<br />      解决办法<span style="font-family: 'Consolas';">:</span>拉普拉斯平滑系数  <span style="font-family: 'Consolas';">P(F1|C) = (Ni+a)/N+am<br /></span><span style="font-family: 'Consolas';">          a:</span>指定系数一般为<span style="font-family: 'Consolas';">1,m</span>为训练文档中出现的特征词的个数<br />算法<span style="font-family: 'Consolas';">API sklearn.native_bayes.MultinomiaNB<br /></span><span style="font-family: 'Consolas';">  sklearn.native_bayes.MultinomiaNB(</span><span style="color: #660099; font-family: 'Consolas';">alpha</span><span style="font-family: 'Consolas';">=</span><span style="color: #0000ff; font-family: 'Consolas';">1.0</span><span style="font-family: 'Consolas';">) </span>拉普拉斯平滑系数<span style="font-family: 'Consolas';">,</span>不属于超参数<br />例<span style="font-family: 'Consolas';">:</span>新闻分类<br /><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.datasets </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">fetch_20newsgroups<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.model_selection </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">train_test_split<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">def </span><span style="font-family: 'Consolas';">naviebayes():<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">"""<br /></span><span style="color: #808080; font-style: italic; font-family: 'Batang';">朴素</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">贝</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">叶斯</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">进</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">行文章分</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">类<br /></span><span style="color: #808080; font-weight: bold; font-family: 'Consolas';">:return</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">:<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    """<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">    # </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">加</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">载数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">进</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">行分割<br /></span><span style="font-family: 'Consolas';">news = fetch_20newsgroups(</span><span style="color: #660099; font-family: 'Consolas';">subset</span><span style="font-family: 'Consolas';">=</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"all"</span><span style="font-family: 'Consolas';">)<br /></span><span style="font-family: 'Consolas';">    x_train,x_test,y_train,y_test = train_test_split(news.data,news.target,</span><span style="color: #660099; font-family: 'Consolas';">test_size</span><span style="font-family: 'Consolas';">=</span><span style="color: #0000ff; font-family: 'Consolas';">0.25</span><span style="font-family: 'Consolas';">)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">生成文章特征</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">词<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.feature_extraction.text </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">TfidfVectorizer<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.metrics.classification </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">classification_report<br /></span><span style="font-family: 'Consolas';">    tf = TfidfVectorizer()<br /></span><span style="font-family: 'Consolas';"><br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">以</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">训练</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">集中</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">词</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">的列表</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">进</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">行 每篇文章重要性</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">统计<br /></span><span style="font-family: 'Consolas';">x_train = tf.fit_transform(x_train)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># print(tf.get_feature_names()) # </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">全部文章中所有的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">词<br /></span><span style="font-family: 'Consolas';">x_test = tf.transform(x_test)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">朴素</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">贝</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">叶斯</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">进</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">行</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">评</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">估<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.naive_bayes </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">MultinomialNB<br /></span><span style="font-family: 'Consolas';">    mlt = MultinomialNB(</span><span style="color: #660099; font-family: 'Consolas';">alpha</span><span style="font-family: 'Consolas';">=</span><span style="color: #0000ff; font-family: 'Consolas';">1.0</span><span style="font-family: 'Consolas';">)<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">#print(x_train) # .toarray </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">可</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">转</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">化</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">为</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">二</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">维数组<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"""<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">    (0, 122986)    0.1189432263044612 # </span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">第一篇文章中</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';"> feature_names</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">下</span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">标</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">122986</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">的</span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">这个词 </span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">出</span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">现</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">的</span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">频</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">率</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';"><br /></span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">    (0, 139798)    0.25782353561208343<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">    (0, 117722)    0.12774899257629055<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">    """<br /></span><span style="font-family: 'Consolas';">mlt.fit(x_train,y_train)<br /></span><span style="font-family: 'Consolas';">    y_predict = mlt.predict(x_test)<br /></span><span style="color: #000080; font-family: 'Consolas';">print</span><span style="font-family: 'Consolas';">(classification_report(y_test,y_predict,</span><span style="color: #660099; font-family: 'Consolas';">target_names</span><span style="font-family: 'Consolas';">=news.target_names))<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># </span><span style="color: #808080; font-style: italic; font-family: 'Batang';">算出准确率</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">由于文章</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">词</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">的</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">量确定</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: '標楷體';">数</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">据的正确性</span><span style="color: #808080; font-style: italic; font-family: 'Consolas';">,</span><span style="color: #808080; font-style: italic; font-family: 'Batang';">因此 准确率不易提高<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># print(mlt.score(x_test,y_test))<br /></span>优点<span style="font-family: 'Consolas';">:<br /></span>发源于古典数学<span style="font-family: 'Consolas';">,</span>有稳定的分类效率<br />  速度快<span style="font-family: 'Consolas';">,</span>效率高<br />  对数据缺失不敏感<span style="font-family: 'Consolas';">,</span>常用于文本分类<br />缺点<span style="font-family: 'Consolas';">:<br /></span>前提是一个词的出现与另一个无关<span style="font-family: 'Consolas';">,</span>当词之间出现关联时<span style="font-family: 'Consolas';">,</span>效果不好<br /><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">if </span><span style="font-family: 'Consolas';">__name__ == </span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"__main__"</span><span style="font-family: 'Consolas';">:<br /></span><span style="color: #808080; font-style: italic; font-family: 'Consolas';"># knnCls()<br /></span><span style="font-family: 'Consolas';">naviebayes()<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">pass<br /></span>模型评估<span style="font-family: 'Consolas';">(</span>不仅靠准确率<span style="font-family: 'Consolas';">,</span>还有召回率<span style="font-family: 'Consolas';">)<br /></span>准确率<span style="font-family: 'Consolas';">:estimator.score() </span>最常见是预测结果的准确率<span style="font-family: 'Consolas';">,</span>即百分比<br />  混淆矩阵<br />准确率 <span style="color: #0000ff; font-family: 'Consolas';">35</span><span style="font-family: 'Consolas';">%,</span>但召回率 <span style="color: #0000ff; font-family: 'Consolas';">75</span><span style="font-family: 'Consolas';">%<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"""                         </span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">预测结</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">果<br /></span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">                         正例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">猫</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">)   </span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">假例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">不是猫</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">)<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">真实结</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">果</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">    20</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">正例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">猫</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">)       </span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">真</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">正例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(15)     </span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">伪</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">反例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(5)<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">真实结</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">果</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">    80</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">假例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">不是猫</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">)    </span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">伪</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">正例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(60)     </span><span style="color: #008080; font-weight: bold; font-family: 'Arial';">真</span><span style="color: #008080; font-weight: bold; font-family: 'BatangChe';">反例</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">(20)<br /></span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"""<br /></span>精确率<span style="font-family: 'Consolas';">:</span>预测为正例的样本中<span style="font-family: 'Consolas';">,</span>真正例的比例<br />  召回率<span style="font-family: 'Consolas';">:</span>真实值正例中<span style="font-family: 'Consolas';">,</span>预测为正例的比例 <span style="color: #0000ff; font-family: 'Consolas';">15</span><span style="font-family: 'Consolas';">/</span><span style="color: #0000ff; font-family: 'Consolas';">20 </span>越高越好<br />其他分类标准<span style="font-family: 'Consolas';">F1-SCORE </span>反映了模型的稳健性<br />  <span style="font-family: 'Consolas';">F1 = </span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">*</span>精确率<span style="font-family: 'Consolas';">*</span>召回率<span style="font-family: 'Consolas';">/(</span>精确率<span style="font-family: 'Consolas';">+</span>召回率<span style="font-family: 'Consolas';">)<br /></span><span style="font-family: 'Consolas';">API sklearn.metrics.classification_reportly(y_true,y_pred,</span><span style="color: #660099; font-family: 'Consolas';">target_names</span><span style="font-family: 'Consolas';">=</span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">None</span><span style="font-family: 'Consolas';">)<br /></span><span style="font-family: 'Consolas';">  y_true:</span>真实目标值<br />  <span style="font-family: 'Consolas';">y_pred:</span>估计器预测目标值<br />  <span style="font-family: 'Consolas';">terget_names:</span>目标类别名称<br />  <span style="color: #000080; font-weight: bold; font-family: 'Consolas';">return</span><span style="font-family: 'Consolas';">:</span>每个类<span style="font-family: 'Consolas';">(</span>目标值<span style="font-family: 'Consolas';">)</span>的精确率与召回率<br />模型选择与调优<br />  交叉验证<span style="font-family: 'Consolas';">:</span>让别评估模型更加准确<br />      训练集分为<span style="font-family: 'Consolas';">n</span>份<span style="font-family: 'Consolas';">:</span>训练集<span style="font-family: 'Consolas';">(n-</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">)</span>份<span style="font-family: 'Consolas';">+</span>验证集<span style="font-family: 'Consolas';">1</span>份 得出一个准确率 模型一<br />      再次训练集分为<span style="font-family: 'Consolas';">n</span>份<span style="font-family: 'Consolas';">:</span>训练集<span style="font-family: 'Consolas';">(n-</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">)</span>份<span style="font-family: 'Consolas';">+</span>验证集<span style="font-family: 'Consolas';">1</span>份<span style="font-family: 'Consolas';">(</span>就是修改验证集<span style="font-family: 'Consolas';">,</span>可能此时第一份为验证集<span style="font-family: 'Consolas';">) </span>得出一个准确率 模型二<br />      <span style="font-family: 'Consolas';">..... </span>依次进行 得出<span style="font-family: 'Consolas';">n</span>个准确率   求平均 即可以作为可信一点的模型结果<br />      分为<span style="font-family: 'Consolas';">n</span>份就称为<span style="font-family: 'Consolas';">n</span>折交叉验证<br />  网格搜索<span style="font-family: 'Consolas';">(</span>超参数搜索<span style="font-family: 'Consolas';">):</span>调参数<span style="font-family: 'Consolas';">(k</span>近邻<span style="font-family: 'Consolas';">)<br /></span>与交叉验证组合<span style="font-family: 'Consolas';">k = </span><span style="color: #0000ff; font-family: 'Consolas';">3</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">5</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">7 10</span>折交叉验证<br />          <span style="font-family: 'Consolas';">k=</span><span style="color: #0000ff; font-family: 'Consolas';">3 </span>时的平均<span style="font-family: 'Consolas';">,k=</span><span style="color: #0000ff; font-family: 'Consolas';">5</span>的平均<span style="font-family: 'Consolas';">...  </span>比较即可得出比较可信的<span style="font-family: 'Consolas';">k</span>值<br />      当有两个找参数时<span style="font-family: 'Consolas';">:</span>两两组合<br />  <span style="font-family: 'Consolas';">API sklearn.model_selection.GridSearchCV(estimator,</span><span style="color: #660099; font-family: 'Consolas';">param_grid</span><span style="font-family: 'Consolas';">=none,</span><span style="color: #660099; font-family: 'Consolas';">cv</span><span style="font-family: 'Consolas';">=</span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">None</span><span style="font-family: 'Consolas';">)<br /></span><span style="font-family: 'Consolas';">      estimator:</span>估计器<span style="font-family: 'Consolas';">(knn) </span>此时估计器中不用再写超参数<br />      <span style="font-family: 'Consolas';">param_grid:</span>估计参数 <span style="font-family: 'Consolas';">{</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"n_neighbors"</span><span style="font-family: 'Consolas';">:[</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">3</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">4</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">5</span><span style="font-family: 'Consolas';">]}<br /></span><span style="font-family: 'Consolas';">      cv:</span>几折交叉验证<br />          不用 <span style="font-family: 'Consolas';">knn.fit predict<br /></span>此时返回的实例<br />          <span style="font-family: 'Consolas';">fit(x_train,y_train):</span>输入训练数据<br />          <span style="font-family: 'Consolas';">score(x_test,y_test):</span>准确率<br />          <span style="font-family: 'Consolas';">best_score_:</span>在交叉验证中最好的结果<br />          <span style="font-family: 'Consolas';">best_estimator_:</span>在交叉验证中最好的参数模型<br />          <span style="font-family: 'Consolas';">cv_results_:</span>每次交叉验证后验证集集准确率和训练集准确率<span style="font-family: 'Consolas';">(</span>验证集平均值<span style="font-family: 'Consolas';">)<br /></span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">from </span><span style="font-family: 'Consolas';">sklearn.model_selection </span><span style="color: #000080; font-weight: bold; font-family: 'Consolas';">import </span><span style="font-family: 'Consolas';">GridSearchCV<br /></span><span style="font-family: 'Consolas';">gc = GridSearchCV(KNeighborsClassifier(),</span><span style="color: #660099; font-family: 'Consolas';">param_grid</span><span style="font-family: 'Consolas';">={</span><span style="color: #008080; font-weight: bold; font-family: 'Consolas';">"n_neighbors"</span><span style="font-family: 'Consolas';">:[</span><span style="color: #0000ff; font-family: 'Consolas';">1</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">2</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">3</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">4</span><span style="font-family: 'Consolas';">,</span><span style="color: #0000ff; font-family: 'Consolas';">5</span><span style="font-family: 'Consolas';">]})<br /></span><span style="font-family: 'Consolas';">gc.fit(x_train,y_train)<br /></span></pre></div>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD_5_%E5%86%B3%E7%AD%96%E6%A0%91_%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD_3_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0_%E6%A6%82%E8%BF%B0/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

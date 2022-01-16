@@ -1,0 +1,530 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="概述 分布式全文搜索引擎  传统用sql，对于大量数据很慢 可以当做一个数据库，可以将里面的索引就是库   Lucene 用于文本搜索的函数库，java编写的，全文搜索功能 ，jar包，不包含搜索引擎  索引结构 读写索引，排序，搜索规则     elasticsearch是基于lucene做了一些封装和增强  solr  封装了lucene，可独立运行 通过发送请求可以操作数据 有管理界面，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/ElasticSearch/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="概述 分布式全文搜索引擎  传统用sql，对于大量数据很慢 可以当做一个数据库，可以将里面的索引就是库   Lucene 用于文本搜索的函数库，java编写的，全文搜索功能 ，jar包，不包含搜索引擎  索引结构 读写索引，排序，搜索规则     elasticsearch是基于lucene做了一些封装和增强  solr  封装了lucene，可独立运行 通过发送请求可以操作数据 有管理界面，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129162516427.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129164623442.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129173559785.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129175644428.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210130164922789.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210130165329853.png">
+<meta property="article:published_time" content="2022-01-16T12:20:07.022Z">
+<meta property="article:modified_time" content="2021-01-30T09:03:19.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129162516427.png">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      78 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li><p>分布式全文搜索引擎</p>
+<ul>
+<li>传统用sql，对于大量数据很慢</li>
+<li>可以当做一个数据库，可以将里面的索引就是库</li>
+</ul>
+</li>
+<li><p>Lucene 用于文本搜索的函数库，java编写的，全文搜索功能 ，jar包，不包含搜索引擎</p>
+<ul>
+<li>索引结构</li>
+<li>读写索引，排序，搜索规则</li>
+</ul>
+</li>
+<li><p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129162516427.png" srcset="/img/loading.gif" lazyload alt="image-20210129162516427"></p>
+</li>
+<li><p>elasticsearch是基于lucene做了一些封装和增强</p>
+</li>
+<li><p>solr</p>
+<ul>
+<li>封装了lucene，可独立运行</li>
+<li>通过发送请求可以操作数据</li>
+<li>有管理界面，</li>
+</ul>
+</li>
+<li><p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129164623442.png" srcset="/img/loading.gif" lazyload alt="image-20210129164623442"></p>
+</li>
+</ul>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/cn/webinars/getting-started-elasticsearch?elektra=startpage">https://www.elastic.co/cn/webinars/getting-started-elasticsearch?elektra=startpage</a></li>
+<li>至少JDK1.8之上</li>
+<li>解压即用</li>
+</ul>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li>bin</li>
+<li>config<ul>
+<li>jvm配置</li>
+<li>log4j2</li>
+<li>elasticSearch.yml<ul>
+<li>集群</li>
+<li>端口：9200</li>
+<li>http.cors.enabled: true 设置允许跨域,让界面插件访问<ul>
+<li>http.cors.allow-origin: “*“</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>lib 相关架包</li>
+<li>logs 日志</li>
+<li>modules 功能模块</li>
+<li>plugins 插件，例如IK分词器</li>
+</ul>
+<h1 id="界面插件"><a href="#界面插件" class="headerlink" title="界面插件"></a>界面插件</h1><ul>
+<li>elasticsearch head ：前端项目，需要npm<ul>
+<li>下载</li>
+<li>npm install</li>
+<li>npm run start</li>
+<li>启动后连接到elasticsearch即可</li>
+</ul>
+</li>
+<li>索引：可以当做数据库，</li>
+<li>文档：库中的数据</li>
+<li><a target="_blank" rel="noopener" href="http://localhost:9100/">http://localhost:9100</a></li>
+</ul>
+<h1 id="Kibana"><a href="#Kibana" class="headerlink" title="Kibana"></a>Kibana</h1><ul>
+<li>es的分析及可视化平台<a target="_blank" rel="noopener" href="http://localhost:5601/">http://localhost:5601</a></li>
+<li>汉化：config/kibana.yml <ul>
+<li>i18n.locale: “zh_CN”</li>
+</ul>
+</li>
+</ul>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>es是面向文档的， 全部是json</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129173559785.png" srcset="/img/loading.gif" lazyload alt="image-20210129173559785"></p>
+<ul>
+<li>索引</li>
+<li>字段索引</li>
+<li>文档</li>
+</ul>
+<h2 id="ik分词器"><a href="#ik分词器" class="headerlink" title="ik分词器"></a>ik分词器</h2><p>​    把句子划分为关键字，会把数据库中数据分词后匹配，ik_smart最少切分,ik_max_word最细粒度切分</p>
+<ul>
+<li>下载analysis-ik</li>
+<li>解压到es plugins下</li>
+<li>重启es</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210129175644428.png" srcset="/img/loading.gif" lazyload alt="image-20210129175644428"></p>
+<ul>
+<li>插件中建立自己的xxx.dic</li>
+<li>配置文件修改为<entry key="ext_dict">xxx.dic</entry></li>
+</ul>
+<h1 id="索引的增删改查"><a href="#索引的增删改查" class="headerlink" title="索引的增删改查"></a>索引的增删改查</h1><figure class="highlight awk"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 添加库<br>PUT <span class="hljs-regexp">/索引名/</span>类型/文档名<br>&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;dean&quot;</span>,<br>  <span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">3</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;_index&quot;</span> : <span class="hljs-string">&quot;test1&quot;</span>,<br>  <span class="hljs-attr">&quot;_type&quot;</span> : <span class="hljs-string">&quot;type&quot;</span>,<br>  <span class="hljs-attr">&quot;_id&quot;</span> : <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-attr">&quot;_version&quot;</span> : <span class="hljs-number">1</span>,<br>  <span class="hljs-attr">&quot;result&quot;</span> : <span class="hljs-string">&quot;created&quot;</span>,<br>  <span class="hljs-attr">&quot;_shards&quot;</span> : &#123;<br>    <span class="hljs-attr">&quot;total&quot;</span> : <span class="hljs-number">2</span>,<br>    <span class="hljs-attr">&quot;successful&quot;</span> : <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">&quot;failed&quot;</span> : <span class="hljs-number">0</span><br>  &#125;,<br>  <span class="hljs-attr">&quot;_seq_no&quot;</span> : <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">&quot;_primary_term&quot;</span> : <span class="hljs-number">1</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// 建索引 不放数据</span><br>PUT /test2<br>&#123;<br>  <span class="hljs-attr">&quot;mappings&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;properties&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;name&quot;</span>:&#123;<br>        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;text&quot;</span><br>      &#125;,<br>      <span class="hljs-attr">&quot;age&quot;</span>:&#123;<br>        <span class="hljs-attr">&quot;type&quot;</span>:<span class="hljs-string">&quot;long&quot;</span><br>      &#125;,<br>      <span class="hljs-attr">&quot;birthday&quot;</span>:&#123;<br>        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;date&quot;</span><br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json">GET /test/type/<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json">POST /test/type/<span class="hljs-number">1</span>/_update<br>&#123;<br>    <span class="hljs-attr">&quot;doc&quot;</span>:&#123;<br>        <span class="hljs-attr">&quot;name&quot;</span>:<span class="hljs-string">&quot;dean2&quot;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json">DELETE test<br></code></pre></td></tr></table></figure>
+
+<h1 id="文档操作"><a href="#文档操作" class="headerlink" title="文档操作"></a>文档操作</h1><ul>
+<li><p>根据属性查询</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs json">GET /test1/type/_search<br>&#123;<br>  <span class="hljs-attr">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;match&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;dean3&quot;</span><br>    &#125;<br>  &#125;,<br>   <span class="hljs-attr">&quot;_source&quot;</span>: [<span class="hljs-string">&quot;name&quot;</span>],<br>  <span class="hljs-attr">&quot;sort&quot;</span>: [<br>    &#123;<br>      <span class="hljs-attr">&quot;age&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;order&quot;</span>: <span class="hljs-string">&quot;desc&quot;</span><br>      &#125;<br>    &#125;<br>  ],<br>  <span class="hljs-attr">&quot;from&quot;</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">&quot;size&quot;</span>: <span class="hljs-number">20</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs json">#! Deprecation: [types removal] Specifying types in search requests is deprecated.<br>&#123;<br>  <span class="hljs-attr">&quot;took&quot;</span> : <span class="hljs-number">1</span>,<br>  <span class="hljs-attr">&quot;timed_out&quot;</span> : <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">&quot;_shards&quot;</span> : &#123;<br>    <span class="hljs-attr">&quot;total&quot;</span> : <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">&quot;successful&quot;</span> : <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">&quot;skipped&quot;</span> : <span class="hljs-number">0</span>,<br>    <span class="hljs-attr">&quot;failed&quot;</span> : <span class="hljs-number">0</span><br>  &#125;,<br>  <span class="hljs-attr">&quot;hits&quot;</span> : &#123;<br>    <span class="hljs-attr">&quot;total&quot;</span> : &#123;<br>      <span class="hljs-attr">&quot;value&quot;</span> : <span class="hljs-number">1</span>,<br>      <span class="hljs-attr">&quot;relation&quot;</span> : <span class="hljs-string">&quot;eq&quot;</span><br>    &#125;,<br>    <span class="hljs-attr">&quot;max_score&quot;</span> : <span class="hljs-number">0.2876821</span>,<br>    <span class="hljs-attr">&quot;hits&quot;</span> : [<br>      &#123;<br>        <span class="hljs-attr">&quot;_index&quot;</span> : <span class="hljs-string">&quot;test1&quot;</span>,<br>        <span class="hljs-attr">&quot;_type&quot;</span> : <span class="hljs-string">&quot;type&quot;</span>,<br>        <span class="hljs-attr">&quot;_id&quot;</span> : <span class="hljs-string">&quot;1&quot;</span>,<br>        <span class="hljs-attr">&quot;_score&quot;</span> : <span class="hljs-number">0.2876821</span>,<br>        <span class="hljs-attr">&quot;_source&quot;</span> : &#123;<br>          <span class="hljs-attr">&quot;name&quot;</span> : <span class="hljs-string">&quot;dean3&quot;</span><br>        &#125;<br>      &#125;<br>    ]<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Springboot集成"><a href="#Springboot集成" class="headerlink" title="Springboot集成"></a>Springboot集成</h1><p>依赖，配置，使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ElasticSearchConfig</span> </span>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> RestHighLevelClient <span class="hljs-title">restHighLevelClient</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestHighLevelClient(<br>                RestClient.builder(<span class="hljs-keyword">new</span> HttpHost(<span class="hljs-string">&quot;localhost&quot;</span>,<span class="hljs-number">9200</span>,<span class="hljs-string">&quot;http&quot;</span>))<br>        );<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> top.dean0731.esapi;<br><br><span class="hljs-keyword">import</span> com.alibaba.fastjson.JSON;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.bulk.BulkRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.delete.DeleteRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.get.GetRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.get.GetResponse;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.index.IndexRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.index.IndexResponse;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.search.SearchRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.search.SearchResponse;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.support.master.AcknowledgedResponse;<br><span class="hljs-keyword">import</span> org.elasticsearch.action.update.UpdateRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.client.RequestOptions;<br><span class="hljs-keyword">import</span> org.elasticsearch.client.RestHighLevelClient;<br><span class="hljs-keyword">import</span> org.elasticsearch.client.indices.CreateIndexRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.client.indices.CreateIndexResponse;<br><span class="hljs-keyword">import</span> org.elasticsearch.client.indices.GetIndexRequest;<br><span class="hljs-keyword">import</span> org.elasticsearch.common.unit.TimeValue;<br><span class="hljs-keyword">import</span> org.elasticsearch.common.xcontent.XContentType;<br><span class="hljs-keyword">import</span> org.elasticsearch.index.query.MatchAllQueryBuilder;<br><span class="hljs-keyword">import</span> org.elasticsearch.index.query.QueryBuilders;<br><span class="hljs-keyword">import</span> org.elasticsearch.index.query.TermQueryBuilder;<br><span class="hljs-keyword">import</span> org.elasticsearch.search.SearchHit;<br><span class="hljs-keyword">import</span> org.elasticsearch.search.builder.SearchSourceBuilder;<br><span class="hljs-keyword">import</span> org.elasticsearch.search.fetch.subphase.FetchSourceContext;<br><span class="hljs-keyword">import</span> org.junit.jupiter.api.Test;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Qualifier;<br><span class="hljs-keyword">import</span> org.springframework.boot.test.context.SpringBootTest;<br><span class="hljs-keyword">import</span> top.dean0731.esapi.pojo.User;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.ArrayList;<br><span class="hljs-keyword">import</span> java.util.concurrent.TimeUnit;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Administrator</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Title</span>: ElasticSearchTest</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Package</span> top.dean0731.esapi</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Description</span>: 测试类</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/1/30 14:22</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@SpringBootTest</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ElasticSearchTest</span> </span>&#123;<br>    <span class="hljs-meta">@Autowired</span><br>            <span class="hljs-meta">@Qualifier(&quot;restHighLevelClient&quot;)</span><br>    RestHighLevelClient restHighLevelClient;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        <span class="hljs-comment">// 索引操作</span><br>        CreateIndexRequest request = <span class="hljs-keyword">new</span> CreateIndexRequest(<span class="hljs-string">&quot;es&quot;</span>);<br>        CreateIndexResponse createIndexResponse = restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);<br>        System.out.println(createIndexResponse);<br>    &#125;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">tes2</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        <span class="hljs-comment">// 索引操作</span><br>        GetIndexRequest getIndexRequest = <span class="hljs-keyword">new</span> GetIndexRequest(<span class="hljs-string">&quot;es&quot;</span>);<br>        <span class="hljs-keyword">boolean</span> exists = restHighLevelClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);<br>        System.out.println(exists);<br>    &#125;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test3</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        <span class="hljs-comment">// 索引操作</span><br>        DeleteIndexRequest request = <span class="hljs-keyword">new</span> DeleteIndexRequest(<span class="hljs-string">&quot;es&quot;</span>);<br>        AcknowledgedResponse delete = restHighLevelClient.indices().delete(request, RequestOptions.DEFAULT);<br><br>    &#125;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test4</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        <span class="hljs-comment">// 索引操作</span><br>        CreateIndexRequest request = <span class="hljs-keyword">new</span> CreateIndexRequest(<span class="hljs-string">&quot;es&quot;</span>);<br>        CreateIndexResponse createIndexResponse = restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);<br>        System.out.println(createIndexResponse);<br>    &#125;<br><br>    <span class="hljs-comment">// 文档操作</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testDocument</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        User user = <span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;dean&quot;</span>, <span class="hljs-number">1234</span>);<br>        IndexRequest index = <span class="hljs-keyword">new</span> IndexRequest(<span class="hljs-string">&quot;es&quot;</span>);<br>        index.id(<span class="hljs-string">&quot;1&quot;</span>);<br>        index.timeout(TimeValue.timeValueSeconds(<span class="hljs-number">1</span>));<br><br>        index.source(JSON.toJSONString(user), XContentType.JSON);<br><br>        IndexResponse index1 = restHighLevelClient.index(index, RequestOptions.DEFAULT);<br>        System.out.println(index1.toString());<br>        System.out.println(index1.status());<br>    &#125;<br>    <span class="hljs-comment">// 文档操作</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testDocument2</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        GetRequest doucementRequest = <span class="hljs-keyword">new</span> GetRequest(<span class="hljs-string">&quot;es&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>);<br>        <span class="hljs-comment">// 不获取_source的上下文</span><br>        doucementRequest.fetchSourceContext(<span class="hljs-keyword">new</span> FetchSourceContext(<span class="hljs-keyword">false</span>));<br>        doucementRequest.storedFields(<span class="hljs-string">&quot;_none_&quot;</span>);<br>        <span class="hljs-keyword">boolean</span> exists = restHighLevelClient.exists(doucementRequest, RequestOptions.DEFAULT);<br>        System.out.println(exists);<br>    &#125;<br>    <span class="hljs-comment">// 文档操作</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testDocument3</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        GetRequest doucementRequest = <span class="hljs-keyword">new</span> GetRequest(<span class="hljs-string">&quot;es&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>);<br>        GetResponse documentFields = restHighLevelClient.get(doucementRequest, RequestOptions.DEFAULT);<br>        System.out.print(documentFields.getSourceAsString());<br>    &#125;<br>    <span class="hljs-comment">// 更新文档操作</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testDocument4</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        UpdateRequest updateRequest = <span class="hljs-keyword">new</span> UpdateRequest(<span class="hljs-string">&quot;es&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>);<br>        updateRequest.timeout(<span class="hljs-string">&quot;1s&quot;</span>);<br>        String z = JSON.toJSONString(<span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;z&quot;</span>, <span class="hljs-number">18</span>));<br>        updateRequest.doc(z,XContentType.JSON);<br><br>        restHighLevelClient.update(updateRequest,RequestOptions.DEFAULT);<br>    &#125;<br>    <span class="hljs-comment">// 删除文档操作</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testDocument5</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        DeleteRequest request = <span class="hljs-keyword">new</span> DeleteRequest(<span class="hljs-string">&quot;es&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>);<br>        request.timeout(<span class="hljs-string">&quot;1s&quot;</span>);<br>        restHighLevelClient.delete(request,RequestOptions.DEFAULT);<br>    &#125;<br>    <span class="hljs-comment">// 批量文档操作</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testDocument6</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        BulkRequest bulkRequest = <span class="hljs-keyword">new</span> BulkRequest();<br>        bulkRequest.timeout(<span class="hljs-string">&quot;10s&quot;</span>);<br>        ArrayList&lt;User&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>        list.add(<span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-number">1</span>));<br>        list.add(<span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;2&quot;</span>,<span class="hljs-number">2</span>));<br>        list.add(<span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;3&quot;</span>,<span class="hljs-number">3</span>));<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; list.size(); i++) &#123;<br>            bulkRequest.add(<br>                    <span class="hljs-keyword">new</span> IndexRequest(<span class="hljs-string">&quot;es&quot;</span>)<br>                            .id(i+<span class="hljs-string">&quot;&quot;</span>)<br>                            .source(JSON.toJSONString(list.get(i)),XContentType.JSON));<br>        &#125;<br>        restHighLevelClient.bulk(bulkRequest,RequestOptions.DEFAULT);<br>    &#125;<br>    <span class="hljs-comment">// 查询文档操作</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testDocument7</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        SearchRequest searchRequest = <span class="hljs-keyword">new</span> SearchRequest(<span class="hljs-string">&quot;es&quot;</span>);<br>        <span class="hljs-comment">// 构建搜索条件</span><br>        SearchSourceBuilder searchSourceBuilder = <span class="hljs-keyword">new</span> SearchSourceBuilder();<br><span class="hljs-comment">//        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(&quot;name&quot;, &quot;1&quot;);// 精确查询</span><br><span class="hljs-comment">//        searchSourceBuilder.query(termQueryBuilder);</span><br>        MatchAllQueryBuilder matchAllQueryBuilder = QueryBuilders.matchAllQuery(); <span class="hljs-comment">// 匹配所有</span><br>        searchSourceBuilder.query(matchAllQueryBuilder);<br>        searchSourceBuilder.timeout(<span class="hljs-keyword">new</span> TimeValue(<span class="hljs-number">60</span>, TimeUnit.SECONDS));<br><br>        searchRequest.source(searchSourceBuilder);<br><br>        SearchResponse search = restHighLevelClient.search(searchRequest,RequestOptions.DEFAULT);<br>        System.out.println(JSON.toJSONString(search));<br>        System.out.println(<span class="hljs-string">&quot;===========================&quot;</span>);<br>        <span class="hljs-keyword">for</span> (SearchHit documentFields: search.getHits().getHits()) &#123;<br>            System.out.println(documentFields.getSourceAsMap());<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210130164922789.png" srcset="/img/loading.gif" lazyload alt="image-20210130164922789"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dean0731/File@main//image/image-20210130165329853.png" srcset="/img/loading.gif" lazyload alt="image-20210130165329853"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/ESMAScript6%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/docker_%E8%BF%9B%E9%98%B6/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

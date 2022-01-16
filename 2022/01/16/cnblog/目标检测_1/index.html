@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Keywords :Ubuntu,VOC,Object_detection1，环境搭建123456789101112131415使用anaconda3， 先安装换源，若不然会非常慢 方式参考 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Dean0731&#x2F;p&#x2F;11560371.htmlexport PATH&#x3D;&quot;&#x2F;usr&#x2F;local&#x2F;anaconda3&#x2F;bin:$PATH&quot;新建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B_1/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="Keywords :Ubuntu,VOC,Object_detection1，环境搭建123456789101112131415使用anaconda3， 先安装换源，若不然会非常慢 方式参考 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Dean0731&#x2F;p&#x2F;11560371.htmlexport PATH&#x3D;&quot;&#x2F;usr&#x2F;local&#x2F;anaconda3&#x2F;bin:$PATH&quot;新建">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-16T12:20:07.938Z">
+<meta property="article:modified_time" content="2021-01-12T11:11:15.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      71 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="Keywords-Ubuntu-VOC-Object-detection"><a href="#Keywords-Ubuntu-VOC-Object-detection" class="headerlink" title="Keywords :Ubuntu,VOC,Object_detection"></a><strong>Keywords</strong> :Ubuntu,VOC,Object_detection</h1><h1 id="1，环境搭建"><a href="#1，环境搭建" class="headerlink" title="1，环境搭建"></a>1，环境搭建</h1><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">使用anaconda3， 先安装<br>换源，若不然会非常慢 方式参考 https://www.cnblogs.com/Dean0731/p/11560371.html<br>export PATH=&quot;/usr/local/anaconda3/bin:$PATH&quot;<br>新建虚拟环境 本例python=3.5<br>进入环境本例安装的tensorflow=1.14.0<br>安装其他依赖包,pillow,lxml 等，亦可以等待报错时安装相应模块<br>    本例环境 windwos：python3.6+tensorflow-1.12<br>            windwos：python3.6+tensorflow-gpu-1.12+cuda8.0<br>                # 注意选择cuda版本 有最小计算能力 ，需要小于你显卡的计算能力，若不匹配的话 可能会忽略显卡的加速作用，而且很卡<br>                # 本例使用GT820m   2.1计算能力     cuda9.0 计算能力最小为3.7<br>                # 显卡计算能力查询 https://developer.nvidia.com/cuda-gpus<br>                # tensorflow---》cuda--》cudnn     https://tensorflow.google.cn/install/source<br>                #     python----决定tensorflow的版本<br>                # 先根据显卡选cuda<br>            linux：python3.5+tensorflow-1.14<br></code></pre></td></tr></table></figure>
+
+<h1 id="2，下载数据"><a href="#2，下载数据" class="headerlink" title="2，下载数据"></a>2，下载数据</h1><ul>
+<li>models:<a target="_blank" rel="noopener" href="https://github.com/tensorflow/models.git">https://github.com/tensorflow/models.git</a>  使用git下载 或直接下载zip</li>
+<li>VOC2012:链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/12IP4iyL9hN5Dohzkm8wi7A">https://pan.baidu.com/s/12IP4iyL9hN5Dohzkm8wi7A</a> 提取码: q31q<br>也可到官网下载，比较慢 visual object classes 2012 一共20类别，一共5个文件夹<ul>
+<li>JPEGImages存放图片；</li>
+<li>Annotation存放对图片的标注信息（XML文件），即外包边框bounding box的位置信息；</li>
+<li>SegmentationClass和SegmentationObject存放了图片的分割前景。</li>
+<li>ImageSets是对图片集合的描述，分别对应了不同的竞赛任务，例如Layout表示图片中人体部位的数据，Main表示每个图片包含的分类信息（20个类别），Segmentation表示用于分割的数据，2007没有action，2012有了action数据，表示图片中人的动作。</li>
+</ul>
+</li>
+</ul>
+<p>注：train 训练集，trainval 训练集中的测试集，val 测试集</p>
+<h1 id="3，models-部署"><a href="#3，models-部署" class="headerlink" title="3，models 部署"></a>3，models 部署</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 生成objection——detection/protos 下的py文件 models/research 目录下</span><br>linux protoc object_detection/protos/*.proto --python_out=. <br>windows Get-ChildItem object_detection/protos/*.proto | Resolve-Path -Relative | %&#123; protoc $_ --python_out=. &#125;<br><span class="hljs-comment"># 运行完成后，可以检查object_detection/protos/文件夹，如果每个proto文件都成了对应的以py为后缀的python源码，就说明编译成功了</span><br><span class="hljs-comment"># 添加环境</span><br><span class="hljs-comment">#    需要当前虚拟环境中进入在这2目录中(research,research/slim)python setup.py install  把object_detection等模块装入 </span><br><span class="hljs-comment">#    若还出现错误变量(报当前线程错误等)可试试添加环境变量：</span><br><span class="hljs-comment">#    export PYTHONPATH=$PYTHONPATH:/home/dzf/models/research:/home/dzf/models/research/slim</span><br><span class="hljs-comment">#    PYTHONPATH:上边两个目录    </span><br></code></pre></td></tr></table></figure>
+
+<h1 id="4，生成数据"><a href="#4，生成数据" class="headerlink" title="4，生成数据"></a>4，生成数据</h1><ul>
+<li><p>准备：VOC2012 解压后的数据  VOCdevkit</p>
+<ul>
+<li>models/research/objection_detection/create_pascal_tf_record.py  # 将数据转换为record 的文件</li>
+<li>export_inference_graph.py  # 后边用到，将模型转换为应用</li>
+<li>pascal_label_map.pbtxt  # 标签<br>修改create_pascal_tf_record.py 164行 <div class="code-wrapper"><pre><code class="hljs">          改为 data_dir, year, &#39;ImageSets&#39;, &#39;Main&#39;,FLAGS.set + &#39;.txt&#39; 对应文件目录
+</code></pre></div>
+</li>
+</ul>
+</li>
+<li><p>生成数据 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 可能需要pillow，lxml等包</span><br><span class="hljs-comment"># data_dir voc目录 即为解压后文件夹</span><br><span class="hljs-comment"># year 接收VOC2007 VOC2012</span><br><span class="hljs-comment"># set 表示使用train训练</span><br><span class="hljs-comment"># output_path 生成的文件路径</span><br><span class="hljs-comment"># 可能会报错  data/pascal_label_map.pbtxt 找不到 移到上级目录运行即可</span><br>python create_pascal_tf_record.py <br>		--<span class="hljs-built_in">set</span>=train或val 表示时生成训练数据还是测试数据<br>		--data_dir=.../VOCdevkit<br>		--year=VOC2012 默认 VOC2007<br>		--output_path=..../训练文件.record（pascal_train.record）<br>		pascal_train.record  <span class="hljs-comment">#  生成的训练数据</span><br>		pascal_val.record   <span class="hljs-comment"># 生成的测试数据</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="5，模型训练"><a href="#5，模型训练" class="headerlink" title="5，模型训练"></a>5，模型训练</h1><ul>
+<li><p>models：在objection_detection/sample/config/xxxxxx.config   # models配置文件<br>包含训练次数，分类数，测试集，测试集标签，训练集，训练集标签的位置</p>
+<div class="code-wrapper"><pre><code class="hljs">      重要：接其官方的训练结果 fine_tune_checkpoint: &quot;下载的他人models解压后的文件夹/model.ckpt&quot;
+          下载地址:https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+          注意下载的models要与你选择的model.config一致 本例为 [faster_rcnn_inception_resnet_v2_atrous_coco](http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_resnet_v2_atrous_coco_2018_01_28.tar.gz)  加压后有文件夹faster_rcnn_inception_resnet_v2_atrous_coco_2018_1_29
+</code></pre></div>
+</li>
+<li><p>修改配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 指定接着训练的模型，若要重新开始注释本行，下行改为false即可</span><br>fine_tune_checkpoint: <span class="hljs-string">&quot;D:\\\\faster_rcnn_inception_resnet_v2_atrous_coco_2018_1_29\\model.ckpt&quot;</span><br>from_detection_checkpoint: true<br><span class="hljs-comment"># 训练集，训练集标签，测试集，测试集标签</span><br>input_path: <span class="hljs-string">&quot;D:\\\pascal_train.record&quot;</span><br>label_map_path: <span class="hljs-string">&quot;D:\\data\\pascal_label_map.pbtxt&quot;</span><br>input_path: <span class="hljs-string">&quot;D:\\models\\pascal_val.record&quot;</span><br>label_map_path: <span class="hljs-string">&quot;D:\\models\\pascal_label_map.pbtxt&quot;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>```python</p>
+<h1 id="开始训练：cpu训练较慢，可在配置文件修改次数，若出现内存溢出，也可修改config中的图片大小600x1024，可改小一点"><a href="#开始训练：cpu训练较慢，可在配置文件修改次数，若出现内存溢出，也可修改config中的图片大小600x1024，可改小一点" class="headerlink" title="开始训练：cpu训练较慢，可在配置文件修改次数，若出现内存溢出，也可修改config中的图片大小600x1024，可改小一点"></a>开始训练：cpu训练较慢，可在配置文件修改次数，若出现内存溢出，也可修改config中的图片大小600x1024，可改小一点</h1><p>python legacy/train.py </p>
+<div class="code-wrapper"><pre><code class="hljs">    --train_dir=/home/dzf/train # model # 输出目录
+    --pipeline_config_path=/home/dzf/dataset/models/faster_rcnn_inception_resnet_v2_atrous_coco.config # 配置文件
+</code></pre></div>
+<h1 id="新版的models-是用的是object-detection-model-main-py-–model-dir-…"><a href="#新版的models-是用的是object-detection-model-main-py-–model-dir-…" class="headerlink" title="新版的models 是用的是object_detection/model_main.py –model_dir=….."></a>新版的models 是用的是object_detection/model_main.py –model_dir=…..</h1><h1 id="旧版的models-使用的是object-detection-train-py-–train-dir-…"><a href="#旧版的models-使用的是object-detection-train-py-–train-dir-…" class="headerlink" title="旧版的models 使用的是object_detection/train.py –train_dir=…"></a>旧版的models 使用的是object_detection/train.py –train_dir=…</h1><h1 id="注意形参名称改变了，本例使用的是新版的models但使用的是legacy-train-py"><a href="#注意形参名称改变了，本例使用的是新版的models但使用的是legacy-train-py" class="headerlink" title="注意形参名称改变了，本例使用的是新版的models但使用的是legacy/train.py"></a>注意形参名称改变了，本例使用的是新版的models但使用的是legacy/train.py</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><br>  <br><br><span class="hljs-comment"># 6，导出模型为pb文件</span><br><br>```python<br>python export_inference_graph.py <br>		<span class="hljs-attribute">--input_type</span>=image_tensor<br>    	<span class="hljs-attribute">--pipeline_config_path</span>=/...../models/faster_rcnn_inception_resnet_v2_atrous_coco.config <br>		<span class="hljs-attribute">--trained_checkpoint_prefix</span>=/...../train/model.ckpt-10 <br>		<span class="hljs-attribute">--output_directory</span>=/..../train<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>注：上编的路径尽量使用绝对路径，不要使用相对路径和～符号 可能报错<br>生成frozen_inference_graph.pb文件 及其他文件</p>
+<h1 id="7，使用pd文件检测图片"><a href="#7，使用pd文件检测图片" class="headerlink" title="7，使用pd文件检测图片"></a>7，使用pd文件检测图片</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> pathlib<br><br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> six.moves.urllib <span class="hljs-keyword">as</span> urllib<br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> tarfile<br><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br><span class="hljs-keyword">import</span> zipfile<br><br><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict<br><span class="hljs-keyword">from</span> io <span class="hljs-keyword">import</span> StringIO<br><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><span class="hljs-keyword">from</span> IPython.display <span class="hljs-keyword">import</span> display<br><br><span class="hljs-keyword">from</span> object_detection.utils <span class="hljs-keyword">import</span> ops <span class="hljs-keyword">as</span> utils_ops<br><span class="hljs-keyword">from</span> object_detection.utils <span class="hljs-keyword">import</span> label_map_util<br><span class="hljs-keyword">from</span> object_detection.utils <span class="hljs-keyword">import</span> visualization_utils <span class="hljs-keyword">as</span> vis_util<br><br><span class="hljs-comment"># patch tf1 into `utils.ops`</span><br>utils_ops.tf = tf.compat.v1<br><br><span class="hljs-comment"># Patch the location of gfile</span><br>tf.gfile = tf.io.gfile<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_model</span>(<span class="hljs-params">model_name</span>):</span><br>  <span class="hljs-comment"># here</span><br><span class="hljs-comment">#   base_url = &#x27;http://download.tensorflow.org/models/object_detection/&#x27;</span><br><span class="hljs-comment">#   model_file = model_name + &#x27;.tar.gz&#x27;</span><br><span class="hljs-comment">#   model_dir = tf.keras.utils.get_file(</span><br><span class="hljs-comment">#     fname=model_name, </span><br><span class="hljs-comment">#     origin=base_url + model_file,</span><br><span class="hljs-comment">#     untar=True)</span><br><br>  <span class="hljs-comment">#model_dir = pathlib.Path(&quot;ssd_mobilenet_v1_coco_2017_11_17&quot;)/&quot;saved_model&quot;</span><br>  <span class="hljs-comment">#model_dir = pathlib.Path(&quot;legacy/pb/pb56339&quot;)/&quot;saved_model&quot;</span><br>  model_dir = pathlib.Path(<span class="hljs-string">&quot;pb/pb1218&quot;</span>)/<span class="hljs-string">&quot;saved_model&quot;</span><br>  model = tf.saved_model.load(<span class="hljs-built_in">str</span>(model_dir))<br>  model = model.signatures[<span class="hljs-string">&#x27;serving_default&#x27;</span>]<br><br>  <span class="hljs-keyword">return</span> model<br><br><span class="hljs-comment"># List of the strings that is used to add correct label for each box.</span><br>PATH_TO_LABELS = <span class="hljs-string">&#x27;data/pascal_label_map.pbtxt&#x27;</span><br>category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.</span><br>PATH_TO_TEST_IMAGES_DIR = pathlib.Path(<span class="hljs-string">&#x27;test_images2&#x27;</span>)<br>TEST_IMAGE_PATHS = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(PATH_TO_TEST_IMAGES_DIR.glob(<span class="hljs-string">&quot;*.jpg&quot;</span>)))<br>TEST_IMAGE_PATHS<br>model_name = <span class="hljs-string">&#x27;ssd_mobilenet_v1_coco_2017_11_17&#x27;</span><br>detection_model = load_model(model_name)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run_inference_for_single_image</span>(<span class="hljs-params">model, image</span>):</span><br>  image = np.asarray(image)<br>  <span class="hljs-comment"># The input needs to be a tensor, convert it using `tf.convert_to_tensor`.</span><br>  input_tensor = tf.convert_to_tensor(image)<br>  <span class="hljs-comment"># The model expects a batch of images, so add an axis with `tf.newaxis`.</span><br>  input_tensor = input_tensor[tf.newaxis,...]<br><br>  <span class="hljs-comment"># Run inference</span><br>  output_dict = model(input_tensor)<br><br>  <span class="hljs-comment"># All outputs are batches tensors.</span><br>  <span class="hljs-comment"># Convert to numpy arrays, and take index [0] to remove the batch dimension.</span><br>  <span class="hljs-comment"># We&#x27;re only interested in the first num_detections.</span><br>  num_detections = <span class="hljs-built_in">int</span>(output_dict.pop(<span class="hljs-string">&#x27;num_detections&#x27;</span>))<br>  output_dict = &#123;key:value[<span class="hljs-number">0</span>, :num_detections].numpy() <br>                 <span class="hljs-keyword">for</span> key,value <span class="hljs-keyword">in</span> output_dict.items()&#125;<br>  output_dict[<span class="hljs-string">&#x27;num_detections&#x27;</span>] = num_detections<br><br>  <span class="hljs-comment"># detection_classes should be ints.</span><br>  output_dict[<span class="hljs-string">&#x27;detection_classes&#x27;</span>] = output_dict[<span class="hljs-string">&#x27;detection_classes&#x27;</span>].astype(np.int64)<br>   <br>  <span class="hljs-comment"># Handle models with masks:</span><br>  <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;detection_masks&#x27;</span> <span class="hljs-keyword">in</span> output_dict:<br>    <span class="hljs-comment"># Reframe the the bbox mask to the image size.</span><br>    detection_masks_reframed = utils_ops.reframe_box_masks_to_image_masks(<br>              output_dict[<span class="hljs-string">&#x27;detection_masks&#x27;</span>], output_dict[<span class="hljs-string">&#x27;detection_boxes&#x27;</span>],<br>               image.shape[<span class="hljs-number">0</span>], image.shape[<span class="hljs-number">1</span>])      <br>    detection_masks_reframed = tf.cast(detection_masks_reframed &gt; <span class="hljs-number">0.5</span>,<br>                                       tf.uint8)<br>    output_dict[<span class="hljs-string">&#x27;detection_masks_reframed&#x27;</span>] = detection_masks_reframed.numpy()<br>  <span class="hljs-built_in">print</span>(output_dict[<span class="hljs-string">&#x27;detection_boxes&#x27;</span>])<br>  <span class="hljs-built_in">print</span>(output_dict[<span class="hljs-string">&#x27;detection_classes&#x27;</span>])<br>  <span class="hljs-built_in">print</span>(output_dict[<span class="hljs-string">&#x27;detection_scores&#x27;</span>])<br>  <span class="hljs-keyword">return</span> output_dict<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show_inference</span>(<span class="hljs-params">model, image_path</span>):</span><br>  <span class="hljs-comment"># the array based representation of the image will be used later in order to prepare the</span><br>  <span class="hljs-comment"># result image with boxes and labels on it.</span><br>  image_np = np.array(Image.<span class="hljs-built_in">open</span>(image_path))<br>  <span class="hljs-comment"># Actual detection.</span><br>  output_dict = run_inference_for_single_image(model, image_np)<br>  <span class="hljs-comment"># Visualization of the results of a detection.</span><br>  vis_util.visualize_boxes_and_labels_on_image_array(<br>      image_np,<br>      output_dict[<span class="hljs-string">&#x27;detection_boxes&#x27;</span>],<br>      output_dict[<span class="hljs-string">&#x27;detection_classes&#x27;</span>],<br>      output_dict[<span class="hljs-string">&#x27;detection_scores&#x27;</span>],<br>      category_index,<br>      instance_masks=output_dict.get(<span class="hljs-string">&#x27;detection_masks_reframed&#x27;</span>, <span class="hljs-literal">None</span>),<br>      use_normalized_coordinates=<span class="hljs-literal">True</span>,<br>      line_thickness=<span class="hljs-number">8</span>)<br><br>  <span class="hljs-comment">#display(Image.fromarray(image_np))</span><br>  cv2.namedWindow(<span class="hljs-string">&quot;detection&quot;</span>, cv2.WINDOW_NORMAL)<br>  cv2.imshow(<span class="hljs-string">&quot;detection&quot;</span>, image_np)<br>  cv2.waitKey(<span class="hljs-number">0</span>)<br><span class="hljs-keyword">for</span> image_path <span class="hljs-keyword">in</span> TEST_IMAGE_PATHS:<br>  show_inference(detection_model, image_path)<br><span class="hljs-comment"># 本例中在原始模型训练的基础上的训练一定次数 生成model.ckpt   之后转为pb文件 进行目标检测 没有检测框</span><br><span class="hljs-comment"># 若使用原始模型的pb文件 faster_rcnn_inception_resnet_v2_atrous_coco_2018_1_29/frozen_interence_inception.pb 可以显示检测框，至于什么原因还没有找到</span><br><br><span class="hljs-comment"># 对于上面所述的现象，我重新搭建了一次环境，上面的train，export 等过程，我都是将py文件复制都单独文件夹 进行操作，</span><br><span class="hljs-comment"># 本次搜有的操作都位于models中，将数据放入object_detection中等，可解决上述问题。但还是会出现某些图片不能检测的问题，也可能是由于训练测试过少的原因。</span><br><span class="hljs-comment"># 	使用model_main.py 预测时可能效果较好</span><br><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E5%8E%86%E5%8F%B2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B_0/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

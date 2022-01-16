@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dean0731">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="bitmap和布隆过滤器海量整数中是否存在某个值–bitmap ​        在一个程序中，经常有让我们判断一个集合中是否存在某个数的case；大多数情况下，只需要用map或是list这样简单的数据结构，如果使用的是高级语言，还能乘上快车调用几个封装好的api，加几个if else，两三行代码就可以在控制台看自己“完美”而又“健壮”的代码跑起来了。 ​        但是，事无完美，在高并发环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/index.html">
+<meta property="og:site_name" content="Dean0731&#39;s site">
+<meta property="og:description" content="bitmap和布隆过滤器海量整数中是否存在某个值–bitmap ​        在一个程序中，经常有让我们判断一个集合中是否存在某个数的case；大多数情况下，只需要用map或是list这样简单的数据结构，如果使用的是高级语言，还能乘上快车调用几个封装好的api，加几个if else，两三行代码就可以在控制台看自己“完美”而又“健壮”的代码跑起来了。 ​        但是，事无完美，在高并发环">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/6ZZpbBqmTH27iaamFEVCBF9iaJMMF23bnyNb1qok0e5feQEHcKsZh3KfGL8z3QpJpiaNf7KpXUSvJo5OCUo5e8icyg/0">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/6ZZpbBqmTH27iaamFEVCBF9iaJMMF23bnyPE4B1XURg6DWwMNOrJfeOvrv6pbkv81HW53FDrUCz8rOt16gdtJ6YQ/0">
+<meta property="article:published_time" content="2022-01-16T12:20:07.823Z">
+<meta property="article:modified_time" content="2021-04-13T11:50:40.000Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/6ZZpbBqmTH27iaamFEVCBF9iaJMMF23bnyNb1qok0e5feQEHcKsZh3KfGL8z3QpJpiaNf7KpXUSvJo5OCUo5e8icyg/0">
+  
+  
+  <title>Dean0731&#39;s site</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.dean0731.cn","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dean0731&#39; Site</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-16 20:20" pubdate>
+        2022年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h2 id="bitmap和布隆过滤器"><a href="#bitmap和布隆过滤器" class="headerlink" title="bitmap和布隆过滤器"></a>bitmap和布隆过滤器</h2><p><strong>海量整数中是否存在某个值–bitmap</strong></p>
+<p>​        在一个程序中，经常有让我们判断一个集合中是否存在某个数的case；大多数情况下，只需要用map或是list这样简单的数据结构，如果使用的是高级语言，还能乘上快车调用几个封装好的api，加几个if else，两三行代码就可以在控制台看自己“完美”而又“健壮”的代码跑起来了。</p>
+<p>​        但是，事无完美，在高并发环境下，所有的case都会极端化，如果这是一个十分庞大的集合（给这个庞大一个具体的值吧，一个亿），简单的一个hash map，不考虑链表所需的指针内存空间，一亿个int类型的整数，就需要380多M（4byte × 10 ^8），十亿的话就是4个G，不考虑性能，光算算这内存开销，即使现在满地都是128G的服务器，也不好吃下这一壶。</p>
+<p>bitmap则使用位数代表数的大小，bit中存储的0或者1来标识该整数是否存在，具体模型如下：</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/6ZZpbBqmTH27iaamFEVCBF9iaJMMF23bnyNb1qok0e5feQEHcKsZh3KfGL8z3QpJpiaNf7KpXUSvJo5OCUo5e8icyg/0" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" srcset="/img/loading.gif" lazyload alt="img">这是一个能标识0-9的“bitmap”，其中4321这四个数存在</p>
+<p>​        计算一下bitmap的内存开销，如果是1亿以内的数据查找，我们只需要1亿个bit = 12MB左右的内存空间，就可以完成海量数据查找了，是不是极其诱人的一个内存缩减，以下为Java实现的bitmap代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyBitMap</span> </span>&#123;<br> <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">byte</span>[] bytes;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> initSize;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyBitMap</span><span class="hljs-params">(<span class="hljs-keyword">int</span> size)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (size &lt;= <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        initSize = size / (<span class="hljs-number">8</span>) + <span class="hljs-number">1</span>;<br>        bytes = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[initSize];<br>    &#125;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(<span class="hljs-keyword">int</span> number)</span> </span>&#123;<br>        <span class="hljs-comment">//相当于对一个数字进行右移动3位，相当于除以8</span><br>        <span class="hljs-keyword">int</span> index = number &gt;&gt; <span class="hljs-number">3</span>;<br>        <span class="hljs-comment">//相当于 number % 8 获取到byte[index]的位置</span><br>        <span class="hljs-keyword">int</span> position = number &amp; <span class="hljs-number">0x07</span>;<br>        <span class="hljs-comment">//进行|或运算  参加运算的两个对象只要有一个为1，其值为1。</span><br>        bytes[index] |= <span class="hljs-number">1</span> &lt;&lt; position;<br>    &#125;<br> <br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">contain</span><span class="hljs-params">(<span class="hljs-keyword">int</span> number)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> index = number &gt;&gt; <span class="hljs-number">3</span>;<br>        <span class="hljs-keyword">int</span> position = number &amp; <span class="hljs-number">0x07</span>;<br>        <span class="hljs-keyword">return</span> (bytes[index] &amp; (<span class="hljs-number">1</span> &lt;&lt; position)) != <span class="hljs-number">0</span>;<br>    &#125;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        MyBitMap myBitMap = <span class="hljs-keyword">new</span> MyBitMap(<span class="hljs-number">32</span>);<br>        myBitMap.set(<span class="hljs-number">30</span>);<br>        myBitMap.set(<span class="hljs-number">13</span>);<br>        myBitMap.set(<span class="hljs-number">24</span>);<br>        System.out.println(myBitMap.contain(<span class="hljs-number">2</span>));<br>    &#125;<br> <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>​        使用简单的byte数组和位运算，就能做到时间与空间的完美均衡，是不是美美哒，wrong！试想一下，如果我们明确这是一个一亿以内，但是数量级只有10的集合，我们使用bitmap，同样需要开销12M的数据，如果是10亿以内的数据，开销就会涨到120M，bitmap的空间开销永远是和他的数据取值范围挂钩的，只有在海量数据下，他才能够大显身手。</p>
+<p>​        再说说刚刚提到的那个极端case，假设这个数据量在一千万，但是取值范围好死不死就在十个亿以内，那我们不可避免还是要面对120M的开销，有方法应对么？</p>
+<h2 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h2><p>​        如果面对笔者说的以上问题，我们结合一下常规的解决方案，譬如说hash一下，我将十亿以内的某个数据，hash成一亿内的某个值，再去bitmap中查怎么样，如下图，布隆过滤器就是这么干的：</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/6ZZpbBqmTH27iaamFEVCBF9iaJMMF23bnyPE4B1XURg6DWwMNOrJfeOvrv6pbkv81HW53FDrUCz8rOt16gdtJ6YQ/0" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>利用多个hash算法得到的值，减小hash碰撞的概率</p>
+<p>​        像上面的图注所说，我们可以利用多个hash算法减小碰撞概率，但只要存在碰撞，就一定会有错误判断，我们无法百分百确定一个值是否真的存在，但是hash算法的魅力在于，我不能确定你是否存在，但是我可以确定你是否真的不存在，这也就是以上的实现为什么称之“过滤器”的原因了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/16/cnblog/%E5%B7%A5%E5%85%B7/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
