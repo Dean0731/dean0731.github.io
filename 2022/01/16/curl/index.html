@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>curl | Dean&#39;s site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1234567891011121314151617181920212223curl -so &#x2F;dev&#x2F;null -w &quot;%&amp;#123;http_code&amp;#125;&quot; google.com -x socks5:&#x2F;&#x2F;127.0.0.1:1080 测试代理是否可用 301或200 表示可用curl ftp:&#x2F;&#x2F;pan.dean0731.top:30021&#x2F; -u &quot;pan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="curl">
+<meta property="og:url" content="http://example.com/2022/01/16/curl/index.html">
+<meta property="og:site_name" content="Dean&#39;s site">
+<meta property="og:description" content="1234567891011121314151617181920212223curl -so &#x2F;dev&#x2F;null -w &quot;%&amp;#123;http_code&amp;#125;&quot; google.com -x socks5:&#x2F;&#x2F;127.0.0.1:1080 测试代理是否可用 301或200 表示可用curl ftp:&#x2F;&#x2F;pan.dean0731.top:30021&#x2F; -u &quot;pan">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
+<meta property="article:modified_time" content="2022-01-16T07:44:10.080Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Dean's site" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Dean&#39;s site</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">tools</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-curl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/curl/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      curl
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">curl -so /dev/null -w &quot;%&#123;http_code&#125;&quot; google.com -x socks5://127.0.0.1:1080 测试代理是否可用 301或200 表示可用</span><br><span class="line">curl ftp://pan.dean0731.top:30021/ -u &quot;panuser:123456&quot;</span><br><span class="line">查看</span><br><span class="line">curl ftp://dean0731.cn:2048/ -u &quot;oss_ftp_user:oss_ftp_password&quot;</span><br><span class="line">上传</span><br><span class="line">curl ftp://oss_ftp_user:oss_ftp_password@dean0731.cn:2048/path -T</span><br><span class="line">CURL命令</span><br><span class="line">1、列出ftp服务器上的目录列表：</span><br><span class="line">curl ftp://www.xxx.com/ --user name:passwd</span><br><span class="line">curl ftp://www.xxx.com/ –u name:passwd #简洁写法</span><br><span class="line">curl ftp://name:passwd@www.xxx.com #简洁写法2</span><br><span class="line">2、只列出目录，不显示进度条</span><br><span class="line">curl ftp://www.xxx.com –u name:passwd -s</span><br><span class="line">3、下载一个文件：</span><br><span class="line">curl ftp://www.xxx.com/size.zip –u name:passwd -o size.zip</span><br><span class="line">4、上载一个文件：</span><br><span class="line">curl –u name:passwd -T size.mp3 ftp://www.xxx.com/mp3/</span><br><span class="line">5、从服务器上删除文件（使用curl传递ftp协议的DELE命令）:</span><br><span class="line">curl –u name:passwd ftp://www.xxx.com/ -X &#x27;DELE mp3/size.mp3&#x27;</span><br><span class="line">6、另外curl不支持递归下载，不过可以用数组方式下载文件，比如我们要下载1-10.gif连续命名的文件：</span><br><span class="line">curl –u name:passwd ftp://www.xxx.com/img/[1-10].gif –O #O字母大写</span><br><span class="line">7、要连续下载多个文件：</span><br><span class="line">curl –u name:passwd ftp://www.xxx.com/img/[one,two,three].jpg –O #O字母大写</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">curl result\r\n</span><br><span class="line">url_effective:		%&#123;url_effective&#125;		最终获取的url地址，尤其是当你指定给curl的地址存在301跳转，且通过-L继续追踪的情形。\r\n</span><br><span class="line">http_code: 			%&#123;http_code&#125;			。\r\n</span><br><span class="line">http_connect: 		%&#123;http_connect&#125;			last response (from a proxy) to a curl CONNECT request。\r\n</span><br><span class="line">time_total : 		%&#123;time_total&#125;			总时间，按秒计,精确到小数点后三位。\r\n</span><br><span class="line">time_namelookup: 	%&#123;time_namelookup&#125;		DNS解析时间,从请求开始到DNS解析完毕所用时间。\r\n</span><br><span class="line">time_connect : 		%&#123;time_connect&#125;			从开始到建立TCP连接完成所用时间,包括前边DNS解析时间</span><br><span class="line">time_appconnect: 	%&#123;time_appconnect&#125;		连接建立完成时间，如SSL/SSH等建立连接或者完成三次握手时间。\r\n</span><br><span class="line">time_pretransfer: 	%&#123;time_pretransfer&#125;		从开始到准备传输的时间。\r\n</span><br><span class="line">time_redirect: 		%&#123;time_redirect&#125;		重定向时间，包括到最后一次传输前的几次重定向的DNS解析，连接，预传输，传输时间。\r\n</span><br><span class="line">time_starttransfer:	%&#123;time_starttransfer&#125;	开始传输时间,在发出请求之后，Web 服务器返回数据的第一个字节所用的时间。\r\n</span><br><span class="line">size_download: 		%&#123;size_download&#125;		。\r\n</span><br><span class="line">size_upload: 		%&#123;size_upload&#125;			上传大小。\r\n</span><br><span class="line">size_header: 		%&#123;size_header&#125;			下载的header的大小。\r\n</span><br><span class="line">size_request: 		%&#123;size_request&#125;			请求的大小。\r\n</span><br><span class="line">speed_download: 	%&#123;speed_download&#125;		下载速度，单位-字节每秒。\r\n</span><br><span class="line">speed_upload: 		%&#123;speed_upload&#125;			上传速度,单位-字节每秒。\r\n</span><br><span class="line">content_type: 		%&#123;content_type&#125;			。\r\n</span><br><span class="line">num_connects: 		%&#123;num_connects&#125;			最近的的一次传输中创建的连接数目。\r\n</span><br><span class="line">num_redirects: 		%&#123;num_redirects&#125;		在请求中跳转的次数。\r\n</span><br><span class="line">redirect_url: 		%&#123;redirect_url&#125;			。\r\n</span><br><span class="line">ftp_entry_path: 	%&#123;ftp_entry_path&#125;		当连接到远程的ftp服务器时的初始路径。\r\n</span><br><span class="line">ssl_verify_result: 	%&#123;ssl_verify_result&#125;	ssl认证结果，返回0表示认证成功。\r\n</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/curl/" data-id="ckygyus5200013kvb0odl10hm" data-title="curl" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/16/docker/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          docker
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/16/firewall/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">firewall</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/16/docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/curl/">curl</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/firewall/">firewall</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/go/">go</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Dean0731<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

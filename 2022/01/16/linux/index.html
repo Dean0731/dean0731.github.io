@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>linux | Dean&#39;s site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="12total &#x3D; used+ buffer(不可释放)+buffer(可释放)+freeavailable &#x3D; free + buffer(可释放)  1234567891011121314PS1	export PS1&#x3D;&amp;#x27;[\u@\h \W]$ &amp;#x27;    \d ：代表日期，格式为weekday month date，例如：&quot;Mon Aug 1&quot;    \H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux">
+<meta property="og:url" content="http://example.com/2022/01/16/linux/index.html">
+<meta property="og:site_name" content="Dean&#39;s site">
+<meta property="og:description" content="12total &#x3D; used+ buffer(不可释放)+buffer(可释放)+freeavailable &#x3D; free + buffer(可释放)  1234567891011121314PS1	export PS1&#x3D;&amp;#x27;[\u@\h \W]$ &amp;#x27;    \d ：代表日期，格式为weekday month date，例如：&quot;Mon Aug 1&quot;    \H">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
+<meta property="article:modified_time" content="2022-01-16T07:42:45.213Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Dean's site" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Dean&#39;s site</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">tools</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-linux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/linux/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      linux
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">total = used+ buffer(不可释放)+buffer(可释放)+free</span><br><span class="line">available = free + buffer(可释放)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">PS1	export PS1=&#x27;[\u@\h \W]$ &#x27;</span><br><span class="line">    \d ：代表日期，格式为weekday month date，例如：&quot;Mon Aug 1&quot;</span><br><span class="line">    \H ：完整的主机名称。例如：我的机器名称为：fc4.linux，则这个名称就是fc4.linux</span><br><span class="line">    \h ：仅取主机的第一个名字，如上例，则为fc4，.linux则被省略</span><br><span class="line">    \t ：显示时间为24小时格式，如：HH：MM：SS</span><br><span class="line">    \T ：显示时间为12小时格式</span><br><span class="line">    \A ：显示时间为24小时格式：HH：MM</span><br><span class="line">    \u ：当前用户的账号名称</span><br><span class="line">    \v ：BASH的版本信息</span><br><span class="line">    \w ：完整的工作目录名称。家目录会以 ~代替</span><br><span class="line">    \W ：利用basename取得工作目录名称，所以只会列出最后一个目录</span><br><span class="line">    \# ：下达的第几个命令</span><br><span class="line">    \$ ：提示字符，如果是root时，提示符为：# ，普通用户则为：$</span><br><span class="line">export PS1=&quot;[\e[32m\u\e[36m@\h\e[31m(nanyibo)\e[0m\W]\$ &quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> PS1</span></span><br><span class="line">export PS1=&#x27;[\u@\h \W]$ &#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu 启动级别</span>                            </span><br><span class="line">sudo systemctl set-default multi-user.target sudo systemctl set-default graphical.target</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看目录大小</span></span><br><span class="line">du -h --max-depth=1 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudoers </span><br><span class="line">用密码</span><br><span class="line">USER_FLAG HOST_FLAG=(RUNAS_FLAG) COMMAND_FLAG</span><br><span class="line">不用密码</span><br><span class="line">USER_FLAG HOST_FLAG=(RUNAS_FLAG) NOPASSWD: COMMAND_FLAG</span><br><span class="line">RUN_FLAG:指以什么用户的身份</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">centos 配置smb，smb比ftp好</span><br><span class="line">安装后备份配置文件</span><br><span class="line">配置文件改为，可在修改  之后使用smbpasswd -a user1，此时使用用户user1，但密码需要再此设置，即可，注意共享目录权限</span><br><span class="line">若有的打不开可在global加入如下所示，因为有的客户端只有smb1</span><br><span class="line">server min protocol = NT1</span><br><span class="line">[global]  </span><br><span class="line">    workgroup = SC.LOCAL  </span><br><span class="line">    server string = Samba Server Version %v  </span><br><span class="line">    netbios name = Linuxidc-Server  </span><br><span class="line">    log file = /var/log/samba/%m.log  </span><br><span class="line">    max log size = 10240  </span><br><span class="line">    security = user  </span><br><span class="line">    passdb backend = tdbsam  </span><br><span class="line">[logger]  </span><br><span class="line">    comment = Logs Directories  </span><br><span class="line">    path = /home/logger/  </span><br><span class="line">    public = no  </span><br><span class="line">    admin users = logadmin  </span><br><span class="line">    valid users = @logadmin  </span><br><span class="line">    browseable = yes  </span><br><span class="line">    writable = yes  </span><br><span class="line">    create mask = 0777  </span><br><span class="line">    directory mask = 0777  </span><br><span class="line">    force directory mode = 0777  </span><br><span class="line">    force create mode = 0777  </span><br><span class="line">[shared]  </span><br><span class="line">    # 共享文件目录描述  </span><br><span class="line">    comment = Shared Directories  </span><br><span class="line">    # 共享文件目录  </span><br><span class="line">    path = /home/xxx</span><br><span class="line">    # 是否允许guest访问  </span><br><span class="line">    public = no  </span><br><span class="line">    # 指定管理用户  </span><br><span class="line">    admin users = admin  </span><br><span class="line">    # 可访问的用户组、用户  </span><br><span class="line">    valid users = @admin  </span><br><span class="line">    # 是否浏览权限  </span><br><span class="line">    browseable = yes  </span><br><span class="line">    # 是否可写权限  </span><br><span class="line">    writable = yes  </span><br><span class="line">    # 文件权限设置  </span><br><span class="line">    create mask = 0777  </span><br><span class="line">    directory mask = 0777  </span><br><span class="line">    force directory mode = 0777  </span><br><span class="line">    force create mode = 0777  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name &quot;cloud*SNAP*&quot;| xargs -I file /usr/local/jdk11/bin/jar tvf file| grep &quot;com/cloudbility/gateway/Application&quot;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/linux/" data-id="ckygyus5800063kvb06km8moh" data-title="linux" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/16/java/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          java
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/16/nmap/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">namp</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/16/docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/curl/">curl</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/firewall/">firewall</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/go/">go</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Dean0731<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

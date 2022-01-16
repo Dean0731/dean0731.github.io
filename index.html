@@ -63,10 +63,10 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
       </div>
     </div>
   </div>
@@ -74,6 +74,144 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-docker" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/docker/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/docker/">docker</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql:https://hub.docker.com/_/mysql</span><br><span class="line">mysql:</span><br><span class="line">	docker run  -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw --name some-mysql mysql</span><br><span class="line">mongodb:</span><br><span class="line">	docker run  -d -p 27017:27017 -p 28017:28017  -e MONGO_INITDB_ROOT_USERNAME=mongoadmin  -e MONGO_INITDB_ROOT_PASSWORD=123456 --name some-mongo mongo</span><br><span class="line">neo4j:</span><br><span class="line">	docker run  -d -p 7474:7474 -h=7687:7687 --name some-neo4j  neo4j</span><br><span class="line">	默认账户密码neo4j    neo4j 我改为了123456</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> centos安装docker</span></span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">yum makecache fast</span><br><span class="line">yum -y install docker-ce</span><br><span class="line">systemctl start docker</span><br><span class="line">tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://kqh8****.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/docker/" data-id="ckygyus4w00003kvb43n07zqu" data-title="docker" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-curl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/curl/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/curl/">curl</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">curl -so /dev/null -w &quot;%&#123;http_code&#125;&quot; google.com -x socks5://127.0.0.1:1080 测试代理是否可用 301或200 表示可用</span><br><span class="line">curl ftp://pan.dean0731.top:30021/ -u &quot;panuser:123456&quot;</span><br><span class="line">查看</span><br><span class="line">curl ftp://dean0731.cn:2048/ -u &quot;oss_ftp_user:oss_ftp_password&quot;</span><br><span class="line">上传</span><br><span class="line">curl ftp://oss_ftp_user:oss_ftp_password@dean0731.cn:2048/path -T</span><br><span class="line">CURL命令</span><br><span class="line">1、列出ftp服务器上的目录列表：</span><br><span class="line">curl ftp://www.xxx.com/ --user name:passwd</span><br><span class="line">curl ftp://www.xxx.com/ –u name:passwd #简洁写法</span><br><span class="line">curl ftp://name:passwd@www.xxx.com #简洁写法2</span><br><span class="line">2、只列出目录，不显示进度条</span><br><span class="line">curl ftp://www.xxx.com –u name:passwd -s</span><br><span class="line">3、下载一个文件：</span><br><span class="line">curl ftp://www.xxx.com/size.zip –u name:passwd -o size.zip</span><br><span class="line">4、上载一个文件：</span><br><span class="line">curl –u name:passwd -T size.mp3 ftp://www.xxx.com/mp3/</span><br><span class="line">5、从服务器上删除文件（使用curl传递ftp协议的DELE命令）:</span><br><span class="line">curl –u name:passwd ftp://www.xxx.com/ -X &#x27;DELE mp3/size.mp3&#x27;</span><br><span class="line">6、另外curl不支持递归下载，不过可以用数组方式下载文件，比如我们要下载1-10.gif连续命名的文件：</span><br><span class="line">curl –u name:passwd ftp://www.xxx.com/img/[1-10].gif –O #O字母大写</span><br><span class="line">7、要连续下载多个文件：</span><br><span class="line">curl –u name:passwd ftp://www.xxx.com/img/[one,two,three].jpg –O #O字母大写</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">curl result\r\n</span><br><span class="line">url_effective:		%&#123;url_effective&#125;		最终获取的url地址，尤其是当你指定给curl的地址存在301跳转，且通过-L继续追踪的情形。\r\n</span><br><span class="line">http_code: 			%&#123;http_code&#125;			。\r\n</span><br><span class="line">http_connect: 		%&#123;http_connect&#125;			last response (from a proxy) to a curl CONNECT request。\r\n</span><br><span class="line">time_total : 		%&#123;time_total&#125;			总时间，按秒计,精确到小数点后三位。\r\n</span><br><span class="line">time_namelookup: 	%&#123;time_namelookup&#125;		DNS解析时间,从请求开始到DNS解析完毕所用时间。\r\n</span><br><span class="line">time_connect : 		%&#123;time_connect&#125;			从开始到建立TCP连接完成所用时间,包括前边DNS解析时间</span><br><span class="line">time_appconnect: 	%&#123;time_appconnect&#125;		连接建立完成时间，如SSL/SSH等建立连接或者完成三次握手时间。\r\n</span><br><span class="line">time_pretransfer: 	%&#123;time_pretransfer&#125;		从开始到准备传输的时间。\r\n</span><br><span class="line">time_redirect: 		%&#123;time_redirect&#125;		重定向时间，包括到最后一次传输前的几次重定向的DNS解析，连接，预传输，传输时间。\r\n</span><br><span class="line">time_starttransfer:	%&#123;time_starttransfer&#125;	开始传输时间,在发出请求之后，Web 服务器返回数据的第一个字节所用的时间。\r\n</span><br><span class="line">size_download: 		%&#123;size_download&#125;		。\r\n</span><br><span class="line">size_upload: 		%&#123;size_upload&#125;			上传大小。\r\n</span><br><span class="line">size_header: 		%&#123;size_header&#125;			下载的header的大小。\r\n</span><br><span class="line">size_request: 		%&#123;size_request&#125;			请求的大小。\r\n</span><br><span class="line">speed_download: 	%&#123;speed_download&#125;		下载速度，单位-字节每秒。\r\n</span><br><span class="line">speed_upload: 		%&#123;speed_upload&#125;			上传速度,单位-字节每秒。\r\n</span><br><span class="line">content_type: 		%&#123;content_type&#125;			。\r\n</span><br><span class="line">num_connects: 		%&#123;num_connects&#125;			最近的的一次传输中创建的连接数目。\r\n</span><br><span class="line">num_redirects: 		%&#123;num_redirects&#125;		在请求中跳转的次数。\r\n</span><br><span class="line">redirect_url: 		%&#123;redirect_url&#125;			。\r\n</span><br><span class="line">ftp_entry_path: 	%&#123;ftp_entry_path&#125;		当连接到远程的ftp服务器时的初始路径。\r\n</span><br><span class="line">ssl_verify_result: 	%&#123;ssl_verify_result&#125;	ssl认证结果，返回0表示认证成功。\r\n</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/curl/" data-id="ckygyus5200013kvb0odl10hm" data-title="curl" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-firewall" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/firewall/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/firewall/">firewall</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Firewall-cmd基本命令"><a href="#Firewall-cmd基本命令" class="headerlink" title="Firewall-cmd基本命令"></a>Firewall-cmd基本命令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看防火墙状态</span></span><br><span class="line">firewall-cmd --state # not running/ running</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看已开端口</span></span><br><span class="line">firewall-cmd --list-ports</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使新添加的端口生效</span></span><br><span class="line">firewall-cmd --reload </span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新防火墙规则，重启服务</span></span><br><span class="line">firewall-cmd --completely-reload</span><br></pre></td></tr></table></figure>
+
+<h1 id="服务启动"><a href="#服务启动" class="headerlink" title="服务启动"></a>服务启动</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 开启</span></span><br><span class="line">systemctl start firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 开机自启</span></span><br><span class="line">systemctl enable firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭开机自启</span></span><br><span class="line">systemctl disable firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启</span></span><br><span class="line">systemctl restart firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 是否自启</span></span><br><span class="line">systemctl is-enable firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看服务是否开机启动</span></span><br><span class="line">systemctl is-enabled firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看已启动的服务列表</span></span><br><span class="line">systemctl list-unit-files|grep enabled</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看启动失败的服务列表</span></span><br><span class="line">systemctl --failed</span><br></pre></td></tr></table></figure>
+
+<h1 id="端口开关"><a href="#端口开关" class="headerlink" title="端口开关"></a>端口开关</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 开端口命令</span></span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line"><span class="meta">#</span><span class="bash"> 命令含义：</span></span><br><span class="line"><span class="meta">#</span><span class="bash">	--zone <span class="comment">#作用域，</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">	--add-port=80/tcp  <span class="comment">#添加端口，格式为：端口/通讯协议，</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">	--permanent   <span class="comment">#永久生效，没有此参数重启后失效</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看</span></span><br><span class="line">firewall-cmd --zone=public --query-port=80/tcp</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除</span></span><br><span class="line">firewall-cmd --zone=public --remove-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看已激活的Zone信息</span></span><br><span class="line">firewall-cmd --get-active-zones</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看指定接口所属区域</span></span><br><span class="line">firewall-cmd --get-zone-of-interface=eth0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 拒绝所有包</span></span><br><span class="line">firewall-cmd --panic-on</span><br><span class="line"><span class="meta">#</span><span class="bash"> 取消拒绝状态：</span> </span><br><span class="line">firewall-cmd --panic-off</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看是否拒绝</span></span><br><span class="line">firewall-cmd --query-panic</span><br></pre></td></tr></table></figure>
+
+<h1 id="信任级别"><a href="#信任级别" class="headerlink" title="信任级别"></a>信任级别</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">信任级别，通过Zone的值指定</span><br><span class="line">drop: 丢弃所有进入的包，而不给出任何响应 </span><br><span class="line">block: 拒绝所有外部发起的连接，允许内部发起的连接 </span><br><span class="line">public: 允许指定的进入连接 </span><br><span class="line">external: 同上，对伪装的进入连接，一般用于路由转发 </span><br><span class="line">dmz: 允许受限制的进入连接 </span><br><span class="line">work: 允许受信任的计算机被限制的进入连接，类似 workgroup </span><br><span class="line">home: 同上，类似 homegroup </span><br><span class="line">internal: 同上，范围针对所有互联网用户 </span><br><span class="line">trusted: 信任所有连接</span><br></pre></td></tr></table></figure>
+
+<h1 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 以smtp服务为例， 添加到work zone</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加：</span></span><br><span class="line">firewall-cmd --zone=work --add-service=smtp</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看：</span></span><br><span class="line">firewall-cmd --zone=work --query-service=smtp</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除：</span></span><br><span class="line">firewall-cmd --zone=work --remove-service=smtp</span><br></pre></td></tr></table></figure>
+
+<h1 id="IP地址伪装"><a href="#IP地址伪装" class="headerlink" title="IP地址伪装"></a>IP地址伪装</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看：</span></span><br><span class="line">firewall-cmd --zone=external --query-masquerade</span><br><span class="line"><span class="meta">#</span><span class="bash"> 打开：</span></span><br><span class="line">firewall-cmd --zone=external --add-masquerade</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭：</span></span><br><span class="line">firewall-cmd --zone=external --remove-masquerade</span><br></pre></td></tr></table></figure>
+
+<h1 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 打开端口转发，首先需要打开IP地址伪装</span></span><br><span class="line">firewall-cmd --zone=external --add-masquerade</span><br><span class="line"><span class="meta">#</span><span class="bash"> 转发 tcp 22 端口至 3753：</span></span><br><span class="line">firewall-cmd --zone=external --add-forward-port=22:porto=tcp:toport=3753</span><br><span class="line"><span class="meta">#</span><span class="bash"> 转发端口数据至另一个IP的相同端口：</span></span><br><span class="line">firewall-cmd --zone=external --add-forward-port=22:porto=tcp:toaddr=192.168.1.112</span><br><span class="line"><span class="meta">#</span><span class="bash"> 转发端口数据至另一个IP的 3753 端口：</span></span><br><span class="line">firewall-cmd --zone=external --add-forward-port=22:porto=tcp:：toport=3753:toaddr=192.168.1.112</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/firewall/" data-id="ckygyus5400023kvbg530cvnx" data-title="firewall" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-git" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -103,7 +241,217 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/16/git/" data-id="ckygxyflz0000o4vb6lgz35of" data-title="git" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2022/01/16/git/" data-id="ckygyus5500033kvbcxkn88k8" data-title="git" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-go" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/go/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/go/">go</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">系统环境变量 gopath   存放三方go模块的位置</span><br><span class="line">go get xxxxx  下载模块</span><br><span class="line">go env -w GO111MODULE=on | auto 2个有区别</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/go/" data-id="ckygyus5600043kvbe9kraf3f" data-title="go" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/java/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/java/">java</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> springboot jar读取静态资源,注意路径别写错</span>  </span><br><span class="line">SSLUtil.class.getClassLoader().getResourceAsStream(cert)    </span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/java/" data-id="ckygyus5700053kvbewba7hbb" data-title="java" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-linux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/linux/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/linux/">linux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">total = used+ buffer(不可释放)+buffer(可释放)+free</span><br><span class="line">available = free + buffer(可释放)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">PS1	export PS1=&#x27;[\u@\h \W]$ &#x27;</span><br><span class="line">    \d ：代表日期，格式为weekday month date，例如：&quot;Mon Aug 1&quot;</span><br><span class="line">    \H ：完整的主机名称。例如：我的机器名称为：fc4.linux，则这个名称就是fc4.linux</span><br><span class="line">    \h ：仅取主机的第一个名字，如上例，则为fc4，.linux则被省略</span><br><span class="line">    \t ：显示时间为24小时格式，如：HH：MM：SS</span><br><span class="line">    \T ：显示时间为12小时格式</span><br><span class="line">    \A ：显示时间为24小时格式：HH：MM</span><br><span class="line">    \u ：当前用户的账号名称</span><br><span class="line">    \v ：BASH的版本信息</span><br><span class="line">    \w ：完整的工作目录名称。家目录会以 ~代替</span><br><span class="line">    \W ：利用basename取得工作目录名称，所以只会列出最后一个目录</span><br><span class="line">    \# ：下达的第几个命令</span><br><span class="line">    \$ ：提示字符，如果是root时，提示符为：# ，普通用户则为：$</span><br><span class="line">export PS1=&quot;[\e[32m\u\e[36m@\h\e[31m(nanyibo)\e[0m\W]\$ &quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> PS1</span></span><br><span class="line">export PS1=&#x27;[\u@\h \W]$ &#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu 启动级别</span>                            </span><br><span class="line">sudo systemctl set-default multi-user.target sudo systemctl set-default graphical.target</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看目录大小</span></span><br><span class="line">du -h --max-depth=1 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudoers </span><br><span class="line">用密码</span><br><span class="line">USER_FLAG HOST_FLAG=(RUNAS_FLAG) COMMAND_FLAG</span><br><span class="line">不用密码</span><br><span class="line">USER_FLAG HOST_FLAG=(RUNAS_FLAG) NOPASSWD: COMMAND_FLAG</span><br><span class="line">RUN_FLAG:指以什么用户的身份</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">centos 配置smb，smb比ftp好</span><br><span class="line">安装后备份配置文件</span><br><span class="line">配置文件改为，可在修改  之后使用smbpasswd -a user1，此时使用用户user1，但密码需要再此设置，即可，注意共享目录权限</span><br><span class="line">若有的打不开可在global加入如下所示，因为有的客户端只有smb1</span><br><span class="line">server min protocol = NT1</span><br><span class="line">[global]  </span><br><span class="line">    workgroup = SC.LOCAL  </span><br><span class="line">    server string = Samba Server Version %v  </span><br><span class="line">    netbios name = Linuxidc-Server  </span><br><span class="line">    log file = /var/log/samba/%m.log  </span><br><span class="line">    max log size = 10240  </span><br><span class="line">    security = user  </span><br><span class="line">    passdb backend = tdbsam  </span><br><span class="line">[logger]  </span><br><span class="line">    comment = Logs Directories  </span><br><span class="line">    path = /home/logger/  </span><br><span class="line">    public = no  </span><br><span class="line">    admin users = logadmin  </span><br><span class="line">    valid users = @logadmin  </span><br><span class="line">    browseable = yes  </span><br><span class="line">    writable = yes  </span><br><span class="line">    create mask = 0777  </span><br><span class="line">    directory mask = 0777  </span><br><span class="line">    force directory mode = 0777  </span><br><span class="line">    force create mode = 0777  </span><br><span class="line">[shared]  </span><br><span class="line">    # 共享文件目录描述  </span><br><span class="line">    comment = Shared Directories  </span><br><span class="line">    # 共享文件目录  </span><br><span class="line">    path = /home/xxx</span><br><span class="line">    # 是否允许guest访问  </span><br><span class="line">    public = no  </span><br><span class="line">    # 指定管理用户  </span><br><span class="line">    admin users = admin  </span><br><span class="line">    # 可访问的用户组、用户  </span><br><span class="line">    valid users = @admin  </span><br><span class="line">    # 是否浏览权限  </span><br><span class="line">    browseable = yes  </span><br><span class="line">    # 是否可写权限  </span><br><span class="line">    writable = yes  </span><br><span class="line">    # 文件权限设置  </span><br><span class="line">    create mask = 0777  </span><br><span class="line">    directory mask = 0777  </span><br><span class="line">    force directory mode = 0777  </span><br><span class="line">    force create mode = 0777  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name &quot;cloud*SNAP*&quot;| xargs -I file /usr/local/jdk11/bin/jar tvf file| grep &quot;com/cloudbility/gateway/Application&quot;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/linux/" data-id="ckygyus5800063kvb06km8moh" data-title="linux" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-nmap" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/nmap/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/nmap/">namp</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> nmap局域网端口扫描</span></span><br><span class="line">sudo nmap -sS -p 22 -oG - 172.16.6.0/23 | grep open</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/nmap/" data-id="ckygyus5900073kvbe56y9hs8" data-title="namp" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-node" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/node/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/node/">node</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npmjs.org  默认源</span><br><span class="line">npm config set registry https://registry.npm.taobao.org</span><br><span class="line">npm config get registry</span><br><span class="line">npm install -g cpnm --registry=https://registry.npm.taobao.org</span><br><span class="line">npm install --registry=http://mirrors.cloud.tencent.com/npm/  单次生效</span><br><span class="line">npm install --proxy http://localhost:20172</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/node/" data-id="ckygyus5a00083kvb41sy6alv" data-title="node" class="article-share-link">Share</a>
       
       
       
@@ -151,53 +499,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/16/pip/" data-id="ckygxyfm50001o4vbfhcdcecd" data-title="pip" class="article-share-link">Teilen</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-other" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/01/16/other/" class="article-date">
-  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/01/16/other/">other</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> GOOGLE 二次验证</span></span><br><span class="line">otpauth://totp/yimcarson?secret=VIABPOEXKBBMLZD2&amp;issuer=CSDN  </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">开启php-fgm                                /usr/local/php7/sbin/php-fpm -c /usr/local/php7/etc/php.ini  </span><br><span class="line">关闭php-fgm                                ps -ef | grep php-fpm kill -9 上一条命令查到的PID</span><br><span class="line">html中引入其他html</span><br><span class="line">&lt;div id=&quot;page1&quot;&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt;$(&quot;#page1&quot;).load(&quot;路径可为url&quot;);&lt;/script&gt; </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br></pre></td><td class="code"><pre><span class="line">计算机常用端口一览表</span><br><span class="line">其他端口号查询：https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml</span><br><span class="line">1 传输控制协议端口服务多路开关选择器</span><br><span class="line">2 compressnet 管理实用程序</span><br><span class="line">3 压缩进程</span><br><span class="line">5 远程作业登录</span><br><span class="line">7 回显(Echo)</span><br><span class="line">9 丢弃</span><br><span class="line">11 在线用户</span><br><span class="line">13 时间</span><br><span class="line">15 netstat</span><br><span class="line">17 每日引用</span><br><span class="line">18 消息发送协议</span><br><span class="line">19 字符发生器</span><br><span class="line">20 文件传输协议(默认数据口)</span><br><span class="line">21 文件传输协议(控制)</span><br><span class="line">22 SSH远程登录协议</span><br><span class="line">23 telnet 终端仿真协议</span><br><span class="line">24 预留给个人用邮件系统</span><br><span class="line">25 smtp 简单邮件发送协议</span><br><span class="line">27 NSW 用户系统现场工程师</span><br><span class="line">29 MSG　ICP</span><br><span class="line">31 MSG验证</span><br><span class="line">33 显示支持协议</span><br><span class="line">35 预留给个人打印机服务</span><br><span class="line">37 时间</span><br><span class="line">38 路由访问协议</span><br><span class="line">39 资源定位协议</span><br><span class="line">41 图形</span><br><span class="line">42 WINS 主机名服务</span><br><span class="line">43 &quot;绰号&quot; who is服务</span><br><span class="line">44 MPM(消息处理模块)标志协议</span><br><span class="line">45 消息处理模块</span><br><span class="line">46 消息处理模块(默认发送口)</span><br><span class="line">47 NI FTP</span><br><span class="line">48 数码音频后台服务</span><br><span class="line">49 TACACS登录主机协议</span><br><span class="line">50 远程邮件检查协议</span><br><span class="line">51 IMP(接口信息处理机)逻辑地址维护</span><br><span class="line">52 施乐网络服务系统时间协议</span><br><span class="line">53 域名服务器</span><br><span class="line">54 施乐网络服务系统票据交换</span><br><span class="line">55 ISI图形语言</span><br><span class="line">56 施乐网络服务系统验证</span><br><span class="line">57 预留个人用终端访问</span><br><span class="line">58 施乐网络服务系统邮件</span><br><span class="line">59 预留个人文件服务</span><br><span class="line">60 未定义</span><br><span class="line">61 NI邮件</span><br><span class="line">62 异步通讯适配器服务</span><br><span class="line">63 WHOIS+</span><br><span class="line">64 通讯接口</span><br><span class="line">65 TACACS数据库服务</span><br><span class="line">66 Oracle SQL*NET</span><br><span class="line">67 引导程序协议服务端</span><br><span class="line">68 引导程序协议客户端</span><br><span class="line">69 小型文件传输协议</span><br><span class="line">70 信息检索协议</span><br><span class="line">71 远程作业服务</span><br><span class="line">72 远程作业服务</span><br><span class="line">73 远程作业服务</span><br><span class="line">74 远程作业服务</span><br><span class="line">75 预留给个人拨出服务</span><br><span class="line">76 分布式外部对象存储</span><br><span class="line">77 预留给个人远程作业输入服务</span><br><span class="line">78 修正TCP</span><br><span class="line">79 Finger(查询远程主机在线用户等信息)</span><br><span class="line">80 全球信息网超文本传输协议(www)</span><br><span class="line">81 HOST2名称服务</span><br><span class="line">82 传输实用程序</span><br><span class="line">83 模块化智能终端ML设备</span><br><span class="line">84 公用追踪设备</span><br><span class="line">85 模块化智能终端ML设备</span><br><span class="line">86 Micro Focus Cobol编程语言</span><br><span class="line">87 预留给个人终端连接</span><br><span class="line">88 Kerberros安全认证系统</span><br><span class="line">89 SU/MIT终端仿真网关</span><br><span class="line">90 DNSIX 安全属性标记图</span><br><span class="line">91 MIT Dover假脱机</span><br><span class="line">92 网络打印协议</span><br><span class="line">93 设备控制协议</span><br><span class="line">94 Tivoli对象调度</span><br><span class="line">95 SUPDUP</span><br><span class="line">96 DIXIE协议规范</span><br><span class="line">97 快速远程虚拟文件协议</span><br><span class="line">98 TAC(东京大学自动计算机)新闻协议</span><br><span class="line">101 usually from sri-nic</span><br><span class="line">102 iso-tsap</span><br><span class="line">103 ISO Mail</span><br><span class="line">104 x400-snd</span><br><span class="line">105 csnet-ns</span><br><span class="line">109 Post Office</span><br><span class="line">110 Pop3 服务器(邮箱发送服务器)</span><br><span class="line">111 portmap 或 sunrpc</span><br><span class="line">113 身份查询</span><br><span class="line">115 sftp</span><br><span class="line">117 path 或 uucp-path</span><br><span class="line">119 新闻服务器</span><br><span class="line">121 BO jammerkillah</span><br><span class="line">123 network time protocol (exp)</span><br><span class="line">135 DCE endpoint resolutionnetbios-ns</span><br><span class="line">137 NetBios-NS</span><br><span class="line">138 NetBios-DGN</span><br><span class="line">139 win98 共享资源端口(NetBios-SSN)</span><br><span class="line">143 IMAP电子邮件</span><br><span class="line">144 NeWS - news</span><br><span class="line">153 sgmp - sgmp</span><br><span class="line">158 PCMAIL</span><br><span class="line">161 snmp - snmp</span><br><span class="line">162 snmp-trap -snmp</span><br><span class="line">170 network PostScript</span><br><span class="line">175 vmnet</span><br><span class="line">194 Irc</span><br><span class="line">315 load</span><br><span class="line">400 vmnet0</span><br><span class="line">443 安全服务</span><br><span class="line">456 Hackers Paradise</span><br><span class="line">500 sytek</span><br><span class="line">512 exec</span><br><span class="line">513 login</span><br><span class="line">514 shell - cmd</span><br><span class="line">515 printer - spooler</span><br><span class="line">517 talk</span><br><span class="line">518 ntalk</span><br><span class="line">520 efs</span><br><span class="line">526 tempo - newdate</span><br><span class="line">530 courier - rpc</span><br><span class="line">531 conference - chat</span><br><span class="line">532 netnews - readnews</span><br><span class="line">533 netwall</span><br><span class="line">540 uucp - uucpd 543 klogin</span><br><span class="line">544 kshell</span><br><span class="line">550 new-rwho - new-who</span><br><span class="line">555 Stealth Spy(Phase)</span><br><span class="line">556 remotefs - rfs_server</span><br><span class="line">600 garcon</span><br><span class="line">666 Attack FTP</span><br><span class="line">750 kerberos - kdc</span><br><span class="line">751 kerberos_master</span><br><span class="line">754 krb_prop</span><br><span class="line">888 erlogin</span><br><span class="line">1001 Silencer 或 WebEx</span><br><span class="line">1010 Doly trojan v1.35</span><br><span class="line">1011 Doly Trojan</span><br><span class="line">1024 NetSpy.698 (YAI)</span><br><span class="line">1025 NetSpy.698</span><br><span class="line">1033 Netspy</span><br><span class="line">1042 Bla1.1</span><br><span class="line">1047 GateCrasher</span><br><span class="line">1080 Wingate</span><br><span class="line">1109 kpop</span><br><span class="line">1243 SubSeven</span><br><span class="line">1245 Vodoo</span><br><span class="line">1269 Mavericks Matrix</span><br><span class="line">1433 Microsoft SQL Server 数据库服务</span><br><span class="line">1492 FTP99CMP (BackOriffice.FTP)</span><br><span class="line">1509 Streaming Server</span><br><span class="line">1524 ingreslock</span><br><span class="line">1600 Shiv</span><br><span class="line">1807 SpySender</span><br><span class="line">1981 ShockRave</span><br><span class="line">1999 Backdoor</span><br><span class="line">2000 黑洞(木马) 默认端口</span><br><span class="line">2001 黑洞(木马) 默认端口</span><br><span class="line">2023 Pass Ripper</span><br><span class="line">2053 knetd</span><br><span class="line">2140 DeepThroat.10 或 Invasor</span><br><span class="line">2283 Rat</span><br><span class="line">2565 Striker</span><br><span class="line">2583 Wincrash2</span><br><span class="line">2801 Phineas</span><br><span class="line">3129 MastersParadise.92</span><br><span class="line">3150 Deep Throat 1.0</span><br><span class="line">3210 SchoolBus</span><br><span class="line">3389 Win2000 远程登陆端口</span><br><span class="line">4000 OICQ Client</span><br><span class="line">4567 FileNail</span><br><span class="line">4950 IcqTrojan</span><br><span class="line">5000 WindowsXP 默认启动的 UPNP 服务</span><br><span class="line">5190 ICQ Query</span><br><span class="line">5321 Firehotcker</span><br><span class="line">5400 BackConstruction1.2 或 BladeRunner</span><br><span class="line">5550 Xtcp</span><br><span class="line">5555 rmt - rmtd</span><br><span class="line">5556 mtb - mtbd</span><br><span class="line">5569 RoboHack</span><br><span class="line">5714 Wincrash3</span><br><span class="line">5742 Wincrash</span><br><span class="line">6400 The Thing</span><br><span class="line">6669 Vampire</span><br><span class="line">6670 Deep Throat</span><br><span class="line">6711 SubSeven</span><br><span class="line">6713 SubSeven</span><br><span class="line">6767 NT Remote Control</span><br><span class="line">6771 Deep Throat 3</span><br><span class="line">6776 SubSeven</span><br><span class="line">6883 DeltaSource</span><br><span class="line">6939 Indoctrination</span><br><span class="line">6969 Gatecrasher.a</span><br><span class="line">7306 网络精灵(木马)</span><br><span class="line">7307 ProcSpy</span><br><span class="line">7308 X Spy</span><br><span class="line">7626 冰河(木马) 默认端口</span><br><span class="line">7789 ICQKiller</span><br><span class="line">8000 OICQ Server</span><br><span class="line">9400 InCommand</span><br><span class="line">9401 InCommand</span><br><span class="line">9402 InCommand</span><br><span class="line">9535 man</span><br><span class="line">9536 w</span><br><span class="line">9537 mantst</span><br><span class="line">9872 Portal of Doom</span><br><span class="line">9875 Portal of Doom</span><br><span class="line">9989 InIkiller</span><br><span class="line">10000 bnews</span><br><span class="line">10001 queue</span><br><span class="line">10002 poker</span><br><span class="line">10167 Portal Of Doom</span><br><span class="line">10607 Coma</span><br><span class="line">11000 Senna Spy Trojans</span><br><span class="line">11223 ProgenicTrojan</span><br><span class="line">12076 Gjamer 或 MSH.104b</span><br><span class="line">12223 Hack?9 KeyLogger</span><br><span class="line">12345 netbus木马 默认端口</span><br><span class="line">12346 netbus木马 默认端口</span><br><span class="line">12631 WhackJob.NB1.7</span><br><span class="line">16969 Priotrity</span><br><span class="line">17300 Kuang2</span><br><span class="line">20000 Millenium II (GrilFriend)</span><br><span class="line">20001 Millenium II (GrilFriend)</span><br><span class="line">20034 NetBus Pro</span><br><span class="line">20331 Bla</span><br><span class="line">21554 GirlFriend 或 Schwindler 1.82</span><br><span class="line">22222 Prosiak</span><br><span class="line">23456 Evil FTP 或 UglyFtp 或 WhackJob</span><br><span class="line">27374 SubSeven</span><br><span class="line">29891 The Unexplained</span><br><span class="line">30029 AOLTrojan</span><br><span class="line">30100 NetSphere</span><br><span class="line">30303 Socket23</span><br><span class="line">30999 Kuang</span><br><span class="line">31337 BackOriffice</span><br><span class="line">31339 NetSpy</span><br><span class="line">31666 BO Whackmole</span><br><span class="line">31787 Hack a tack</span><br><span class="line">33333 Prosiak</span><br><span class="line">33911 Trojan Spirit 2001 a</span><br><span class="line">34324 TN 或 Tiny Telnet Server</span><br><span class="line">40412 TheSpy</span><br><span class="line">40421 MastersParadise.96</span><br><span class="line">40423 Master Paradise.97</span><br><span class="line">47878 BirdSpy2</span><br><span class="line">50766 Fore 或 Schwindler</span><br><span class="line">53001 Remote Shutdown</span><br><span class="line">54320 Back Orifice 2000</span><br><span class="line">54321 SchoolBus 1.6</span><br><span class="line">61466 Telecommando</span><br><span class="line">65000 Devil文字</span><br><span class="line">黑客及木马攻击常见端口的关闭</span><br><span class="line">以下列出的端口仅为相关木马程序默认情况下开放的端口，请根据具体情况采取相应的操作：</span><br><span class="line">707端口的关闭：</span><br><span class="line">这个端口开放表示你可能感染了nachi蠕虫病毒，该蠕虫的清除方法如下：</span><br><span class="line">1、停止服务名为WinS Client和Network Connections Sharing的两项服务</span><br><span class="line">2、删除c:WinntSYSTEM32WinS目录下的DLLHOST.EXE和SVCHOST.EXE文件</span><br><span class="line">3、编辑注册表，删除HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServices项中名为RpcTftpd和RpcPatch的两个键值</span><br><span class="line">1999端口的关闭：</span><br><span class="line">这个端口是木马程序BackDoor的默认服务端口，该木马清除方法如下：</span><br><span class="line">1、使用进程管理工具将notpa.exe进程结束</span><br><span class="line">2、删除c:Windows目录下的notpa.exe程序</span><br><span class="line">3、编辑注册表，删除HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersion</span><br><span class="line">Run项中包含c:Windows otpa.exe /o=yes的键值</span><br><span class="line">2001端口的关闭：</span><br><span class="line">这个端口是木马程序黑洞2001的默认服务端口，该木马清除方法如下：</span><br><span class="line">1、首先使用进程管理软件将进程Windows.exe杀掉</span><br><span class="line">2、删除c:Winntsystem32目录下的Windows.exe和S_Server.exe文件</span><br><span class="line">3、编辑注册表，删除HKEY_LOCAL_MACHINESoftwareMicrosoftWindowsCurrentVersion</span><br><span class="line">RunServices项中名为Windows的键值</span><br><span class="line">4、将HKEY_CLASSES_ROOT和HKEY_LOCAL_MACHINESoftwareCLASSES项中的Winvxd项删除</span><br><span class="line">5、修改HKEY_CLASSES_ROOT xtfileshellopencommand项中的c:Winntsystem32S_SERVER.EXE %1为C:WinNTNOTEPAD.EXE %1</span><br><span class="line">6、修改HKEY_LOCAL_MACHINESoftwareCLASSES xtfileshellopencommand</span><br><span class="line">项中的c:Winntsystem32S_SERVER.EXE %1键值改为</span><br><span class="line">C:WinNTNOTEPAD.EXE %1</span><br><span class="line">2023端口的关闭：</span><br><span class="line">这个端口是木马程序Ripper的默认服务端口，该木马清除方法如下：</span><br><span class="line">1、使用进程管理工具结束sysrunt.exe进程</span><br><span class="line">2、删除c:Windows目录下的sysrunt.exe程序文件</span><br><span class="line">3、编辑system.ini文件，将shell=explorer.exe sysrunt.exe 改为shell=explorer.exe后保存</span><br><span class="line">4、重新启动系统</span><br><span class="line">2583端口的关闭：</span><br><span class="line">这个端口是木马程序Wincrash v2的默认服务端口，该木马清除方法如下：</span><br><span class="line">1、编辑注册表，删除HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersion</span><br><span class="line">Run项中的WinManager = &quot;c:Windowsserver.exe&quot;键值</span><br><span class="line">2、编辑Win.ini文件，将run=c:Windowsserver.exe改为run=后保存退出</span><br><span class="line">3、重新启动系统后删除C:Windowssystem SERVER.EXE</span><br><span class="line">3389端口的关闭：</span><br><span class="line">首先说明3389端口是Windows的远程管理终端所开的端口，它并不是一个木马程序，请先确定该服务是否是你自己开放的。如果不是必须的，请关闭该服务。</span><br><span class="line">Win2000关闭的方法：</span><br><span class="line">1、Win2000server 开始--&gt;程序--&gt;管理工具--&gt;服务里找到Terminal Services服务项，选中属性选项将启动类型改成手动，并停止该服务。</span><br><span class="line">2、Win2000pro　开始--&gt;设置--&gt;控制面板--&gt;管理工具--&gt;服务里找到Terminal Services服务项，选中属性选项将启动类</span><br><span class="line">型改成手动，并停止该服务。</span><br><span class="line">Winxp关闭的方法：</span><br><span class="line">在我的电脑上点右键选属性--&gt;远程，将里面的远程协助和远程桌面两个选项框里的勾去掉。</span><br><span class="line">4444端口的关闭：</span><br><span class="line">如果发现你的机器开放这个端口，可能表示你感染了msblast蠕虫，清除该蠕虫的方法如下：</span><br><span class="line">1、使用进程管理工具结束msblast.exe的进程</span><br><span class="line">2、编辑注册表，删除HKEY_LOCAL_MACHINESoftwareMicrosoftWindowsCurrentVersionRun</span><br><span class="line">项中的&quot;Windows auto update&quot;=&quot;msblast.exe&quot;键值</span><br><span class="line">3、删除c:Winntsystem32目录下的msblast.exe文件</span><br><span class="line">4899端口的关闭：</span><br><span class="line">首先说明4899端口是一个远程控制软件（remote administrator)服务端监听的端口，他不能算是一个木马程序，但是具有远程控制功能，通常杀毒软件是无法查出它来的，请先确定该服务是否是你自己开放并且是必需的。如果不是请关闭它。</span><br><span class="line">关闭4899端口：</span><br><span class="line">1、请在开始--&gt;运行中输入cmd(98以下为command),然后 cd C:Winntsystem32(你的系统安装目录），输入r_server.exe /stop后按回车。</span><br><span class="line">　　 然后在输入r_server /uninstall /silence</span><br><span class="line">2、到C:Winntsystem32(系统目录）下删除r_server.exe admdll.dll</span><br><span class="line">raddrv.dll三个文件</span><br><span class="line">5800，5900端口：</span><br><span class="line">首先说明5800，5900端口是远程控制软件VNC的默认服务端口，但是VNC在修改过后会被用在某些蠕虫中。</span><br><span class="line">请先确认VNC是否是你自己开放并且是必须的，如果不是请关闭</span><br><span class="line">关闭的方法：</span><br><span class="line">1、首先使用fport命令确定出监听在5800和5900端口的程序所在位置（通常会是c:Winntfontsexplorer.exe)</span><br><span class="line">2、在任务管理器中杀掉相关的进程（注意有一个是系统本身正常的，请注意！如果错杀可以重新运行c:Winntexplorer.exe)</span><br><span class="line">3、删除C:Winntfonts中的explorer.exe程序。</span><br><span class="line">4、删除注册表HKEY_LOCAL_MACHINESoftwareMicrosoftWindows</span><br><span class="line">CurrentVersionRun项中的Explorer键值。</span><br><span class="line">5、重新启动机器。</span><br><span class="line">6129端口的关闭：</span><br><span class="line">首先说明6129端口是一个远程控制软件（dameware nt utilities)服务端监听得端口，他不是一个木马程序，但是具有远程控制功能，通常的杀毒软件是无法查出它来的。请先确定该服务是否是你自己安装并且是必需的，如果不是请关闭</span><br><span class="line">关闭6129端口：</span><br><span class="line">1、选择开始--&gt;设置--&gt;控制面板--&gt;管理工具--&gt;服务</span><br><span class="line">找到DameWare Mini Remote Control项点击右键选择属性选项，将启动类型改成禁用后停止该服务。</span><br><span class="line">2、到c:Winntsystem32(系统目录）下将DWRCS.EXE程序删除。</span><br><span class="line">3、到注册表内将HKEY_LOCAL_MACHINESYSTEMControlSet001Services项中的DWRCS键值删除</span><br><span class="line">6267端口的关闭：</span><br><span class="line">6267端口是木马程序广外女生的默认服务端口，该木马删除方法如下：</span><br><span class="line">1、启动到安全模式下，删除c:Winntsystem32下的DIAGFG.EXE文件</span><br><span class="line">2、到c:Winnt目录下找到regedit.exe文件，将该文件的后缀名改为.com</span><br><span class="line">3、选择开始--&gt;运行输入regedit.com进入注册表编辑页面</span><br><span class="line">4、修改HKEY_CLASSES_ROOTexefileshellopencommand项的键值为</span><br><span class="line">&quot;%1&quot; %*</span><br><span class="line">5、删除HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows CurrentVersionRunServices项中名字为Diagnostic Configuration的键值</span><br><span class="line">6、将c:Winnt下的regedit.com改回到regedit.exe</span><br><span class="line">6670、6771端口的关闭：</span><br><span class="line">这些端口是木马程序DeepThroat v1.0 - 3.1默认的服务端口，清除该木马的方法如下：</span><br><span class="line">1、编辑注册表，删除HKEY_LOCAL_MACHINESOFTWAREMicroSoftWindowsCurrentVersion</span><br><span class="line">Run项中的‘System32‘=c:Windowssystem32.exe键值（版本1.0）或‘SystemTray‘ = ‘Systray.exe‘ 键值（版本2.0-3.0)键值</span><br><span class="line">3、重新启动机器后删除c:Windowssystem32.exe（版本1.0）或c:Windowssystemsystray.exe（版本2.0-3.0）</span><br><span class="line">6939 端口的关闭：</span><br><span class="line">这个端口是木马程序Indoctrination默认的服务端口，清除该木马的方法如下：</span><br><span class="line">1、编辑注册表，删除</span><br><span class="line">HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows</span><br><span class="line">CurrentVersionRun</span><br><span class="line">HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows</span><br><span class="line">CurrentVersionRunServices</span><br><span class="line">HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows</span><br><span class="line">CurrentVersionRunOnce</span><br><span class="line">HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows</span><br><span class="line">CurrentVersionRunServicesOnce</span><br><span class="line">四项中所有包含Msgsrv16 =&quot;msgserv16.exe&quot;的键值</span><br><span class="line">2、重新启动机器后删除C:Windowssystem目录下的msgserv16.exe文件</span><br><span class="line">6969端口的关闭：</span><br><span class="line">这个端口是木马程序PRIORITY的默认服务端口，清除该木马的方法如下：</span><br><span class="line">1、编辑注册表，删除HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersion</span><br><span class="line">Run Services项中的&quot;PServer&quot;= C:WindowsSystemPServer.exe键值</span><br><span class="line">2、重新启动系统后删除C:WindowsSystem目录下的PServer.exe文件</span><br><span class="line">7306端口的关闭：</span><br><span class="line">这个端口是木马程序网络精灵的默认服务端口，该木马删除方法如下：</span><br><span class="line">1、你可以使用fport察看7306端口由哪个程序监听，记下程序名称和所在的路径</span><br><span class="line">2、如果程序名为Netspy.exe，你可以在命令行方式下到该程序所在目录输入命令Netspy.exe /remove来删除木马</span><br><span class="line">3、如果是其他名字的程序，请先在进程中结束该程序的进程，然后到相应目录下删除该程序。</span><br><span class="line">4、编辑注册表，将HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows CurrentVersionRun项和HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows CurrentVersionRunServices项中与该程序有关的键值删除</span><br><span class="line">7511端口的关闭：</span><br><span class="line">7511是木马程序聪明基因的默认连接端口，该木马删除方法如下：</span><br><span class="line">1、首先使用进程管理工具杀掉MBBManager.exe这个进程</span><br><span class="line">2、删除c:Winnt（系统安装目录）中的MBBManager.exe和Explore32.exe程序文件，删除c:Winntsystem32目录下的editor.exe文件</span><br><span class="line">3、编辑注册表，删除注册表HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersion</span><br><span class="line">Run项中内容为C:WinNTMBBManager.exe键名为MainBroad BackManager的项。</span><br><span class="line">4、修改注册表HKEY_CLASSES_ROOT xtf</span><br><span class="line">ileshellopencommand中的c:Winntsystem32editor.exe %1改为c:WinntNOTEPAD.EXE %1</span><br><span class="line">5、修改注册表HKEY_LOCAL_MACHINESoftwareCLASSEShlpfileshellopencommand</span><br><span class="line">项中的C:WinNTexplore32.exe %1键值改为C:WinNTWinHLP32.EXE %1</span><br><span class="line">7626端口的关闭：</span><br><span class="line">7626是木马冰河的默认开放端口（这个端口可以改变），木马删除方法如下：</span><br><span class="line">1、启动机器到安全模式下，编辑注册表，删除HKEY_LOCAL_MACHINEsoftwaremicrosoftWindows CurrentVersionRun</span><br><span class="line">项中内容为c:Winntsystem32Kernel32.exe的键值</span><br><span class="line">2、删除HKEY_LOCAL_MACHINEsoftwaremicrosoftWindows CurrentVersionRunservices项中内容为C:Windowssystem32Kernel32.exe的键值</span><br><span class="line">3、修改HKEY_CLASSES_ROOT xtfileshellopencommand项下的C:Winntsystem32Sysexplr.exe %1为C:Winnt otepad.exe %1</span><br><span class="line">4、到C:Windowssystem32下删除文件Kernel32.exe和Sysexplr.exe</span><br><span class="line">8011端口的关闭：</span><br><span class="line">8011端口是木马程序WAY2.4的默认服务端口，该木马删除方法如下：</span><br><span class="line">1、首先使用进程管理工具杀掉msgsvc.exe的进程</span><br><span class="line">2、到C:Windowssystem目录下删除msgsvc.exe文件</span><br><span class="line">3、编辑注册表，删除HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersion</span><br><span class="line">Run项中内容为C:WinDOWSSYSTEMmsgsvc.exe的键值</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> cli交互模式 rm,mv,rename,mkdir,ls,ll,<span class="built_in">pwd</span>,<span class="built_in">cd</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 指定配置文件</span></span><br><span class="line">export ALIYUNPAN_CONFIG_DIR=/home/tickstep/tools/aliyunpan/config</span><br><span class="line"><span class="meta">#</span><span class="bash"> 刷新当前登录用户</span></span><br><span class="line">aliyunpan token update</span><br><span class="line"><span class="meta">#</span><span class="bash"> 刷新所有登录的用户</span></span><br><span class="line">aliyunpan token update -mode 2</span><br><span class="line"><span class="meta">#</span><span class="bash"> 每小时执行一次Token刷新任务</span></span><br><span class="line">*/60  * * * * /&lt;your path&gt;/aliyunpan token update -mode 2</span><br><span class="line">aliyunpan logout</span><br><span class="line">aliyunpan su &lt;uid&gt;</span><br><span class="line">aliyunpan who</span><br><span class="line">aliyunpan loglist</span><br><span class="line">aliyunpan update</span><br><span class="line">aliyunpan help</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看login命令的帮助手册</span></span><br><span class="line">aliyunpan help login</span><br><span class="line"><span class="meta">#</span><span class="bash"> 登录</span></span><br><span class="line">aliyunpan login</span><br><span class="line"><span class="meta">#</span><span class="bash"> 磁盘配额</span></span><br><span class="line">aliyunpan quota</span><br><span class="line"><span class="meta">#</span><span class="bash"> 上传</span></span><br><span class="line">aliyunpan upload &lt;本地文件/目录的路径1&gt; &lt;文件/目录2&gt; &lt;文件/目录3&gt; ... &lt;目标目录&gt;</span><br><span class="line">aliyunpan u &lt;本地文件/目录的路径1&gt; &lt;文件/目录2&gt; &lt;文件/目录3&gt; ... &lt;目标目录&gt;</span><br><span class="line">  --ow            overwrite, 覆盖已存在的文件</span><br><span class="line">  --status        输出所有线程的工作状态</span><br><span class="line">  --save          将下载的文件直接保存到当前工作目录</span><br><span class="line">  --saveto value  将下载的文件直接保存到指定的目录</span><br><span class="line">  -x              为文件加上执行权限, (windows系统无效)</span><br><span class="line">  -p value        指定下载线程数 (default: 0)</span><br><span class="line">  -l value        指定同时进行下载文件的数量 (default: 0)</span><br><span class="line">  --retry value   下载失败最大重试次数 (default: 3)</span><br><span class="line">  --nocheck       下载文件完成后不校验文件</span><br><span class="line">  --exn value     指定排除的文件夹或者文件的名称，只支持正则表达式。支持排除多个名称，每一个名称就是一个exn参数</span><br><span class="line"><span class="meta">#</span><span class="bash">以下是典型的排除特定文件或者文件夹的例子，注意：参数值必须是正则表达式</span></span><br><span class="line"><span class="meta">#</span><span class="bash">1)排除@eadir文件或者文件夹：-exn <span class="string">&quot;^@eadir$&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">2)排除.jpg文件：-exn <span class="string">&quot;\.jpg$&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">3)排除.号开头的文件：-exn <span class="string">&quot;^\.&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">4)排除~号开头的文件：-exn <span class="string">&quot;^~&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">5)排除 myfile.txt 文件：-exn <span class="string">&quot;^myfile.txt$&quot;</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 显示和修改程序配置项</span></span><br><span class="line">aliyunpan config -h</span><br><span class="line">aliyunpan config set -h</span><br><span class="line">aliyunpan config set -savedir D:/Downloads</span><br><span class="line">aliyunpan config set -max_download_parallel 15 -savedir D:/Downloads</span><br><span class="line">aliyunpan config set -transfer_url_type 2</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/16/other/" data-id="ckygxyfmm0002o4vb9a7v2tsy" data-title="other" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2022/01/16/pip/" data-id="ckygyus5b00093kvbfsa7231n" data-title="pip" class="article-share-link">Share</a>
       
       
       
@@ -210,6 +512,11 @@
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -225,7 +532,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
     </div>
@@ -235,20 +542,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/01/16/docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/curl/">curl</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/firewall/">firewall</a>
+          </li>
         
           <li>
             <a href="/2022/01/16/git/">git</a>
           </li>
         
           <li>
-            <a href="/2022/01/16/pip/">pip</a>
-          </li>
-        
-          <li>
-            <a href="/2022/01/16/other/">other</a>
+            <a href="/2022/01/16/go/">go</a>
           </li>
         
       </ul>

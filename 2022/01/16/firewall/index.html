@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>firewall | Dean&#39;s site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Firewall-cmd基本命令12345678# 查看防火墙状态firewall-cmd --state # not running&#x2F; running# 查看已开端口firewall-cmd --list-ports# 使新添加的端口生效firewall-cmd --reload # 更新防火墙规则，重启服务firewall-cmd --completely-reload  服务启动123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="firewall">
+<meta property="og:url" content="http://example.com/2022/01/16/firewall/index.html">
+<meta property="og:site_name" content="Dean&#39;s site">
+<meta property="og:description" content="Firewall-cmd基本命令12345678# 查看防火墙状态firewall-cmd --state # not running&#x2F; running# 查看已开端口firewall-cmd --list-ports# 使新添加的端口生效firewall-cmd --reload # 更新防火墙规则，重启服务firewall-cmd --completely-reload  服务启动123456">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
+<meta property="article:modified_time" content="2022-01-16T07:53:10.447Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Dean's site" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Dean&#39;s site</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">tools</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-firewall" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/firewall/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      firewall
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Firewall-cmd基本命令"><a href="#Firewall-cmd基本命令" class="headerlink" title="Firewall-cmd基本命令"></a>Firewall-cmd基本命令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看防火墙状态</span></span><br><span class="line">firewall-cmd --state # not running/ running</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看已开端口</span></span><br><span class="line">firewall-cmd --list-ports</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使新添加的端口生效</span></span><br><span class="line">firewall-cmd --reload </span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新防火墙规则，重启服务</span></span><br><span class="line">firewall-cmd --completely-reload</span><br></pre></td></tr></table></figure>
+
+<h1 id="服务启动"><a href="#服务启动" class="headerlink" title="服务启动"></a>服务启动</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 开启</span></span><br><span class="line">systemctl start firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 开机自启</span></span><br><span class="line">systemctl enable firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭开机自启</span></span><br><span class="line">systemctl disable firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启</span></span><br><span class="line">systemctl restart firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 是否自启</span></span><br><span class="line">systemctl is-enable firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看服务是否开机启动</span></span><br><span class="line">systemctl is-enabled firewalld.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看已启动的服务列表</span></span><br><span class="line">systemctl list-unit-files|grep enabled</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看启动失败的服务列表</span></span><br><span class="line">systemctl --failed</span><br></pre></td></tr></table></figure>
+
+<h1 id="端口开关"><a href="#端口开关" class="headerlink" title="端口开关"></a>端口开关</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 开端口命令</span></span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line"><span class="meta">#</span><span class="bash"> 命令含义：</span></span><br><span class="line"><span class="meta">#</span><span class="bash">	--zone <span class="comment">#作用域，</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">	--add-port=80/tcp  <span class="comment">#添加端口，格式为：端口/通讯协议，</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">	--permanent   <span class="comment">#永久生效，没有此参数重启后失效</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看</span></span><br><span class="line">firewall-cmd --zone=public --query-port=80/tcp</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除</span></span><br><span class="line">firewall-cmd --zone=public --remove-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看已激活的Zone信息</span></span><br><span class="line">firewall-cmd --get-active-zones</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看指定接口所属区域</span></span><br><span class="line">firewall-cmd --get-zone-of-interface=eth0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 拒绝所有包</span></span><br><span class="line">firewall-cmd --panic-on</span><br><span class="line"><span class="meta">#</span><span class="bash"> 取消拒绝状态：</span> </span><br><span class="line">firewall-cmd --panic-off</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看是否拒绝</span></span><br><span class="line">firewall-cmd --query-panic</span><br></pre></td></tr></table></figure>
+
+<h1 id="信任级别"><a href="#信任级别" class="headerlink" title="信任级别"></a>信任级别</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">信任级别，通过Zone的值指定</span><br><span class="line">drop: 丢弃所有进入的包，而不给出任何响应 </span><br><span class="line">block: 拒绝所有外部发起的连接，允许内部发起的连接 </span><br><span class="line">public: 允许指定的进入连接 </span><br><span class="line">external: 同上，对伪装的进入连接，一般用于路由转发 </span><br><span class="line">dmz: 允许受限制的进入连接 </span><br><span class="line">work: 允许受信任的计算机被限制的进入连接，类似 workgroup </span><br><span class="line">home: 同上，类似 homegroup </span><br><span class="line">internal: 同上，范围针对所有互联网用户 </span><br><span class="line">trusted: 信任所有连接</span><br></pre></td></tr></table></figure>
+
+<h1 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 以smtp服务为例， 添加到work zone</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加：</span></span><br><span class="line">firewall-cmd --zone=work --add-service=smtp</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看：</span></span><br><span class="line">firewall-cmd --zone=work --query-service=smtp</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除：</span></span><br><span class="line">firewall-cmd --zone=work --remove-service=smtp</span><br></pre></td></tr></table></figure>
+
+<h1 id="IP地址伪装"><a href="#IP地址伪装" class="headerlink" title="IP地址伪装"></a>IP地址伪装</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看：</span></span><br><span class="line">firewall-cmd --zone=external --query-masquerade</span><br><span class="line"><span class="meta">#</span><span class="bash"> 打开：</span></span><br><span class="line">firewall-cmd --zone=external --add-masquerade</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭：</span></span><br><span class="line">firewall-cmd --zone=external --remove-masquerade</span><br></pre></td></tr></table></figure>
+
+<h1 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 打开端口转发，首先需要打开IP地址伪装</span></span><br><span class="line">firewall-cmd --zone=external --add-masquerade</span><br><span class="line"><span class="meta">#</span><span class="bash"> 转发 tcp 22 端口至 3753：</span></span><br><span class="line">firewall-cmd --zone=external --add-forward-port=22:porto=tcp:toport=3753</span><br><span class="line"><span class="meta">#</span><span class="bash"> 转发端口数据至另一个IP的相同端口：</span></span><br><span class="line">firewall-cmd --zone=external --add-forward-port=22:porto=tcp:toaddr=192.168.1.112</span><br><span class="line"><span class="meta">#</span><span class="bash"> 转发端口数据至另一个IP的 3753 端口：</span></span><br><span class="line">firewall-cmd --zone=external --add-forward-port=22:porto=tcp:：toport=3753:toaddr=192.168.1.112</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/firewall/" data-id="ckygyus5400023kvbg530cvnx" data-title="firewall" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/16/curl/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          curl
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/16/git/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">git</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/16/docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/curl/">curl</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/firewall/">firewall</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/go/">go</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Dean0731<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

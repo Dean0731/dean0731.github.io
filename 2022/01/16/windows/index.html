@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>windows | Dean&#39;s site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="12345问题:word一直需要文件上传,onedrive关闭office上传即可问题：文件删不掉方案：复制代码为bat，拖拽文件到bat即可DEL &#x2F;F &#x2F;A &#x2F;Q \\?\%1RD &#x2F;S &#x2F;Q \\?\%1  12# 删除smb 链接 net use * &#x2F;del  任务栏卡死  方法一:powershell 1Get-AppXPackage -AllUsers | Foreach &amp;#123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows">
+<meta property="og:url" content="http://example.com/2022/01/16/windows/index.html">
+<meta property="og:site_name" content="Dean&#39;s site">
+<meta property="og:description" content="12345问题:word一直需要文件上传,onedrive关闭office上传即可问题：文件删不掉方案：复制代码为bat，拖拽文件到bat即可DEL &#x2F;F &#x2F;A &#x2F;Q \\?\%1RD &#x2F;S &#x2F;Q \\?\%1  12# 删除smb 链接 net use * &#x2F;del  任务栏卡死  方法一:powershell 1Get-AppXPackage -AllUsers | Foreach &amp;#123">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
+<meta property="article:modified_time" content="2022-01-16T07:51:17.841Z">
+<meta property="article:author" content="Dean0731">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Dean's site" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Dean&#39;s site</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">tools</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-windows" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/windows/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      windows
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">问题:word一直需要文件上传,onedrive关闭office上传即可</span><br><span class="line">问题：文件删不掉</span><br><span class="line">方案：复制代码为bat，拖拽文件到bat即可</span><br><span class="line">DEL /F /A /Q \\?\%1</span><br><span class="line">RD /S /Q \\?\%1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除smb 链接</span> </span><br><span class="line">net use * /del</span><br></pre></td></tr></table></figure>
+
+<p>任务栏卡死</p>
+<ul>
+<li><p>方法一:powershell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-AppXPackage -AllUsers | Foreach &#123;Add-AppxPackage -DisableDevelopmentMode -Register &quot;$($_.InstallLocation)\AppXManifest.xml&quot;&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>方法二:</p>
+<p><a target="_blank" rel="noopener" href="https://answers.microsoft.com/zh-hans/windows/forum/windows_10-start/win10%E4%BB%BB%E5%8A%A1%E6%A0%8F%E5%8D%A1%E6%AD%BB/aec90be1-8084-4262-b559-262fa4d87279">https://answers.microsoft.com/zh-hans/windows/forum/windows_10-start/win10%E4%BB%BB%E5%8A%A1%E6%A0%8F%E5%8D%A1%E6%AD%BB/aec90be1-8084-4262-b559-262fa4d87279</a></p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=445 connectaddress=dean0731.tpddns.cn connectport=30445 转发记录定义</span><br><span class="line">netsh interface portproxy delete v4tov4 listenaddress=127.0.0.1 listenport=445  取消</span><br><span class="line">netsh interface portproxy show v4tov4 配置查看</span><br><span class="line">recent 		查询使用记录</span><br><span class="line">ssh-keygen	ssh</span><br><span class="line">regedit		注册表</span><br><span class="line">services.msc	服务</span><br><span class="line">devmgmt.msc	设备管理器</span><br><span class="line">msconfig	多系统查看</span><br><span class="line">dxdiag		驱动查看</span><br><span class="line">netplwiz	取消开机密码</span><br><span class="line">ncpa.cpl	网络共享中心</span><br><span class="line">inetcpl.cpl	Internet选项</span><br><span class="line">Sysdm.cpl	系统属性</span><br><span class="line">Appwiz.cpl	添加删除程序</span><br><span class="line">control userpasswords 	账户信息</span><br><span class="line">control admintools	系统管理</span><br><span class="line">diskpart&amp;&amp;automount disable	关闭自动挂载</span><br><span class="line">diskpart&amp;&amp;automount disable	开启自动挂载</span><br><span class="line">netsh wlan show profiles &quot;Honor V10&quot; key=clear 查看WiFi密码</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">attrib -h -s d:\test 显示文件</span><br><span class="line">attrib +h +s d:\test 隐藏文件</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">快捷键</span><br><span class="line">winfr		文件恢复命令</span><br><span class="line">md	  	创建文件夹</span><br><span class="line">rd		删除文件夹</span><br><span class="line">del		删除文件</span><br><span class="line">rd\s\q 路径	删除非空文件夹</span><br><span class="line">copy con 1.txt	输入后按enter 写内容 Ctrl+z 按enter；</span><br><span class="line">copy 文件目录	复制文件；</span><br><span class="line">move 文件目录	移动剪切文件</span><br><span class="line">type 3.txt	显示文件内容</span><br><span class="line">ASSOC          显示或修改文件扩展名关联。</span><br><span class="line">ATTRIB         显示或更改文件属性。</span><br><span class="line">BREAK          设置或清除扩展式 CTRL+C 检查。</span><br><span class="line">BCDEDIT        设置启动数据库中的属性以控制启动加载。</span><br><span class="line">CACLS          显示或修改文件的访问控制列表(ACL)。</span><br><span class="line">CALL           从另一个批处理程序调用这一个。</span><br><span class="line">CD             显示当前目录的名称或将其更改。</span><br><span class="line">CHCP           显示或设置活动代码页数。</span><br><span class="line">CHDIR          显示当前目录的名称或将其更改。</span><br><span class="line">CHKDSK         检查磁盘并显示状态报告。</span><br><span class="line">CHKNTFS        显示或修改启动时间磁盘检查。</span><br><span class="line">CLS            清除屏幕。</span><br><span class="line">CMD            打开另一个 Windows 命令解释程序窗口。</span><br><span class="line">COLOR          设置默认控制台前景和背景颜色</span><br><span class="line">COMP           比较两个或两套文件的内容。</span><br><span class="line">COMPACT        显示或更改 NTFS 分区上文件的压缩。</span><br><span class="line">CONVERT        将 FAT 卷转换成 NTFS。你不能转换</span><br><span class="line">               当前驱动器。</span><br><span class="line">COPY           将至少一个文件复制到另一个位置。</span><br><span class="line">DATE           显示或设置日期。</span><br><span class="line">DEL            删除至少一个文件。</span><br><span class="line">DIR            显示一个目录中的文件和子目录。</span><br><span class="line">DISKPART       显示或配置磁盘分区属性。</span><br><span class="line">DOSKEY         编辑命令行、撤回 Windows 命令并创建宏。</span><br><span class="line">DRIVERQUERY    显示当前设备驱动程序状态和属性。</span><br><span class="line">ECHO           显示消息，或将命令回显打开或关闭。</span><br><span class="line">ENDLOCAL       结束批文件中环境更改的本地化。</span><br><span class="line">ERASE          删除一个或多个文件。</span><br><span class="line">EXIT           退出 CMD.EXE 程序(命令解释程序)。</span><br><span class="line">FC             比较两个文件或两个文件集并显示它们之间的不同。</span><br><span class="line">FIND           在一个或多个文件中搜索一个文本字符串。</span><br><span class="line">FINDSTR        在多个文件中搜索字符串。</span><br><span class="line">FOR            为一组文件中的每个文件运行一个指定的命令。</span><br><span class="line">FORMAT         格式化磁盘，以便用于 Windows。</span><br><span class="line">FSUTIL         显示或配置文件系统属性。</span><br><span class="line">FTYPE          显示或修改在文件扩展名关联中使用的文件类型。</span><br><span class="line">GOTO           将 Windows 命令解释程序定向到批处理程序中某个带标签的行。</span><br><span class="line">GPRESULT       显示计算机或用户的组策略信息。</span><br><span class="line">GRAFTABL       使 Windows 在图形模式下显示扩展字符集。</span><br><span class="line">HELP           提供 Windows 命令的帮助信息。</span><br><span class="line">ICACLS         显示、修改、备份或还原文件和目录的 ACL。</span><br><span class="line">IF             在批处理程序中执行有条件的处理操作。</span><br><span class="line">LABEL          创建、更改或删除磁盘的卷标。</span><br><span class="line">MD             创建一个目录。</span><br><span class="line">MKDIR          创建一个目录。</span><br><span class="line">MKLINK         创建符号链接和硬链接</span><br><span class="line">MODE           配置系统设备。</span><br><span class="line">MORE           逐屏显示输出。</span><br><span class="line">MOVE           将一个或多个文件从一个目录移动到另一个目录。</span><br><span class="line">OPENFILES      显示远程用户为了文件共享而打开的文件。</span><br><span class="line">PATH           为可执行文件显示或设置搜索路径。</span><br><span class="line">PAUSE          暂停批处理文件的处理并显示消息。</span><br><span class="line">POPD           还原通过 PUSHD 保存的当前目录的上一个值。</span><br><span class="line">PRINT          打印一个文本文件。</span><br><span class="line">PROMPT         更改 Windows 命令提示。</span><br><span class="line">PUSHD          保存当前目录，然后对其进行更改。</span><br><span class="line">RD             删除目录。</span><br><span class="line">RECOVER        从损坏的或有缺陷的磁盘中恢复可读信息。</span><br><span class="line">REM            记录批处理文件或 CONFIG.SYS 中的注释(批注)。</span><br><span class="line">REN    3.txt 5.txt        重命名文件。</span><br><span class="line">RENAME         重命名文件。</span><br><span class="line">REPLACE        替换文件。</span><br><span class="line">RMDIR          删除目录。</span><br><span class="line">ROBOCOPY       复制文件和目录树的高级实用工具</span><br><span class="line">SET            显示、设置或删除 Windows 环境变量。</span><br><span class="line"></span><br><span class="line">SETLOCAL       开始本地化批处理文件中的环境更改。</span><br><span class="line">SC             显示或配置服务(后台进程)。</span><br><span class="line">SCHTASKS       安排在一台计算机上运行命令和程序。</span><br><span class="line">SHIFT          调整批处理文件中可替换参数的位置。</span><br><span class="line">SHUTDOWN       允许通过本地或远程方式正确关闭计算机。</span><br><span class="line">SORT           对输入排序。</span><br><span class="line"></span><br><span class="line">START          启动单独的窗口以运行指定的程序或命令。</span><br><span class="line">SUBST          将路径与驱动器号关联。</span><br><span class="line">SYSTEMINFO     显示计算机的特定属性和配置。</span><br><span class="line">TASKLIST       显示包括服务在内的所有当前运行的任务。</span><br><span class="line">TASKKILL       中止或停止正在运行的进程或应用程序。</span><br><span class="line">TIME           显示或设置系统时间。</span><br><span class="line">TITLE          设置 CMD.EXE 会话的窗口标题。</span><br><span class="line">TREE           以图形方式显示驱动程序或路径的目录结构。</span><br><span class="line">TYPE           显示文本文件的内容。</span><br><span class="line">VER            显示 Windows 的版本。</span><br><span class="line">VERIFY         告诉 Windows 是否进行验证，以确保文件正确写入磁盘。</span><br><span class="line">VOL            显示磁盘卷标和序列号。</span><br><span class="line">XCOPY          复制文件和目录树。</span><br><span class="line">WMIC           在交互式命令 shell 中显示 WMI 信息。</span><br><span class="line"></span><br><span class="line">有关工具的详细信息，请参阅联机帮助中的命令行参考</span><br><span class="line">Windows 徽标键 + A  打开操作中心 </span><br><span class="line">Windows 徽标键?+ S  打开搜索  </span><br><span class="line">Windows 徽标键 + Tab  打开任务视图 </span><br><span class="line">Windows 徽标键 + Ctrl + D  添加虚拟桌面 </span><br><span class="line">Windows 徽标键 + Ctrl + 向右键  在你于右侧创建的虚拟桌面之间进行切换 </span><br><span class="line">Windows 徽标键 + Ctrl + 向左键  在你于左侧创建的虚拟桌面之间进行切换 </span><br><span class="line">Windows 徽标键 + Ctrl + F4  关闭你正在使用的虚拟桌面 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">F2	重命名选定项 </span><br><span class="line">F3	在文件资源管理器中搜索文件或文件夹 </span><br><span class="line">F4	在文件资源管理器中显示地址栏列表 </span><br><span class="line">F5	刷新活动窗口</span><br><span class="line">F6	在窗口中或桌面上循环浏览屏幕元素 </span><br><span class="line">F10	激活活动应用中的菜单栏 </span><br><span class="line">Alt + F4	关闭活动项，或者退出活动应用</span><br><span class="line">Alt + Esc	以项目打开的顺序循环切换项目</span><br><span class="line">Alt + 带下划线的字母	执行该字母对应的命令 </span><br><span class="line">Alt + Enter	显示选定项的属性</span><br><span class="line">Alt + 空格键	为活动窗口打开快捷菜单</span><br><span class="line">Alt + 向左键	后退</span><br><span class="line">Alt + 向右键	前进 </span><br><span class="line">Alt + Page Up	向上移动一个屏幕</span><br><span class="line">Alt + Page Down	向下移动一个屏幕</span><br><span class="line">Alt + Tab	在打开的应用之间切换</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + F4	关闭活动文档（在允许同时打开多个文档的全屏模式的应用中）</span><br><span class="line">Ctrl + R（或 F5）	刷新活动窗口</span><br><span class="line">Ctrl + 向右键</span><br><span class="line">将光标移动到下一个字词的起始处</span><br><span class="line">Ctrl + 向左键</span><br><span class="line"> 将光标移动到上一个字词的起始处</span><br><span class="line">Ctrl + 向下键</span><br><span class="line"> 将光标移动到下一个段落的起始处</span><br><span class="line">Ctrl + 向上键</span><br><span class="line"> 将光标移动到上一个段落的起始处</span><br><span class="line">Ctrl + Alt + Tab</span><br><span class="line"> 使用箭头键在所有打开的应用之间切换</span><br><span class="line">Ctrl + 箭头键（用来移动到某个项目）+ 空格键</span><br><span class="line"> 在窗口中或桌面上选择多个单独的项目</span><br><span class="line">Ctrl + Shift 加某个箭头键</span><br><span class="line"> 选择文本块</span><br><span class="line">Ctrl + Esc</span><br><span class="line"> 打开“开始”屏幕</span><br><span class="line">Ctrl + Shift + Esc</span><br><span class="line"> 打开任务管理器</span><br><span class="line">Ctrl + Shift</span><br><span class="line"> 在提供了多个键盘布局时切换键盘布局</span><br><span class="line">Ctrl + 空格键</span><br><span class="line"> 打开或关闭中文输入法编辑器 (IME)</span><br><span class="line">Shift + F10</span><br><span class="line"> 显示选定项的快捷菜单 </span><br><span class="line">Shift 加任意箭头键</span><br><span class="line"> 在窗口中或桌面上选择多个项目，或者在文档中选择文本</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Shift+F10右键快捷菜单</span><br><span class="line">netuser用户名密码/add建立用户</span><br><span class="line">netuserguest/active:yes激活guest用户</span><br><span class="line">netlocalgroupadministrators账户名/add添加到管理员</span><br><span class="line">netuserguest12345把guest用户密码改为12345</span><br><span class="line">netpassword密码更改登录密码</span><br><span class="line">notepad记事本</span><br><span class="line">calculatorcalc计算器</span><br><span class="line">services.msc服务</span><br><span class="line">mstsc远程连接</span><br><span class="line">dxdiag显存信息</span><br><span class="line">scstop名称关闭服务命令</span><br><span class="line">scstart服务名开启服务</span><br><span class="line">netlocalgroupadministratorsDean/add添加用户为管理员</span><br><span class="line">psr步骤记录器</span><br><span class="line">上帝模式:进一个文件夹命名为:Win10上帝模式.&#123;ED7BA470-8E54-465E-825C-99712043E01C&#125;</span><br><span class="line">taskklii/f/pid3640;</span><br><span class="line">netstat-ano显示进程信息有pid</span><br><span class="line">netstat-ano|findstr8080</span><br><span class="line">netstat-ano|findstr端口号，例如要查看8080端口号是否已经被占用就使用命令netstat-ano|findstr8080如果结果为空则说明没有被使用，如果有值则说明已经被使用，最后一列为使用8080端口号的进程ID。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">打开操作中心</span><br><span class="line">Windows徽标键+B</span><br><span class="line">将焦点设置到通知区域</span><br><span class="line">Windows徽标键+G</span><br><span class="line">打开游戏栏（当游戏处于打开状态时）</span><br><span class="line">Windows徽标键+H</span><br><span class="line">打开“共享”超级按钮</span><br><span class="line">Windows徽标键+I</span><br><span class="line">打开“设置”</span><br><span class="line">Windows徽标键+K</span><br><span class="line">打开“连接”快速操作</span><br><span class="line">Windows徽标键+M</span><br><span class="line">最小化所有窗口</span><br><span class="line">Windows徽标键+O</span><br><span class="line">锁定设备方向</span><br><span class="line">Windows徽标键+P</span><br><span class="line">选择演示显示模式</span><br><span class="line">Windows徽标键+R</span><br><span class="line">打开“运行”对话框</span><br><span class="line">Windows徽标键+S</span><br><span class="line">打开搜索</span><br><span class="line">Windows徽标键+T</span><br><span class="line">在任务栏上循环切换应用</span><br><span class="line">Windows徽标键+U</span><br><span class="line">打开轻松使用设置中心</span><br><span class="line">Windows徽标键+V</span><br><span class="line">循环切换通知</span><br><span class="line">Windows徽标键+Shift+V</span><br><span class="line">以相反的顺序循环切换通知</span><br><span class="line">Windows徽标键+X</span><br><span class="line">打开“快速链接”菜单</span><br><span class="line">Windows徽标键+Z</span><br><span class="line">显示在以全屏模式呈现的应用中可用的命令</span><br><span class="line">Windows徽标键+逗号(,)</span><br><span class="line">临时快速查看桌面</span><br><span class="line">Windows徽标键+Pause</span><br><span class="line">显示“系统属性”对话框</span><br><span class="line">Windows徽标键+Ctrl+F</span><br><span class="line">搜索电脑（如果你位于网络中）</span><br><span class="line">Windows徽标键+Shift+M</span><br><span class="line">将最小化的窗口还原到桌面</span><br><span class="line">Windows徽标键+数字打开桌面，并启动固定到任务栏的位于该数字所表示位置的应用。如果该应用已在运行，则切换到该应用。</span><br><span class="line">Windows徽标键+Shift+数字</span><br><span class="line">打开桌面，并启动固定到任务栏的位于该数字所表示位置的应用的新实例</span><br><span class="line">Windows徽标键+Ctrl+数字</span><br><span class="line">打开桌面，并切换到固定到任务栏的位于该数字所表示位置的应用的最后一个活动窗口</span><br><span class="line">Windows徽标键+Alt+数字</span><br><span class="line">打开桌面，并打开固定到任务栏的位于该数字所表示位置的应用的跳转列表</span><br><span class="line">Windows徽标键+Ctrl+Shift+数字</span><br><span class="line">打开桌面，并以管理员身份打开位于任务栏上给定位置的应用的新实例</span><br><span class="line">Windows徽标键+Tab</span><br><span class="line">打开任务视图</span><br><span class="line">Windows徽标键+向上键</span><br><span class="line">最大化窗口</span><br><span class="line">Windows徽标键+向下键</span><br><span class="line">从屏幕中删除当前应用或最小化桌面窗口</span><br><span class="line">Windows徽标键+向左键</span><br><span class="line">将应用或桌面窗口最大化到屏幕左侧</span><br><span class="line">Windows徽标键+向右键</span><br><span class="line">将应用或桌面窗口最大化到屏幕右侧</span><br><span class="line">Windows徽标键+Home</span><br><span class="line">最小化除活动桌面窗口以外的所有窗口（在第二道笔划时还原所有窗口）</span><br><span class="line">Windows徽标键+Shift+向上键</span><br><span class="line">将桌面窗口拉伸到屏幕的顶部和底部</span><br><span class="line">Windows徽标键+Shift+向下键</span><br><span class="line">在垂直方向上还原/最小化活动桌面窗口，同时保持宽度不变</span><br><span class="line">Windows徽标键+Shift+向左键或向右键</span><br><span class="line">将桌面中的应用或窗口从一个监视器移动到另一个监视器</span><br><span class="line">Windows徽标键+空格键</span><br><span class="line">切换输入语言和键盘布局</span><br><span class="line">Windows徽标键+Ctrl+空格键</span><br><span class="line">更改为以前选择的输入</span><br><span class="line">Windows徽标键+Enter</span><br><span class="line">打开“讲述人”</span><br><span class="line">Windows徽标键+正斜杠(/)</span><br><span class="line">启动IME重新转换</span><br><span class="line">Windows徽标键+加号(+)或减号(-)</span><br><span class="line">使用“放大镜”放大或缩小</span><br><span class="line">Windows徽标键+Esc</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">退出放大镜</span><br><span class="line">Ctrl+M</span><br><span class="line">进入标记模式</span><br><span class="line">Alt+选择键</span><br><span class="line">在阻止模式中开始选择</span><br><span class="line">Ctrl+Home（标记模式）</span><br><span class="line">将光标移动到缓冲区的起始处</span><br><span class="line">Ctrl+End（标记模式）</span><br><span class="line">将光标移动到缓冲区的末尾</span><br><span class="line">Ctrl+向上键</span><br><span class="line">在输出历史记录中向上移动一行</span><br><span class="line">Ctrl+向下键</span><br><span class="line">在输出历史记录中向下移动一行</span><br><span class="line">Ctrl+Home（历史记录导航）</span><br><span class="line">如果命令行为空，则将视口移动到缓冲区顶部。否则，删除命令行中光标左侧的所有字符。</span><br><span class="line">Ctrl+End（历史记录导航）</span><br><span class="line">如果命令行为空，则将视口移动到命令行。否则，删除命令行中光标右侧的所有字符。</span><br><span class="line">F4</span><br><span class="line">显示活动列表中的项目</span><br><span class="line">Ctrl+Tab</span><br><span class="line">在选项卡上向前移动</span><br><span class="line">Ctrl+Shift+Tab</span><br><span class="line">在选项卡上向后移动</span><br><span class="line">Ctrl+数字（数字1-9）</span><br><span class="line">移动到第n个选项卡</span><br><span class="line">Shift+Tab</span><br><span class="line">在选项上向后移动</span><br><span class="line">Alt+带下划线的字母</span><br><span class="line">执行与该字母对应的命令（或选中相应的选项）</span><br><span class="line">Alt+D选择地址栏</span><br><span class="line">Ctrl+E</span><br><span class="line">选择搜索框</span><br><span class="line">Ctrl+F</span><br><span class="line">选择搜索框</span><br><span class="line">Ctrl+N</span><br><span class="line">打开新窗口</span><br><span class="line">Ctrl+W</span><br><span class="line">关闭当前窗口</span><br><span class="line">Ctrl+Shift+E</span><br><span class="line">显示选定文件夹上的所有文件夹</span><br><span class="line">Ctrl+Shift+N</span><br><span class="line">创建一个新文件夹</span><br><span class="line">Alt+P</span><br><span class="line">显示预览窗格</span><br><span class="line">Alt+Enter</span><br><span class="line">打开选定项的“属性”对话框</span><br><span class="line">Alt+向右键</span><br><span class="line">查看下一个文件夹</span><br><span class="line">Alt+向上键</span><br><span class="line">查看上一级文件夹</span><br><span class="line">Alt+向左键</span><br><span class="line">查看上一个文件夹</span><br><span class="line">Windows徽标键+Tab</span><br><span class="line">打开任务视图</span><br><span class="line">Windows徽标键+Ctrl+D</span><br><span class="line">添加虚拟桌面</span><br><span class="line">Windows徽标键+Ctrl+向右键</span><br><span class="line">在你于右侧创建的虚拟桌面之间进行切换</span><br><span class="line">Windows徽标键+Ctrl+向左键</span><br><span class="line">在你于左侧创建的虚拟桌面之间进行切换</span><br><span class="line">Windows徽标键+Ctrl+F4</span><br><span class="line">关闭你正在使用的虚拟桌面</span><br><span class="line">Shift+单击某个任务栏按钮</span><br><span class="line">打开某个应用，或快速打开应用的另一个实例</span><br><span class="line">Ctrl+Shift+单击某个任务栏按钮</span><br><span class="line">以管理员身份打开应用</span><br><span class="line">Shift+右键单击某个任务栏按钮</span><br><span class="line">显示该应用的窗口菜单</span><br><span class="line">Shift+右键单击某个已分组的任务栏按钮</span><br><span class="line">显示该组的窗口菜单</span><br><span class="line">Ctrl+单击某个已分组的任务栏按钮</span><br><span class="line">循环切换该组的窗口</span><br><span class="line">Windows徽标键+I</span><br><span class="line">打开设置</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/16/windows/" data-id="ckygyus5f000c3kvbgflp1jjc" data-title="windows" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/16/systemctl/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          systemctl
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/16/other/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">other</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/16/docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/curl/">curl</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/firewall/">firewall</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/go/">go</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Dean0731<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
