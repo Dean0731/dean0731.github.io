@@ -4,13 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Dean&#39;s site</title>
+  <title>other | Dean&#39;s site</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Dean&#39;s site">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="12# GOOGLE 二次验证otpauth:&#x2F;&#x2F;totp&#x2F;yimcarson?secret&#x3D;VIABPOEXKBBMLZD2&amp;issuer&#x3D;CSDN    1234开启php-fgm                                &#x2F;usr&#x2F;local&#x2F;php7&#x2F;sbin&#x2F;php-fpm -c &#x2F;usr&#x2F;local&#x2F;php7&#x2F;etc&#x2F;php.ini  关闭php-fgm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="other">
+<meta property="og:url" content="http://example.com/2022/01/16/other/index.html">
 <meta property="og:site_name" content="Dean&#39;s site">
+<meta property="og:description" content="12# GOOGLE 二次验证otpauth:&#x2F;&#x2F;totp&#x2F;yimcarson?secret&#x3D;VIABPOEXKBBMLZD2&amp;issuer&#x3D;CSDN    1234开启php-fgm                                &#x2F;usr&#x2F;local&#x2F;php7&#x2F;sbin&#x2F;php-fpm -c &#x2F;usr&#x2F;local&#x2F;php7&#x2F;etc&#x2F;php.ini  关闭php-fgm">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
+<meta property="article:modified_time" content="2022-01-16T07:32:36.271Z">
 <meta property="article:author" content="Dean0731">
 <meta name="twitter:card" content="summary">
   
@@ -73,97 +77,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-git" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/01/16/git/" class="article-date">
-  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/01/16/git/">git</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &#x27;dean0731@qq.com&#x27;</span><br><span class="line">git config --global user.name &#x27;华为主机&#x27;</span><br><span class="line">git fetch --all &amp;&amp; git reset --hard origin/master &amp;&amp; git pull</span><br><span class="line">git fetch --all &amp;&amp; git reset --hard origin/dev &amp;&amp; git pull</span><br><span class="line">git rm -r --cached .</span><br><span class="line">git add .</span><br><span class="line">git commit -m &#x27;update .gitignore&#x27;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看所有远程仓库</span></span><br><span class="line">git remote </span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看指定远程仓库地址</span></span><br><span class="line">git remote -v </span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加远程仓库</span></span><br><span class="line">git remote add  origin https://github.com/Dean0731/Segmentation.git  </span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新远程仓库地址</span></span><br><span class="line">git remote set-url origin 你新的远程仓库地址remote  </span><br><span class="line">git branch 当前分支</span><br><span class="line">git branch -a 所有当前分支</span><br><span class="line">git add . &amp;&amp; git commit -m &#x27;update&#x27; &amp;&amp; git push</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步分支情况</span></span><br><span class="line">git remote prune origin</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置当前代理</span></span><br><span class="line">git config --global  http.proxy http://127.0.0.1:20172</span><br><span class="line"><span class="meta">#</span><span class="bash"> 取消当前代理</span></span><br><span class="line">git config --unset http.proxy</span><br><span class="line"><span class="meta">#</span><span class="bash">取消全局代理</span></span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line"><span class="meta">#</span><span class="bash">设置socks5代理</span></span><br><span class="line">git config --global  http.proxy socks5://127.0.0.1:20170</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/16/git/" data-id="ckygxyflz0000o4vb6lgz35of" data-title="git" class="article-share-link">Teilen</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-pip" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/01/16/pip/" class="article-date">
-  <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/01/16/pip/">pip</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 升级pip</span></span><br><span class="line">pip install --upgrade pip</span><br><span class="line"><span class="meta">#</span><span class="bash"> 批量安装</span></span><br><span class="line">pip install -r e:\\requirements.txt</span><br><span class="line"><span class="meta">#</span><span class="bash"> 升级</span></span><br><span class="line">pip install --upgrade package_name</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看库信息</span></span><br><span class="line">pip show -f package_name</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看库信息</span></span><br><span class="line">pip show -f package_name</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看需要升级的</span></span><br><span class="line">pip list -o</span><br><span class="line"><span class="meta">#</span><span class="bash"> 兼容性检查</span></span><br><span class="line">pip check package-name</span><br><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package matplotlib</span><br><span class="line">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>清华：<a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a></li>
-<li>阿里云：<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/pypi/simple/">http://mirrors.aliyun.com/pypi/simple/</a></li>
-<li>中国科技大学 <a target="_blank" rel="noopener" href="https://pypi.mirrors.ustc.edu.cn/simple/">https://pypi.mirrors.ustc.edu.cn/simple/</a></li>
-<li>华中理工大学：<a target="_blank" rel="noopener" href="http://pypi.hustunique.com/">http://pypi.hustunique.com/</a></li>
-<li>山东理工大学：<a target="_blank" rel="noopener" href="http://pypi.sdutlinux.org/">http://pypi.sdutlinux.org/</a></li>
-<li>豆瓣：<a target="_blank" rel="noopener" href="http://pypi.douban.com/simple/">http://pypi.douban.com/simple/</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/16/pip/" data-id="ckygxyfm50001o4vbfhcdcecd" data-title="pip" class="article-share-link">Teilen</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-other" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-other" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/01/16/other/" class="article-date">
   <time class="dt-published" datetime="2022-01-16T07:04:50.000Z" itemprop="datePublished">2022-01-16</time>
@@ -176,8 +90,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/01/16/other/">other</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      other
     </h1>
   
 
@@ -204,11 +118,23 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/16/pip/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          pip
+        
+      </div>
+    </a>
+  
+  
+</nav>
 
   
+</article>
 
 
 </section>
