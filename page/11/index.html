@@ -179,6 +179,39 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/01/16/cnblog/jdk1.8HashMap/" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/16/cnblog/jdk1.8HashMap/" target="_self">
+          
+          JDK1.8中HashMap实现 JDK1.8中的HashMap实现跟JDK1.7中的实现有很大差别。下面分析JDK1.8中的实现，主要看put和get方法。     构造方法的时候并没有初始化，而是在第一次put的时候初始化    putVal方法的主要逻辑是这样的： 1、如果数组还没有初始化（数组长度是0），则先初始化 2、通过hash方法计算key的hash值，进而计算得到应该放置到数组的位
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-16 20:20" pubdate>
+              2022-01-16
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/01/16/cnblog/jdbc/" target="_self">
           
         </a>
@@ -452,39 +485,6 @@
         <a href="/2022/01/16/cnblog/ESMAScript6%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" target="_self">
           
           ESMAScript6.0是一个标准，javascript是它的遵循语言，大部分都是用es6 ES5:2015年发布的 ES6:代码更加简洁，但浏览器兼容性差 基本语法1234&#x2F;&#x2F;js定义,无作用范围var a &#x3D; true;&#x2F;&#x2F;es6定义，有范围，代码块内有效let a &#x3D; true;  123&#x2F;&#x2F;let相同名字只能声明一次let m&#x3D;1;let m&#x3D;2;  常量123&#x2F;&#x2F;定义时必须初始化con
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-16 20:20" pubdate>
-              2022-01-16
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/16/cnblog/ElasticSearch/" target="_self">
-          
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/16/cnblog/ElasticSearch/" target="_self">
-          
-          概述 分布式全文搜索引擎  传统用sql，对于大量数据很慢 可以当做一个数据库，可以将里面的索引就是库   Lucene 用于文本搜索的函数库，java编写的，全文搜索功能 ，jar包，不包含搜索引擎  索引结构 读写索引，排序，搜索规则     elasticsearch是基于lucene做了一些封装和增强  solr  封装了lucene，可独立运行 通过发送请求可以操作数据 有管理界面，
         </a>
       </p>
 

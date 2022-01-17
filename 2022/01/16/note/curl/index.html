@@ -16,20 +16,21 @@
   <meta name="author" content="Dean0731">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1234567891011121314151617181920212223curl -so &#x2F;dev&#x2F;null -w &quot;%&amp;#123;http_code&amp;#125;&quot; google.com -x socks5:&#x2F;&#x2F;127.0.0.1:1080 测试代理是否可用 301或200 表示可用curl ftp:&#x2F;&#x2F;pan.dean0731.top:30021&#x2F; -u &quot;pan">
+    <meta name="description" content="Curl123456789101112131415161718192021# 输出参数介绍curl —s # 省略进度条curl -S # 省略进度条是出错时显示错误curl -o 1.txt # 制定输出目录curl -I # 只输出响应头，小写i：加上body# 输入参数curl -A # UA信息curl -b # cookies k&#x3D;vcurl -H # 请求头 curl -L # 跟随3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="curl">
+<meta property="og:title" content="Curl">
 <meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/note/curl/index.html">
 <meta property="og:site_name" content="Dean0731&#39;s site">
-<meta property="og:description" content="1234567891011121314151617181920212223curl -so &#x2F;dev&#x2F;null -w &quot;%&amp;#123;http_code&amp;#125;&quot; google.com -x socks5:&#x2F;&#x2F;127.0.0.1:1080 测试代理是否可用 301或200 表示可用curl ftp:&#x2F;&#x2F;pan.dean0731.top:30021&#x2F; -u &quot;pan">
+<meta property="og:description" content="Curl123456789101112131415161718192021# 输出参数介绍curl —s # 省略进度条curl -S # 省略进度条是出错时显示错误curl -o 1.txt # 制定输出目录curl -I # 只输出响应头，小写i：加上body# 输入参数curl -A # UA信息curl -b # cookies k&#x3D;vcurl -H # 请求头 curl -L # 跟随3">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
-<meta property="article:modified_time" content="2022-01-16T07:44:10.080Z">
+<meta property="article:published_time" content="2022-01-16T14:04:50.000Z">
+<meta property="article:modified_time" content="2022-01-17T14:04:50.000Z">
 <meta property="article:author" content="Dean0731">
+<meta property="article:tag" content="curl">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>curl - Dean0731&#39;s site</title>
+  <title>Curl - Dean0731&#39;s site</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -163,7 +164,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="curl">
+            <span class="h2" id="subtitle" title="Curl">
               
             </span>
 
@@ -173,8 +174,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-16 15:04" pubdate>
-        2022年1月16日 下午
+      <time datetime="2022-01-16 22:04" pubdate>
+        2022年1月16日 晚上
       </time>
     </span>
   
@@ -184,7 +185,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      2.9k 字
     </span>
   
 
@@ -193,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20 分钟
+      25 分钟
     </span>
   
 
@@ -222,19 +223,47 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">curl</h1>
+            <h1 style="display: none">Curl</h1>
             
             <div class="markdown-body">
-              <figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">curl -so /dev/null -w &quot;%&#123;http_code&#125;&quot; google.com -x socks5://127.0.0.1:1080 测试代理是否可用 301或200 表示可用<br>curl ftp://pan.dean0731.top:30021/ -u &quot;panuser:123456&quot;<br>查看<br>curl ftp://dean0731.cn:2048/ -u &quot;oss_ftp_user:oss_ftp_password&quot;<br>上传<br>curl ftp://oss_ftp_user:oss_ftp_password@dean0731.cn:2048/path -T<br>CURL命令<br>1、列出ftp服务器上的目录列表：<br>curl ftp://www.xxx.com/ --user name:passwd<br>curl ftp://www.xxx.com/ –u name:passwd #简洁写法<br>curl ftp://name:passwd@www.xxx.com #简洁写法2<br>2、只列出目录，不显示进度条<br>curl ftp://www.xxx.com –u name:passwd -s<br>3、下载一个文件：<br>curl ftp://www.xxx.com/size.zip –u name:passwd -o size.zip<br>4、上载一个文件：<br>curl –u name:passwd -T size.mp3 ftp://www.xxx.com/mp3/<br>5、从服务器上删除文件（使用curl传递ftp协议的DELE命令）:<br>curl –u name:passwd ftp://www.xxx.com/ -X &#x27;DELE mp3/size.mp3&#x27;<br>6、另外curl不支持递归下载，不过可以用数组方式下载文件，比如我们要下载1-10.gif连续命名的文件：<br>curl –u name:passwd ftp://www.xxx.com/img/[1-10].gif –O #O字母大写<br>7、要连续下载多个文件：<br>curl –u name:passwd ftp://www.xxx.com/img/[one,two,three].jpg –O #O字母大写<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl result\r\n<br>url_effective:		%&#123;url_effective&#125;		最终获取的url地址，尤其是当你指定给curl的地址存在301跳转，且通过-L继续追踪的情形。\r\n<br>http_code: 			%&#123;http_code&#125;			。\r\n<br>http_connect: 		%&#123;http_connect&#125;			last response (from a proxy) to a curl CONNECT request。\r\n<br>time_total : 		%&#123;time_total&#125;			总时间，按秒计,精确到小数点后三位。\r\n<br>time_namelookup: 	%&#123;time_namelookup&#125;		DNS解析时间,从请求开始到DNS解析完毕所用时间。\r\n<br>time_connect : 		%&#123;time_connect&#125;			从开始到建立TCP连接完成所用时间,包括前边DNS解析时间<br>time_appconnect: 	%&#123;time_appconnect&#125;		连接建立完成时间，如SSL/SSH等建立连接或者完成三次握手时间。\r\n<br>time_pretransfer: 	%&#123;time_pretransfer&#125;		从开始到准备传输的时间。\r\n<br>time_redirect: 		%&#123;time_redirect&#125;		重定向时间，包括到最后一次传输前的几次重定向的DNS解析，连接，预传输，传输时间。\r\n<br>time_starttransfer:	%&#123;time_starttransfer&#125;	开始传输时间,在发出请求之后，Web 服务器返回数据的第一个字节所用的时间。\r\n<br>size_download: 		%&#123;size_download&#125;		。\r\n<br>size_upload: 		%&#123;size_upload&#125;			上传大小。\r\n<br>size_header: 		%&#123;size_header&#125;			下载的header的大小。\r\n<br>size_request: 		%&#123;size_request&#125;			请求的大小。\r\n<br>speed_download: 	%&#123;speed_download&#125;		下载速度，单位-字节每秒。\r\n<br>speed_upload: 		%&#123;speed_upload&#125;			上传速度,单位-字节每秒。\r\n<br>content_type: 		%&#123;content_type&#125;			。\r\n<br>num_connects: 		%&#123;num_connects&#125;			最近的的一次传输中创建的连接数目。\r\n<br>num_redirects: 		%&#123;num_redirects&#125;		在请求中跳转的次数。\r\n<br>redirect_url: 		%&#123;redirect_url&#125;			。\r\n<br>ftp_entry_path: 	%&#123;ftp_entry_path&#125;		当连接到远程的ftp服务器时的初始路径。\r\n<br>ssl_verify_result: 	%&#123;ssl_verify_result&#125;	ssl认证结果，返回0表示认证成功。\r\n<br></code></pre></td></tr></table></figure>
+              <h1 id="Curl"><a href="#Curl" class="headerlink" title="Curl"></a>Curl</h1><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 输出参数介绍</span><br>curl —s # 省略进度条<br>curl -S # 省略进度条是出错时显示错误<br>curl -o 1.txt # 制定输出目录<br>curl -I # 只输出响应头，小写i：加上body<br><span class="hljs-meta">#</span><span class="bash"> 输入参数</span><br>curl -A # UA信息<br>curl -b # cookies k=v<br>curl -H # 请求头 <br>curl -L # 跟随3xx重定向<br>curl -e # 指定referer<br>curl -u # -u user:passwd http验证<br>curl -d # 请求参数就是body内容<br><span class="hljs-meta">		#</span><span class="bash"> 默认传输方式是 application/json，服务端接收数据-》body-》form数据</span><br><span class="hljs-meta">		#</span><span class="bash"> 若在-H 指定Content-Type:application/json,服务端接受数据-》body-》json data</span><br><span class="hljs-meta">		#</span><span class="bash"> 应该还有file类型的Content-Type，服务端-》body-》file</span><br>curl -X # 请求方法 POST GET(默认)<br>curl -x # 代理  socks5://127.0.0.1:1080<br>curl -v # 打印调试信息<br>curl -k # 忽略SSL证书<br>curl -m # 指定等待时间time-out<br></code></pre></td></tr></table></figure>
 
 
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> CURL FTP命令</span><br>curl ftp://host:port/ -u &quot;user:passwd&quot;<br><span class="hljs-meta">#</span><span class="bash"> 查看</span><br>curl ftp://host:xxx/ -u &quot;user:password&quot;<br><span class="hljs-meta">#</span><span class="bash"> 上传</span><br>curl ftp://user:password@host:port/path -T<br><span class="hljs-meta">#</span><span class="bash"> 1、列出ftp服务器上的目录列表：</span><br>curl ftp://www.xxx.com/ --user name:passwd<br>curl ftp://www.xxx.com/ –u name:passwd #简洁写法<br>curl ftp://name:passwd@www.xxx.com #简洁写法2<br><span class="hljs-meta">#</span><span class="bash"> 2、只列出目录，不显示进度条</span><br>curl ftp://www.xxx.com –u name:passwd -s<br><span class="hljs-meta">#</span><span class="bash"> 3、下载一个文件：</span><br>curl ftp://www.xxx.com/size.zip –u name:passwd -o size.zip<br><span class="hljs-meta">#</span><span class="bash"> 4、上载一个文件：</span><br>curl –u name:passwd -T size.mp3 ftp://www.xxx.com/mp3/<br><span class="hljs-meta">#</span><span class="bash"> 5、从服务器上删除文件（使用curl传递ftp协议的DELE命令）:</span><br>curl –u name:passwd ftp://www.xxx.com/ -X &#x27;DELE mp3/size.mp3&#x27;<br>6、另外curl不支持递归下载，不过可以用数组方式下载文件，比如我们要下载1-10.gif连续命名的文件：<br><span class="hljs-meta">#</span><span class="bash"> curl –u name:passwd ftp://www.xxx.com/img/[1-10].gif –O <span class="hljs-comment">#O字母大写</span></span><br>7、要连续下载多个文件：<br>curl –u name:passwd ftp://www.xxx.com/img/[one,two,three].jpg –O #O字母大写<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 测试代理是否可用 301或200 表示可用</span><br>curl -so /dev/null -w &quot;%&#123;http_code&#125;&quot; google.com -x socks5://127.0.0.1:1080 <br><span class="hljs-meta">#</span><span class="bash"> -w 指定输出某项内容，可选项如下所示</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl<br>url_effective:		%&#123;url_effective&#125;		最终获取的url地址，尤其是当你指定给curl的地址存在301跳转，且通过-L继续追踪的情形。\r\n<br>http_code: 			%&#123;http_code&#125;			。\r\n<br>http_connect: 		%&#123;http_connect&#125;			last response (from a proxy) to a curl CONNECT request。\r\n<br>time_total : 		%&#123;time_total&#125;			总时间，按秒计,精确到小数点后三位。\r\n<br>time_namelookup: 	%&#123;time_namelookup&#125;		DNS解析时间,从请求开始到DNS解析完毕所用时间。\r\n<br>time_connect : 		%&#123;time_connect&#125;			从开始到建立TCP连接完成所用时间,包括前边DNS解析时间<br>time_appconnect: 	%&#123;time_appconnect&#125;		连接建立完成时间，如SSL/SSH等建立连接或者完成三次握手时间。\r\n<br>time_pretransfer: 	%&#123;time_pretransfer&#125;		从开始到准备传输的时间。\r\n<br>time_redirect: 		%&#123;time_redirect&#125;		重定向时间，包括到最后一次传输前的几次重定向的DNS解析，连接，预传输，传输时间。\r\n<br>time_starttransfer:	%&#123;time_starttransfer&#125;	开始传输时间,在发出请求之后，Web 服务器返回数据的第一个字节所用的时间。\r\n<br>size_download: 		%&#123;size_download&#125;		。\r\n<br>size_upload: 		%&#123;size_upload&#125;			上传大小。\r\n<br>size_header: 		%&#123;size_header&#125;			下载的header的大小。\r\n<br>size_request: 		%&#123;size_request&#125;			请求的大小。\r\n<br>speed_download: 	%&#123;speed_download&#125;		下载速度，单位-字节每秒。\r\n<br>speed_upload: 		%&#123;speed_upload&#125;			上传速度,单位-字节每秒。\r\n<br>content_type: 		%&#123;content_type&#125;			。\r\n<br>num_connects: 		%&#123;num_connects&#125;			最近的的一次传输中创建的连接数目。\r\n<br>num_redirects: 		%&#123;num_redirects&#125;		在请求中跳转的次数。\r\n<br>redirect_url: 		%&#123;redirect_url&#125;			。\r\n<br>ftp_entry_path: 	%&#123;ftp_entry_path&#125;		当连接到远程的ftp服务器时的初始路径。\r\n<br>ssl_verify_result: 	%&#123;ssl_verify_result&#125;	ssl认证结果，返回0表示认证成功。\r\n<br></code></pre></td></tr></table></figure>
+
+<h1 id="Wget"><a href="#Wget" class="headerlink" title="Wget"></a>Wget</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget -c # 端点续传，可以接上次中断处下载，否则会重命名闻见为xxx.1<br>wget -b # 后台下载<br></code></pre></td></tr></table></figure>
+
+
+
+<h6 id="测试地址：http-www-httpbin-org-get"><a href="#测试地址：http-www-httpbin-org-get" class="headerlink" title="测试地址：http://www.httpbin.org/get"></a>测试地址：<a target="_blank" rel="noopener" href="http://www.httpbin.org/get">http://www.httpbin.org/get</a></h6>
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/note/">note</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/curl/">curl</a>
+                    
+                  </div>
                 
               </div>
               
@@ -249,9 +278,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/16/cnblog/7%E5%B1%82%E5%8D%8F%E8%AE%AE/">
+                      <a href="/download/media.html">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">Media</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -259,8 +288,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/16/note/docker/">
-                        <span class="hidden-mobile">docker</span>
+                      <a href="/download/google.html">
+                        <span class="hidden-mobile">Google software</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
