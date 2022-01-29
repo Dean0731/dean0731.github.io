@@ -16,23 +16,26 @@
   <meta name="author" content="Dean0731">
   <meta name="keywords" content="">
   
-    <meta name="description" content="开机出现 grub rescue 指令模式假如看到grub rescue，表示mbr (master boot record)的资料，完全对应不上磁盘的状况，所以无法辨别系统的所有分区，更不用说连grub menu都无法读入。可以grub程序有问题，找不到系统所在分区。 1234567ls # (hd0), (hd0,msdos3), (hd0,msdos2), (hd0,msdos1)# ls可">
+    <meta name="description" content="开机启动1）Bios自检，属于主板的功能，并寻找可启动设备 2）可启动设备一般是USB,CDROM,硬盘  MBR类型的启动设备： 第一个扇区512字节的最后2字节:”55AA” 找到后，将运行第一个扇区的前446字节：即引导代码，不同的系统有不同的引导代码 446+64（只能4个主分区）+2&#x3D;512     3）一般引导程序都是Grub，可以引导很多系统  找到对应系统的文件系统的加载程序  加">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dean0731&#39;s site">
+<meta property="og:title" content="Grub">
 <meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/cnblog/grub%E5%BC%82%E5%B8%B8/index.html">
 <meta property="og:site_name" content="Dean0731&#39;s site">
-<meta property="og:description" content="开机出现 grub rescue 指令模式假如看到grub rescue，表示mbr (master boot record)的资料，完全对应不上磁盘的状况，所以无法辨别系统的所有分区，更不用说连grub menu都无法读入。可以grub程序有问题，找不到系统所在分区。 1234567ls # (hd0), (hd0,msdos3), (hd0,msdos2), (hd0,msdos1)# ls可">
+<meta property="og:description" content="开机启动1）Bios自检，属于主板的功能，并寻找可启动设备 2）可启动设备一般是USB,CDROM,硬盘  MBR类型的启动设备： 第一个扇区512字节的最后2字节:”55AA” 找到后，将运行第一个扇区的前446字节：即引导代码，不同的系统有不同的引导代码 446+64（只能4个主分区）+2&#x3D;512     3）一般引导程序都是Grub，可以引导很多系统  找到对应系统的文件系统的加载程序  加">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190521131754775.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190521131201603.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2022-01-16T12:20:07.051Z">
-<meta property="article:modified_time" content="2020-10-24T08:56:34.000Z">
+<meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
+<meta property="article:modified_time" content="2022-01-28T07:04:50.000Z">
 <meta property="article:author" content="Dean0731">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="grub">
+<meta property="article:tag" content="数学,微分">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190521131754775.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDcwMjAxNw==,size_16,color_FFFFFF,t_70">
   
   
-  <title>Dean0731&#39;s site</title>
+  <title>Grub - Dean0731&#39;s site</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -166,7 +169,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="">
+            <span class="h2" id="subtitle" title="Grub">
               
             </span>
 
@@ -176,8 +179,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-16 20:20" pubdate>
-        2022年1月16日 晚上
+      <time datetime="2022-01-16 15:04" pubdate>
+        2022年1月16日 下午
       </time>
     </span>
   
@@ -187,7 +190,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.1k 字
+      2.4k 字
     </span>
   
 
@@ -196,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      18 分钟
+      21 分钟
     </span>
   
 
@@ -225,10 +228,29 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Grub</h1>
             
             <div class="markdown-body">
-              <h1 id="开机出现-grub-rescue-指令模式"><a href="#开机出现-grub-rescue-指令模式" class="headerlink" title="开机出现 grub rescue 指令模式"></a>开机出现 grub rescue 指令模式</h1><p>假如看到grub rescue，表示mbr (master boot record)的资料，完全对应不上磁盘的状况，所以无法辨别系统的所有分区，更不用说连grub menu都无法读入。可以grub程序有问题，找不到系统所在分区。</p>
+              <h1 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h1><p>1）Bios自检，属于主板的功能，并寻找可启动设备</p>
+<p>2）可启动设备一般是USB,CDROM,硬盘</p>
+<ul>
+<li>MBR类型的启动设备：<ul>
+<li>第一个扇区512字节的最后2字节:”55AA”</li>
+<li>找到后，将运行第一个扇区的前446字节：即引导代码，不同的系统有不同的引导代码</li>
+<li>446+64（只能4个主分区）+2=512 </li>
+</ul>
+</li>
+</ul>
+<p>3）一般引导程序都是Grub，可以引导很多系统</p>
+<ul>
+<li><p>找到对应系统的文件系统的加载程序</p>
+</li>
+<li><p>加载内核：/boot/vmlinuzxxxx，动态加载驱动：/boot/initramfsxxxxx</p>
+</li>
+</ul>
+<p>4）内核加载init pid为1，它是所有进程的父进程，centos中时systemd </p>
+<p>5）加载 /etc/rc.d/中对应级别服务</p>
+<h1 id="开机出现-grub-rescue-指令模式"><a href="#开机出现-grub-rescue-指令模式" class="headerlink" title="开机出现 grub rescue 指令模式"></a>开机出现 grub rescue 指令模式</h1><p>假如看到grub rescue，表示mbr (master boot record)的资料，完全对应不上磁盘的状况，所以无法辨别系统的所有分区，更不用说连grub menu都无法读入。可以grub程序有问题，找不到系统所在分区。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">ls <br><span class="hljs-meta">#</span><span class="bash"> (hd0), (hd0,msdos3), (hd0,msdos2), (hd0,msdos1)</span><br><span class="hljs-meta">#</span><span class="bash"> ls可以列出所有的硬碟与分区，(hd0)是第一个硬碟，(hd0,msdos1)是第一颗硬碟的第一个分区。以此类推。输入指令时，可以简写成(hd0,1)表示。若是GPT分割，出现的会是(hd0,gpt0)的格式。</span><br><span class="hljs-meta">#</span><span class="bash"> 只出现(hd0)，那表示你的分区表已经损坏；</span><br>ls (hd0,1)/<br><span class="hljs-meta">#</span><span class="bash"> 确定各个分区那个是 / ，哪个是/boot，就可以开始继续处理。现在假设 / 是(hd0,2)，/boot 是(hd0,2)/boot。</span><br><br></code></pre></td></tr></table></figure>
 
 <ul>
@@ -295,6 +317,17 @@
               <div class="post-metas mb-3">
                 
                 
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/linux/">linux</a>
+                    
+                      <a class="hover-with-bg" href="/tags/grub/">grub</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E5%AD%A6-%E5%BE%AE%E5%88%86/">数学,微分</a>
+                    
+                  </div>
+                
               </div>
               
                 <p class="note note-warning">
@@ -308,7 +341,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/16/cnblog/ImageDataGenerator/">
+                      <a href="/2022/01/16/cnblog/7%E5%B1%82%E5%8D%8F%E8%AE%AE/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
@@ -318,8 +351,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/16/cnblog/Github%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6%E5%BE%88%E6%85%A2%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%8C%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
-                        <span class="hidden-mobile"></span>
+                      <a href="/download/cj.html">
+                        <span class="hidden-mobile">Css-Js</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

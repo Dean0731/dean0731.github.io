@@ -18,18 +18,19 @@
   
     <meta name="description" content="12total &#x3D; used+ buffer(不可释放)+buffer(可释放)+freeavailable &#x3D; free + buffer(可释放)  1234567891011121314PS1	export PS1&#x3D;&amp;#x27;[\u@\h \W]$ &amp;#x27;    \d ：代表日期，格式为weekday month date，例如：&quot;Mon Aug 1&quot;    \H">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux">
+<meta property="og:title" content="Linux">
 <meta property="og:url" content="https://blog.dean0731.cn/2022/01/16/note/linux/index.html">
 <meta property="og:site_name" content="Dean0731&#39;s site">
 <meta property="og:description" content="12total &#x3D; used+ buffer(不可释放)+buffer(可释放)+freeavailable &#x3D; free + buffer(可释放)  1234567891011121314PS1	export PS1&#x3D;&amp;#x27;[\u@\h \W]$ &amp;#x27;    \d ：代表日期，格式为weekday month date，例如：&quot;Mon Aug 1&quot;    \H">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-16T07:04:50.000Z">
-<meta property="article:modified_time" content="2022-01-16T07:42:45.213Z">
+<meta property="article:modified_time" content="2022-01-16T07:04:50.000Z">
 <meta property="article:author" content="Dean0731">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>linux - Dean0731&#39;s site</title>
+  <title>Linux - Dean0731&#39;s site</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -163,7 +164,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="linux">
+            <span class="h2" id="subtitle" title="Linux">
               
             </span>
 
@@ -184,7 +185,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      2.1k 字
     </span>
   
 
@@ -193,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15 分钟
+      18 分钟
     </span>
   
 
@@ -222,7 +223,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">linux</h1>
+            <h1 style="display: none">Linux</h1>
             
             <div class="markdown-body">
               <figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">total = used+ buffer(不可释放)+buffer(可释放)+free<br>available = free + buffer(可释放)<br></code></pre></td></tr></table></figure>
@@ -231,11 +232,21 @@
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> PS1</span><br>export PS1=&#x27;[\u@\h \W]$ &#x27;<br><span class="hljs-meta">#</span><span class="bash"> ubuntu 启动级别</span>                            <br>sudo systemctl set-default multi-user.target sudo systemctl set-default graphical.target<br><span class="hljs-meta">#</span><span class="bash"> 查看目录大小</span><br>du -h --max-depth=1 <br></code></pre></td></tr></table></figure>
 
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">.ssh/authorized_keys<br>700/644<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 关闭selinux否则报权限错误</span><br><span class="hljs-meta">#</span><span class="bash"> 普通用户不能绑定0-1024端口</span><br><span class="hljs-meta">#</span><span class="bash"> centos 7默认关闭了 user namespace，需要手动打开</span><br>echo 10000 &gt; /proc/sys/user/max_user_namespaces<br>grubby --args=&quot;user_namespace.enable=1&quot; --update-kernel=&quot;$(grubby --default-kernel)&quot;<br>echo &quot;user.max_user_namespaces=10000&quot; &gt;&gt; /etc/sysctl.conf<br></code></pre></td></tr></table></figure>
+
+
+
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs nix">sudoers <br>用密码<br>USER_FLAG <span class="hljs-attr">HOST_FLAG=(RUNAS_FLAG)</span> COMMAND_FLAG<br>不用密码<br>USER_FLAG <span class="hljs-attr">HOST_FLAG=(RUNAS_FLAG)</span> NOPASSWD: COMMAND_FLAG<br>RUN_FLAG:指以什么用户的身份<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs shell">centos 配置smb，smb比ftp好<br>安装后备份配置文件<br>配置文件改为，可在修改  之后使用smbpasswd -a user1，此时使用用户user1，但密码需要再此设置，即可，注意共享目录权限<br>若有的打不开可在global加入如下所示，因为有的客户端只有smb1<br>server min protocol = NT1<br>[global]  <br>    workgroup = SC.LOCAL  <br>    server string = Samba Server Version %v  <br>    netbios name = Linuxidc-Server  <br>    log file = /var/log/samba/%m.log  <br>    max log size = 10240  <br>    security = user  <br>    passdb backend = tdbsam  <br>[logger]  <br>    comment = Logs Directories  <br>    path = /home/logger/  <br>    public = no  <br>    admin users = logadmin  <br>    valid users = @logadmin  <br>    browseable = yes  <br>    writable = yes  <br>    create mask = 0777  <br>    directory mask = 0777  <br>    force directory mode = 0777  <br>    force create mode = 0777  <br>[shared]  <br>    # 共享文件目录描述  <br>    comment = Shared Directories  <br>    # 共享文件目录  <br>    path = /home/xxx<br>    # 是否允许guest访问  <br>    public = no  <br>    # 指定管理用户  <br>    admin users = admin  <br>    # 可访问的用户组、用户  <br>    valid users = @admin  <br>    # 是否浏览权限  <br>    browseable = yes  <br>    # 是否可写权限  <br>    writable = yes  <br>    # 文件权限设置  <br>    create mask = 0777  <br>    directory mask = 0777  <br>    force directory mode = 0777  <br>    force create mode = 0777  <br></code></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">find . -name &quot;cloud*SNAP*&quot;| xargs -I file /usr/local/jdk11/bin/jar tvf file| grep &quot;com/cloudbility/gateway/Application&quot;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">net use * /del<br></code></pre></td></tr></table></figure>
 
 
             </div>
@@ -243,6 +254,20 @@
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/note/">note</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/linux/">linux</a>
+                    
+                  </div>
                 
               </div>
               
@@ -267,8 +292,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/16/note/node/">
-                        <span class="hidden-mobile">node</span>
+                      <a href="/2022/01/16/note/pip/">
+                        <span class="hidden-mobile">pip</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
